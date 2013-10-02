@@ -91,7 +91,6 @@ def sauce_browser(test_name, language)
 
   browser
 end
-
 def test_name(scenario)
   if scenario.respond_to? :feature
     "#{scenario.feature.name}: #{scenario.name}"
@@ -115,8 +114,10 @@ end
 Before do |scenario|
   @config = config
   @random_string = Random.new.rand.to_s
-  @browser = browser(environment, test_name(scenario), 'default') unless @language
-  $session_id = @browser.driver.instance_variable_get(:@bridge).session_id
+  unless @language # only UniversalLanguageSelector needs this
+    @browser = browser(environment, test_name(scenario), 'default')
+    $session_id = @browser.driver.instance_variable_get(:@bridge).session_id
+  end
 end
 
 After do |scenario|
@@ -125,4 +126,23 @@ After do |scenario|
     sauce_api(%Q{{"public": true}})
   end
   @browser.close unless ENV['KEEP_BROWSER_OPEN'] == 'true'
+end
+
+# only UniversalLanguageSelector needs this
+
+Before('@uls-in-personal-only') do |scenario|
+  if uls_position() != 'personal'
+    scenario.skip_invoke!
+  end
+end
+
+Before('@uls-in-sidebar-only') do |scenario|
+  if uls_position() != 'interlanguage'
+    scenario.skip_invoke!
+  end
+end
+
+After('@reset-preferences-after') do |scenario|
+  visit(ResetPreferencesPage)
+  on(ResetPreferencesPage).submit_element.click
 end
