@@ -101,9 +101,9 @@ def test_name(scenario)
 end
 
 config = YAML.load_file('config/config.yml')
-mediawiki_username = config['mediawiki_username']
 
 Before('@login') do
+  puts "MEDIAWIKI_USER environment variable is not defined! Please export a value for that variable before proceeding." unless ENV['MEDIAWIKI_USER']
   puts "MEDIAWIKI_PASSWORD environment variable is not defined! Please export a value for that variable before proceeding." unless ENV['MEDIAWIKI_PASSWORD']
 end
 
@@ -115,7 +115,6 @@ end
 Before do |scenario|
   @config = config
   @random_string = Random.new.rand.to_s
-  @mediawiki_username = mediawiki_username
   @browser = browser(environment, test_name(scenario), 'default') unless @language
   $session_id = @browser.driver.instance_variable_get(:@bridge).session_id
 end
