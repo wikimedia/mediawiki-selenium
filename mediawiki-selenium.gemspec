@@ -8,9 +8,10 @@ Gem::Specification.new do |spec|
   spec.version       = Mediawiki::Selenium::VERSION
   spec.authors       = ["Zeljko Filipin"]
   spec.email         = ["zeljko.filipin@gmail.com"]
-  spec.description   = %q{An easy way to run MediaWiki Selenium tests.}
+  spec.description   = %q{Several MediaWiki extensions share code that makes it easy to run Selenium tests. This gem
+makes it easy to update the shared code.}
   spec.summary       = %q{An easy way to run MediaWiki Selenium tests.}
-  spec.homepage      = ""
+  spec.homepage      = "https://github.com/zeljkofilipin/mediawiki-selenium"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)
