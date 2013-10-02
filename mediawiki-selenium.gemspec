@@ -12,7 +12,7 @@ Gem::Specification.new do |spec|
 makes it easy to update the shared code.}
   spec.summary       = %q{An easy way to run MediaWiki Selenium tests.}
   spec.homepage      = "https://github.com/zeljkofilipin/mediawiki-selenium"
-  spec.license       = "MIT"
+  spec.license       = "GPL-2"
 
   spec.files         = `git ls-files`.split($/)
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
