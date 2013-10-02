@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = Mediawiki::Selenium::VERSION
   spec.authors       = ["Zeljko Filipin"]
   spec.email         = ["zeljko.filipin@gmail.com"]
-  spec.description   = %q{TODO: Write a gem description}
-  spec.summary       = %q{TODO: Write a gem summary}
+  spec.description   = %q{An easy way to run MediaWiki Selenium tests.}
+  spec.summary       = %q{An easy way to run MediaWiki Selenium tests.}
   spec.homepage      = ""
   spec.license       = "MIT"
 
