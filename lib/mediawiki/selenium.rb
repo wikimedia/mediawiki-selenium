@@ -10,9 +10,4 @@ https://github.com/zeljkofilipin/mediawiki-selenium/blob/master//CREDITS.
 =end
 
 require "mediawiki/selenium/version"
-
-module Mediawiki
-  module Selenium
-    # Your code goes here...
-  end
-end
+require "mediawiki/selenium/env"
