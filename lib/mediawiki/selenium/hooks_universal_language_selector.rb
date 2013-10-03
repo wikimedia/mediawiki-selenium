@@ -10,7 +10,6 @@ https://github.com/zeljkofilipin/mediawiki-selenium/blob/master//CREDITS.
 =end
 
 Before('@language') do |scenario|
-  p '@language'
   @language = true
   @scenario = scenario
 end
