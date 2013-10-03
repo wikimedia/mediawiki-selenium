@@ -10,6 +10,7 @@ https://github.com/zeljkofilipin/mediawiki-selenium/blob/master//CREDITS.
 =end
 
 require "mediawiki/selenium/env"
+require "mediawiki/selenium/hooks"
 require "mediawiki/selenium/sauce"
 require "mediawiki/selenium/version"
 
