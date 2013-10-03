@@ -16,11 +16,6 @@ Before('@login') do
   puts "MEDIAWIKI_PASSWORD environment variable is not defined! Please export a value for that variable before proceeding." unless ENV['MEDIAWIKI_PASSWORD']
 end
 
-Before('@language') do |scenario|
-  @language = true
-  @scenario = scenario
-end
-
 Before do |scenario|
   @config = config
   @random_string = Random.new.rand.to_s
@@ -36,23 +31,4 @@ After do |scenario|
     sauce_api(%Q{{"public": true}})
   end
   @browser.close unless ENV['KEEP_BROWSER_OPEN'] == 'true'
-end
-
-# only UniversalLanguageSelector needs this
-
-Before('@uls-in-personal-only') do |scenario|
-  if uls_position() != 'personal'
-    scenario.skip_invoke!
-  end
-end
-
-Before('@uls-in-sidebar-only') do |scenario|
-  if uls_position() != 'interlanguage'
-    scenario.skip_invoke!
-  end
-end
-
-After('@reset-preferences-after') do |scenario|
-  visit(ResetPreferencesPage)
-  on(ResetPreferencesPage).submit_element.click
 end
