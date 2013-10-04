@@ -13,6 +13,7 @@ https://github.com/zeljkofilipin/mediawiki-selenium/blob/master//CREDITS.
 require 'bundler/setup'
 require 'page-object'
 require 'page-object/page_factory'
+require 'rest_client'
 require 'watir-webdriver'
 require 'yaml'
 
@@ -54,7 +55,14 @@ def local_browser(language)
   end
 end
 def sauce_api(json)
-  %x{curl -H 'Content-Type:text/json' -s -X PUT -d '#{json}' http://#{ENV['SAUCE_ONDEMAND_USERNAME']}:#{ENV['SAUCE_ONDEMAND_ACCESS_KEY']}@saucelabs.com/rest/v1/#{ENV['SAUCE_ONDEMAND_USERNAME']}/jobs/#{$session_id}}
+RestClient::Request.execute(
+  :method => :put,
+  :url => "https://saucelabs.com/rest/v1/#{ENV['SAUCE_ONDEMAND_USERNAME']}/jobs/#{$session_id}",
+  :user => ENV['SAUCE_ONDEMAND_USERNAME'],
+  :password => ENV['SAUCE_ONDEMAND_ACCESS_KEY'],
+  :headers => {:content_type => "application/json"},
+  :payload => json
+)
 end
 def sauce_browser(test_name, language)
   config = YAML.load_file('config/config.yml')
