@@ -22,7 +22,7 @@ Before do |scenario|
   if ENV['REUSE_BROWSER'] == 'true' and $browser # only CirrusSearch needs this
     @browser = $browser
   else
-    unless @language # only UniversalLanguageSelector needs this
+    unless @language or @user_agent # only UniversalLanguageSelector needs @language, only MobileFrontend needs @user_agent
       @browser = browser(environment, test_name(scenario), 'default')
       $browser = @browser # only CirrusSearch needs this
       $session_id = @browser.driver.instance_variable_get(:@bridge).session_id
