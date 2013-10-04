@@ -19,9 +19,14 @@ end
 Before do |scenario|
   @config = config
   @random_string = Random.new.rand.to_s
-  unless @language # only UniversalLanguageSelector needs this
-    @browser = browser(environment, test_name(scenario), 'default')
-    $session_id = @browser.driver.instance_variable_get(:@bridge).session_id
+  if ENV['REUSE_BROWSER'] == 'true' and $browser # only CirrusSearch needs this
+    @browser = $browser
+  else
+    unless @language # only UniversalLanguageSelector needs this
+      @browser = browser(environment, test_name(scenario), 'default')
+      $browser = @browser # only CirrusSearch needs this
+      $session_id = @browser.driver.instance_variable_get(:@bridge).session_id
+    end
   end
 end
 
@@ -30,5 +35,5 @@ After do |scenario|
     sauce_api(%Q{{"passed": #{scenario.passed?}}})
     sauce_api(%Q{{"public": true}})
   end
-  @browser.close unless ENV['KEEP_BROWSER_OPEN'] == 'true'
+  @browser.close unless ENV['KEEP_BROWSER_OPEN'] == 'true' or ENV['REUSE_BROWSER'] == 'true' # only CirrusSearch needs ENV['REUSE_BROWSER']
 end
