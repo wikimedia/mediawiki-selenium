@@ -34,6 +34,7 @@ After do |scenario|
   if environment == :saucelabs
     sauce_api(%Q{{"passed": #{scenario.passed?}}})
     sauce_api(%Q{{"public": true}})
+    sauce_api(%Q{{"build": #{ENV['BUILD_NUMBER']}}}) if ENV['BUILD_NUMBER']
   end
   @browser.close unless ENV['KEEP_BROWSER_OPEN'] == 'true' or ENV['REUSE_BROWSER'] == 'true' # only CirrusSearch needs ENV['REUSE_BROWSER']
 end
