@@ -19,12 +19,12 @@ end
 Before do |scenario|
   @config = config
   @random_string = Random.new.rand.to_s
-  if ENV['REUSE_BROWSER'] == 'true' and $browser # only CirrusSearch needs this
+  if ENV['REUSE_BROWSER'] == 'true' and $browser # CirrusSearch and VisualEditor need this
     @browser = $browser
   else
     unless @language or @user_agent # only UniversalLanguageSelector needs @language, only MobileFrontend needs @user_agent
       @browser = browser(environment, test_name(scenario), 'default')
-      $browser = @browser # only CirrusSearch needs this
+      $browser = @browser # CirrusSearch and VisualEditor need this
       $session_id = @browser.driver.instance_variable_get(:@bridge).session_id
     end
   end
@@ -36,5 +36,5 @@ After do |scenario|
     sauce_api(%Q{{"public": true}})
     sauce_api(%Q{{"build": #{ENV['BUILD_NUMBER']}}}) if ENV['BUILD_NUMBER']
   end
-  @browser.close unless ENV['KEEP_BROWSER_OPEN'] == 'true' or ENV['REUSE_BROWSER'] == 'true' # only CirrusSearch needs ENV['REUSE_BROWSER']
+  @browser.close unless ENV['KEEP_BROWSER_OPEN'] == 'true' or ENV['REUSE_BROWSER'] == 'true' # CirrusSearch and VisualEditor need this
 end
