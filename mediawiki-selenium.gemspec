@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
   spec.description   = %q{Several MediaWiki extensions share code that makes it easy to run Selenium tests. This gem
 makes it easy to update the shared code.}
   spec.summary       = %q{An easy way to run MediaWiki Selenium tests.}
-  spec.homepage      = "https://github.com/zeljkofilipin/mediawiki-selenium"
+  spec.homepage      = "https://gerrit.wikimedia.org/r/#/admin/projects/mediawiki/selenium"
   spec.license       = "GPL-2"
 
   spec.files         = `git ls-files`.split($/)
