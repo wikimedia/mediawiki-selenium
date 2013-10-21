@@ -1,6 +1,7 @@
 # Mediawiki::Selenium
 
-TODO: Write a gem description
+Several MediaWiki extensions share code that makes it easy to run Selenium tests. This gem
+makes it easy to update the shared code.
 
 ## Installation
 
@@ -18,7 +19,9 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Add the gem to Gemfile.
+
+Create `tests/browser/features/support/env.rb` file with this content: `require 'mediawiki/selenium'`
 
 ## Contributing
 
