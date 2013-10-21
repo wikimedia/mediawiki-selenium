@@ -170,30 +170,19 @@
 
 
 # UniversalLanguageSelector
+- Browser Label: firefox
 - Recipients: aaharoni@wikimedia.org cmcmahon@wikimedia.org nlaxstrom@wikimedia.org smazeland@wikimedia.org sthottingal@wikimedia.org zfilipin@wikimedia.org
 - Repository URL: UniversalLanguageSelector@gerrit
 - Folder: tests/browser/
 
 
-## UniversalLanguageSelector-commons.wikimedia.beta.wmflabs.org-linux-chrome
-- Browser Label: chrome
-- bundle exec: cucumber --verbose --profile ci --tags @commons.wikimedia.beta.wmflabs.org
-- MediaWiki URL: commons.wikimedia.beta.wmflabs.org
-
 ## UniversalLanguageSelector-commons.wikimedia.beta.wmflabs.org-linux-firefox
-- Browser Label: firefox
 - bundle exec: cucumber --verbose --profile ci --tags @commons.wikimedia.beta.wmflabs.org
 - MediaWiki URL: commons.wikimedia.beta.wmflabs.org
 
-## UniversalLanguageSelector-en.wikipedia.beta.wmflabs.org-linux-chrome
-- Browser Label: chrome
-- bundle exec: cucumber --verbose --profile ci --tags @en.wikipedia.beta.wmflabs.org
-- MediaWiki URL: en.wikipedia.beta.wmflabs.org
-
-## UniversalLanguageSelector-en.wikipedia.beta.wmflabs.org-linux-firefox
-- Browser Label: firefox
-- bundle exec: cucumber --verbose --profile ci --tags @en.wikipedia.beta.wmflabs.org
-- MediaWiki URL: en.wikipedia.beta.wmflabs.org
+## UniversalLanguageSelector-sandbox.translatewiki.net-linux-firefox
+- bundle exec: cucumber --verbose --profile ci --tags @sandbox.translatewiki.net
+- MediaWiki URL: sandbox.translatewiki.net
 
 
 
