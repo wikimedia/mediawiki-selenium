@@ -155,6 +155,21 @@
 - MediaWiki URL: en.m.wikipedia.org
 
 
+
+# Translate
+
+
+## Translate-sandbox.translatewiki.net-linux-firefox
+- Browser Label: firefox
+- bundle exec: cucumber --verbose --profile ci --tags @sandbox.translatewiki.net
+- Recipients: aaharoni@wikimedia.org cmcmahon@wikimedia.org nlaxstrom@wikimedia.org smazeland@wikimedia.org zfilipin@wikimedia.org
+- Repository URL: Translate@gerrit
+- Branch: master
+- MediaWiki URL: sandbox.translatewiki.net
+- Folder: tests/browser/
+
+
+
 # TwnMainPage
 
 

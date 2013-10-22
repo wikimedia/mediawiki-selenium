@@ -69,6 +69,9 @@
   - Display Name: MobileFrontend@gerrit
   - Value: https://gerrit.wikimedia.org/r/mediawiki/extensions/MobileFrontend
 
+  - Display Name: Translate@gerrit
+  - Value: https://gerrit.wikimedia.org/r/mediawiki/extensions/Translate
+
   - Display Name: TwnMainPage@gerrit
   - Value: https://gerrit.wikimedia.org/r/mediawiki/extensions/TwnMainPage
 
