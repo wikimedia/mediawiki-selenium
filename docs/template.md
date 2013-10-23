@@ -51,35 +51,29 @@
 - UI Mode: Dropdown list (no inline help, but more compact UI)
 - Options
 
-  - Display Name: browsertests@cloudbees
-  - Value: git://git.cloudbees.com/wmf/browsertests.git
+  - Display Name: browsertests
+  - Value: ssh://zfilipin@gerrit.wikimedia.org:29418/qa/browsertests
 
-  - Display Name: browsertests@gerrit
-  - Value: https://gerrit.wikimedia.org/r/qa/browsertests
+  - Display Name: CirrusSearch
+  - Value: ssh://zfilipin@gerrit.wikimedia.org:29418/mediawiki/extensions/CirrusSearch
 
-  - Display Name: CirrusSearch@gerrit
-  - Value: https://gerrit.wikimedia.org/r/mediawiki/extensions/CirrusSearch
+  - Display Name: Flow
+  - Value: ssh://zfilipin@gerrit.wikimedia.org:29418/mediawiki/extensions/Flow
 
-  - Display Name: Flow@gerrit
-  - Value: https://gerrit.wikimedia.org/r/mediawiki/extensions/Flow
+  - Display Name: MobileFrontend
+  - Value: ssh://zfilipin@gerrit.wikimedia.org:29418/mediawiki/extensions/MobileFrontend
 
-  - Display Name: MobileFrontend@cloudbees
-  - Value: git://git.cloudbees.com/wmf/MobileFrontend.git
+  - Display Name: Translate
+  - Value: ssh://zfilipin@gerrit.wikimedia.org:29418/mediawiki/extensions/Translate
 
-  - Display Name: MobileFrontend@gerrit
-  - Value: https://gerrit.wikimedia.org/r/mediawiki/extensions/MobileFrontend
+  - Display Name: TwnMainPage
+  - Value: ssh://zfilipin@gerrit.wikimedia.org:29418/mediawiki/extensions/TwnMainPage
 
-  - Display Name: Translate@gerrit
-  - Value: https://gerrit.wikimedia.org/r/mediawiki/extensions/Translate
+  - Display Name: UniversalLanguageSelector
+  - Value: ssh://zfilipin@gerrit.wikimedia.org:29418/mediawiki/extensions/UniversalLanguageSelector
 
-  - Display Name: TwnMainPage@gerrit
-  - Value: https://gerrit.wikimedia.org/r/mediawiki/extensions/TwnMainPage
-
-  - Display Name: UniversalLanguageSelector@gerrit
-  - Value: https://gerrit.wikimedia.org/r/mediawiki/extensions/UniversalLanguageSelector
-
-  - Display Name: VisualEditor@gerrit
-  - Value: https://gerrit.wikimedia.org/r/mediawiki/extensions/VisualEditor
+  - Display Name: VisualEditor
+  - Value: ssh://zfilipin@gerrit.wikimedia.org:29418/mediawiki/extensions/VisualEditor
 
 ## Branch
 
@@ -113,6 +107,7 @@
     - en.wikipedia.beta.wmflabs.org
     - en.wikipedia.org
     - sandbox.translatewiki.net
+    - test2.m.wikipedia.org
     - test2.wikipedia.org
 
 ## Folder
@@ -130,6 +125,18 @@
     - modules/ve-mw/test/browser/
     - tests/acceptance/
     - tests/browser/
+
+## MediaWiki user
+
+- ID: MEDIAWIKI_USER
+- Display Name: MediaWiki user
+- Type: Text-field
+
+## MediaWiki password
+
+- ID: MEDIAWIKI_PASSWORD
+- Display Name: MediaWiki password
+- Type: Text-field
 
 ## Jelly-based transformation
 
@@ -214,6 +221,9 @@
       <builders>
         <hudson.tasks.Shell>
           <command>
+            export MEDIAWIKI_USER=${MEDIAWIKI_USER}
+            export MEDIAWIKI_PASSWORD=${MEDIAWIKI_PASSWORD}
+
             export BROWSER_LABEL=${BROWSER_LABEL}
             export MEDIAWIKI_URL=http://${MEDIAWIKI_URL}/wiki/
 
