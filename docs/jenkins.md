@@ -24,8 +24,3 @@
   - name
     - SAUCE_ONDEMAND_ACCESS_KEY
     - SAUCE_ONDEMAND_USERNAME
-
-## Public Key
-
-- Jenkins > Manage Jenkins > Configure System > CloudBees DEV@cloud Authorization > CloudBees Public Key > copy key
-  - https://gerrit.wikimedia.org/r/#/settings/ssh-keys > Add Key ... > paste key > Add

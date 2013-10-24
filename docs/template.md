@@ -52,28 +52,28 @@
 - Options
 
   - Display Name: browsertests
-  - Value: ssh://zfilipin@gerrit.wikimedia.org:29418/qa/browsertests
+  - Value: https://gerrit.wikimedia.org/r/qa/browsertests
 
   - Display Name: CirrusSearch
-  - Value: ssh://zfilipin@gerrit.wikimedia.org:29418/mediawiki/extensions/CirrusSearch
+  - Value: https://gerrit.wikimedia.org/r/mediawiki/extensions/CirrusSearch
 
   - Display Name: Flow
-  - Value: ssh://zfilipin@gerrit.wikimedia.org:29418/mediawiki/extensions/Flow
+  - Value: https://gerrit.wikimedia.org/r/mediawiki/extensions/Flow
 
   - Display Name: MobileFrontend
-  - Value: ssh://zfilipin@gerrit.wikimedia.org:29418/mediawiki/extensions/MobileFrontend
+  - Value: https://gerrit.wikimedia.org/r/mediawiki/extensions/MobileFrontend
 
   - Display Name: Translate
-  - Value: ssh://zfilipin@gerrit.wikimedia.org:29418/mediawiki/extensions/Translate
+  - Value: https://gerrit.wikimedia.org/r/mediawiki/extensions/Translate
 
   - Display Name: TwnMainPage
-  - Value: ssh://zfilipin@gerrit.wikimedia.org:29418/mediawiki/extensions/TwnMainPage
+  - Value: https://gerrit.wikimedia.org/r/mediawiki/extensions/TwnMainPage
 
   - Display Name: UniversalLanguageSelector
-  - Value: ssh://zfilipin@gerrit.wikimedia.org:29418/mediawiki/extensions/UniversalLanguageSelector
+  - Value: https://gerrit.wikimedia.org/r/mediawiki/extensions/UniversalLanguageSelector
 
   - Display Name: VisualEditor
-  - Value: ssh://zfilipin@gerrit.wikimedia.org:29418/mediawiki/extensions/VisualEditor
+  - Value: https://gerrit.wikimedia.org/r/mediawiki/extensions/VisualEditor
 
 ## Branch
 
