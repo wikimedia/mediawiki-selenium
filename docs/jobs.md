@@ -119,7 +119,7 @@
 
 # MobileFrontend
 - bundle exec: cucumber --verbose --profile ci
-- Folder: tests/acceptance/
+- Folder: tests/browser/
 - MediaWiki user: Selenium_user
 - Repository URL: MobileFrontend
 

@@ -123,7 +123,6 @@
   - name:
     - (empty)
     - modules/ve-mw/test/browser/
-    - tests/acceptance/
     - tests/browser/
 
 ## MediaWiki user
