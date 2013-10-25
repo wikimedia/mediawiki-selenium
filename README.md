@@ -25,11 +25,7 @@ Create `tests/browser/features/support/env.rb` file with this content: `require 
 
 ## Links
 
-mediawiki-selenium gem at various sites:
-
-- https://rubygems.org/gems/mediawiki-selenium
-- https://github.com/wikimedia/mediawiki-selenium
-- https://gerrit.wikimedia.org/r/#/admin/projects/mediawiki/selenium
+mediawiki-selenium gem: [Gerrit](https://gerrit.wikimedia.org/r/#/admin/projects/mediawiki/selenium), [GitHub](https://github.com/wikimedia/mediawiki-selenium), [RubyGems](https://rubygems.org/gems/mediawiki-selenium), [Code Climate](https://codeclimate.com/github/wikimedia/mediawiki-selenium)
 
 Repositories that use the gem:
 
