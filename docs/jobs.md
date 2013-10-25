@@ -30,18 +30,6 @@
 ## browsertests-commons.wikimedia.beta.wmflabs.org-linux-firefox
 - Browser Label: firefox
 
-## browsertests-commons.wikimedia.beta.wmflabs.org-windows-internet_explorer_6
-- Browser Label: internet_explorer_6
-- bundle exec: cucumber --verbose --profile ci --tags @commons.wikimedia.beta.wmflabs.org --tags ~@ie6-bug
-
-## browsertests-commons.wikimedia.beta.wmflabs.org-windows-internet_explorer_7
-- Browser Label: internet_explorer_7
-- bundle exec: cucumber --verbose --profile ci --tags @commons.wikimedia.beta.wmflabs.org --tags ~@ie7-bug
-
-## browsertests-commons.wikimedia.beta.wmflabs.org-windows-internet_explorer_8
-- Browser Label: internet_explorer_8
-- bundle exec: cucumber --verbose --profile ci --tags @commons.wikimedia.beta.wmflabs.org --tags ~@ie8-bug
-
 ## browsertests-commons.wikimedia.beta.wmflabs.org-windows-internet_explorer_9
 - Browser Label: internet_explorer_9
 
@@ -112,20 +100,6 @@
 
 
 
-# CirrusSearch-en.wikipedia.beta.wmflabs.org
-
-
-## CirrusSearch-en.wikipedia.beta.wmflabs.org-linux-chrome
-- Browser Label: chrome
-- bundle exec: cucumber --verbose --profile ci
-- Recipients: cmcmahon@wikimedia.org neverett@wikimedia.org zfilipin@wikimedia.org
-- MediaWiki URL: en.wikipedia.beta.wmflabs.org
-- Folder: tests/browser/
-- MediaWiki user: Selenium_user
-- Repository URL: CirrusSearch
-
-
-
 # Flow
 - bundle exec: cucumber --verbose --profile ci --tags @en.wikipedia.beta.wmflabs.org
 - Recipients: zfilipin@wikimedia.org cmcmahon@wikimedia.org
@@ -140,9 +114,6 @@
 
 ## Flow-en.wikipedia.beta.wmflabs.org-linux-firefox
 - Browser Label: firefox
-
-## Flow-en.wikipedia.beta.wmflabs.org-linux-internet_explorer_10
-- Browser Label: internet_explorer_10
 
 
 
