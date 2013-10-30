@@ -12,11 +12,6 @@ https://github.com/zeljkofilipin/mediawiki-selenium/blob/master/CREDITS.
 config = YAML.load_file('config/config.yml')
 
 Before('@login') do
-  ENV['MEDIAWIKI_PASSWORD'] = ENV['MEDIAWIKI_PASSWORD_SELENIUM_SANDBOX_TRANSLATEWIKI_NET'] if ENV['MEDIAWIKI_PASSWORD_SELENIUM_SANDBOX_TRANSLATEWIKI_NET']
-  ENV['MEDIAWIKI_PASSWORD'] = ENV['MEDIAWIKI_PASSWORD_SELENIUM_USER_WIKIPEDIA_ORG'] if ENV['MEDIAWIKI_PASSWORD_SELENIUM_USER_WIKIPEDIA_ORG']
-  ENV['MEDIAWIKI_PASSWORD'] = ENV['MEDIAWIKI_PASSWORD_SELENIUM_USER_WMFLABS_ORG'] if ENV['MEDIAWIKI_PASSWORD_SELENIUM_USER_WMFLABS_ORG']
-  ENV['MEDIAWIKI_PASSWORD'] = ENV['MEDIAWIKI_PASSWORD_ULS_WMFLABS_ORG'] if ENV['MEDIAWIKI_PASSWORD_ULS_WMFLABS_ORG']
-
   puts "MEDIAWIKI_USER environment variable is not defined! Please export a value for that variable before proceeding." unless ENV['MEDIAWIKI_USER']
   puts "MEDIAWIKI_PASSWORD environment variable is not defined! Please export a value for that variable before proceeding." unless ENV['MEDIAWIKI_PASSWORD']
 end
