@@ -5,9 +5,13 @@
 - Branch: master
 - MediaWiki URL:
 - Folder:
-- MediaWiki user:
-- MediaWiki password:
 - Repository URL:
+- MediaWiki user:
+- MediaWiki password variable:
+    MEDIAWIKI_PASSWORD_SELENIUM_SANDBOX_TRANSLATEWIKI_NET
+    MEDIAWIKI_PASSWORD_SELENIUM_USER_WIKIPEDIA_ORG
+    MEDIAWIKI_PASSWORD_SELENIUM_USER_WMFLABS_ORG
+    MEDIAWIKI_PASSWORD_ULS_WMFLABS_ORG
 
 
 

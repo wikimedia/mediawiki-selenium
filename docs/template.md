@@ -131,10 +131,10 @@
 - Display Name: MediaWiki user
 - Type: Text-field
 
-## MediaWiki password
+## MediaWiki password variable
 
-- ID: MEDIAWIKI_PASSWORD
-- Display Name: MediaWiki password
+- ID: MEDIAWIKI_PASSWORD_VARIABLE
+- Display Name: MediaWiki password variable
 - Type: Text-field
 
 ## Jelly-based transformation
@@ -221,7 +221,7 @@
         <hudson.tasks.Shell>
           <command>
             export MEDIAWIKI_USER=${MEDIAWIKI_USER}
-            export MEDIAWIKI_PASSWORD=${MEDIAWIKI_PASSWORD}
+            export MEDIAWIKI_PASSWORD_VARIABLE=${MEDIAWIKI_PASSWORD_VARIABLE}
 
             export BROWSER_LABEL=${BROWSER_LABEL}
             export MEDIAWIKI_URL=http://${MEDIAWIKI_URL}/wiki/
