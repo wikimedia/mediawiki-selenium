@@ -90,7 +90,7 @@ def sauce_browser(test_name, language)
     http_client: Selenium::WebDriver::Remote::Http::Persistent.new,
     url: "http://#{ENV['SAUCE_ONDEMAND_USERNAME']}:#{ENV['SAUCE_ONDEMAND_ACCESS_KEY']}@ondemand.saucelabs.com:80/wd/hub",
     desired_capabilities: caps)
-
+  browser.window.resize_to 1280, 1024
   browser.wd.file_detector = lambda do |args|
     # args => ['/path/to/file']
     str = args.first.to_s
