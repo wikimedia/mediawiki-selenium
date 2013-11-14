@@ -190,6 +190,11 @@
 - MediaWiki URL: commons.wikimedia.beta.wmflabs.org
 - MediaWiki user: Uls
 
+## UniversalLanguageSelector-en.wikipedia.beta.wmflabs.org-linux-firefox
+- bundle exec: cucumber --verbose --profile ci --tags @en.wikipedia.beta.wmflabs.org
+- MediaWiki URL: en.wikipedia.beta.wmflabs.org
+- MediaWiki user: Uls
+
 ## UniversalLanguageSelector-sandbox.translatewiki.net-linux-firefox
 - bundle exec: cucumber --verbose --profile ci --tags @sandbox.translatewiki.net
 - MediaWiki URL: sandbox.translatewiki.net
