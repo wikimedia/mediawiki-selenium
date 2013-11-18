@@ -122,6 +122,7 @@
 
 
 # MobileFrontend
+- Recipients: cmcmahon@wikimedia.org mobile-l@lists.wikimedia.org mobile-tech@wikimedia.org zfilipin@wikimedia.org
 - Folder: tests/browser/
 - MediaWiki user: Selenium_user
 - Repository URL: MobileFrontend
@@ -130,25 +131,21 @@
 ## MobileFrontend-en.m.wikipedia.beta.wmflabs.org-linux-chrome
 - Browser Label: chrome
 - bundle exec: cucumber --verbose --profile ci --tags @en.m.wikipedia.beta.wmflabs.org
-- Recipients: mgrover@wikimedia.org
 - MediaWiki URL: en.m.wikipedia.beta.wmflabs.org
 
 ## MobileFrontend-en.m.wikipedia.beta.wmflabs.org-linux-firefox
 - Browser Label: firefox
 - bundle exec: cucumber --verbose --profile ci --tags @en.m.wikipedia.beta.wmflabs.org
-- Recipients: cmcmahon@wikimedia.org mgrover@wikimedia.org  mobile-l@lists.wikimedia.org mobile-tech@wikimedia.org zfilipin@wikimedia.org
 - MediaWiki URL: en.m.wikipedia.beta.wmflabs.org
 
 ## MobileFrontend-en.m.wikipedia.org-linux-firefox
 - Browser Label: firefox
 - bundle exec: cucumber --verbose --profile ci --tags @en.m.wikipedia.org
-- Recipients: cmcmahon@wikimedia.org mgrover@wikimedia.org  mobile-l@lists.wikimedia.org mobile-tech@wikimedia.org zfilipin@wikimedia.org
 - MediaWiki URL: en.m.wikipedia.org
 
 ## MobileFrontend-test2.m.wikipedia.org-linux-firefox
 - Browser Label: firefox
 - bundle exec: cucumber --verbose --profile ci --tags @test2.m.wikipedia.org
-- Recipients: cmcmahon@wikimedia.org mgrover@wikimedia.org mobile-tech@wikimedia.org zfilipin@wikimedia.org
 - MediaWiki URL: test2.m.wikipedia.org
 
 
