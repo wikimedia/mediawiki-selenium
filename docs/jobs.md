@@ -8,25 +8,20 @@
 - Repository URL:
 - MediaWiki user:
 - MediaWiki password variable:
-    MEDIAWIKI_PASSWORD_SELENIUM_SANDBOX_TRANSLATEWIKI_NET
-    MEDIAWIKI_PASSWORD_SELENIUM_USER_WIKIPEDIA_ORG
-    MEDIAWIKI_PASSWORD_SELENIUM_USER_WMFLABS_ORG
-    MEDIAWIKI_PASSWORD_ULS_WMFLABS_ORG
 
 
 
 # browsertests
 - Recipients: cmcmahon@wikimedia.org zfilipin@wikimedia.org
 - Folder: root of the repository
-- MediaWiki user: Selenium_user
 - Repository URL: browsertests
-
+- MediaWiki user: Selenium_user
 
 
 # browsertests-commons.wikimedia.beta.wmflabs.org
 - MediaWiki URL: commons.wikimedia.beta.wmflabs.org
 - bundle exec: cucumber --verbose --profile ci --tags @commons.wikimedia.beta.wmflabs.org
-
+- MediaWiki password variable: MEDIAWIKI_PASSWORD_SELENIUM_USER_WMFLABS_ORG
 
 ## browsertests-commons.wikimedia.beta.wmflabs.org-linux-chrome
 - Browser Label: chrome
@@ -45,7 +40,7 @@
 # browsertests-en.wikipedia.beta.wmflabs.org
 - bundle exec: cucumber --verbose --profile ci --tags @en.wikipedia.beta.wmflabs.org
 - MediaWiki URL: en.wikipedia.beta.wmflabs.org
-
+- MediaWiki password variable: MEDIAWIKI_PASSWORD_SELENIUM_USER_WMFLABS_ORG
 
 ## browsertests-en.wikipedia.beta.wmflabs.org-linux-chrome
 - Browser Label: chrome
@@ -76,7 +71,7 @@
 # browsertests-test2.wikipedia.org
 - bundle exec: cucumber --verbose --profile ci --tags @test2.wikipedia.org
 - MediaWiki URL: test2.wikipedia.org
-
+- MediaWiki password variable: MEDIAWIKI_PASSWORD_SELENIUM_USER_WIKIPEDIA_ORG
 
 ## browsertests-test2.wikipedia.org-linux-chrome
 - Browser Label: chrome
@@ -109,8 +104,9 @@
 - Recipients: zfilipin@wikimedia.org cmcmahon@wikimedia.org
 - MediaWiki URL: en.m.wikipedia.beta.wmflabs.org
 - Folder: tests/browser/
-- MediaWiki user: Selenium_user
 - Repository URL: Flow
+- MediaWiki user: Selenium_user
+- MediaWiki password variable: MEDIAWIKI_PASSWORD_SELENIUM_USER_WMFLABS_ORG
 
 
 ## Flow-en.wikipedia.beta.wmflabs.org-linux-chrome
@@ -123,33 +119,36 @@
 
 # MobileFrontend
 - Folder: tests/browser/
-- MediaWiki user: Selenium_user
 - Repository URL: MobileFrontend
-
+- MediaWiki user: Selenium_user
 
 ## MobileFrontend-en.m.wikipedia.beta.wmflabs.org-linux-chrome
 - Browser Label: chrome
 - bundle exec: cucumber --verbose --profile ci --tags @en.m.wikipedia.beta.wmflabs.org
 - Recipients: mgrover@wikimedia.org
 - MediaWiki URL: en.m.wikipedia.beta.wmflabs.org
+- MediaWiki password variable: MEDIAWIKI_PASSWORD_SELENIUM_USER_WMFLABS_ORG
 
 ## MobileFrontend-en.m.wikipedia.beta.wmflabs.org-linux-firefox
 - Browser Label: firefox
 - bundle exec: cucumber --verbose --profile ci --tags @en.m.wikipedia.beta.wmflabs.org
 - Recipients: cmcmahon@wikimedia.org mgrover@wikimedia.org  mobile-l@lists.wikimedia.org mobile-tech@wikimedia.org zfilipin@wikimedia.org
 - MediaWiki URL: en.m.wikipedia.beta.wmflabs.org
+- MediaWiki password variable: MEDIAWIKI_PASSWORD_SELENIUM_USER_WMFLABS_ORG
 
 ## MobileFrontend-en.m.wikipedia.org-linux-firefox
 - Browser Label: firefox
 - bundle exec: cucumber --verbose --profile ci --tags @en.m.wikipedia.org
 - Recipients: cmcmahon@wikimedia.org mgrover@wikimedia.org  mobile-l@lists.wikimedia.org mobile-tech@wikimedia.org zfilipin@wikimedia.org
 - MediaWiki URL: en.m.wikipedia.org
+- MediaWiki password variable: MEDIAWIKI_PASSWORD_SELENIUM_USER_WIKIPEDIA_ORG
 
 ## MobileFrontend-test2.m.wikipedia.org-linux-firefox
 - Browser Label: firefox
 - bundle exec: cucumber --verbose --profile ci --tags @test2.m.wikipedia.org
 - Recipients: cmcmahon@wikimedia.org mgrover@wikimedia.org mobile-tech@wikimedia.org zfilipin@wikimedia.org
 - MediaWiki URL: test2.m.wikipedia.org
+- MediaWiki password variable: MEDIAWIKI_PASSWORD_SELENIUM_USER_WIKIPEDIA_ORG
 
 
 
@@ -162,8 +161,9 @@
 - Recipients: aaharoni@wikimedia.org cmcmahon@wikimedia.org nlaxstrom@wikimedia.org smazeland@wikimedia.org zfilipin@wikimedia.org
 - MediaWiki URL: sandbox.translatewiki.net
 - Folder: tests/browser/
-- MediaWiki user: Selenium
 - Repository URL: Translate
+- MediaWiki user: Selenium
+- MediaWiki password variable: MEDIAWIKI_PASSWORD_SELENIUM_SANDBOX_TRANSLATEWIKI_NET
 
 
 
@@ -176,8 +176,10 @@
 - Recipients: aaharoni@wikimedia.org cmcmahon@wikimedia.org nlaxstrom@wikimedia.org smazeland@wikimedia.org zfilipin@wikimedia.org
 - MediaWiki URL: sandbox.translatewiki.net
 - Folder: tests/browser/
-- MediaWiki user: Selenium
 - Repository URL: TwnMainPage
+- MediaWiki user: Selenium
+- MediaWiki password variable: MEDIAWIKI_PASSWORD_SELENIUM_SANDBOX_TRANSLATEWIKI_NET
+
 
 
 
@@ -192,23 +194,26 @@
 - bundle exec: cucumber --verbose --profile ci --tags @commons.wikimedia.beta.wmflabs.org
 - MediaWiki URL: commons.wikimedia.beta.wmflabs.org
 - MediaWiki user: Uls
+- MediaWiki password variable: MEDIAWIKI_PASSWORD_ULS_WMFLABS_ORG
 
 ## UniversalLanguageSelector-en.wikipedia.beta.wmflabs.org-linux-firefox
 - bundle exec: cucumber --verbose --profile ci --tags @en.wikipedia.beta.wmflabs.org
 - MediaWiki URL: en.wikipedia.beta.wmflabs.org
 - MediaWiki user: Uls
+- MediaWiki password variable: MEDIAWIKI_PASSWORD_ULS_WMFLABS_ORG
 
 ## UniversalLanguageSelector-sandbox.translatewiki.net-linux-firefox
 - bundle exec: cucumber --verbose --profile ci --tags @sandbox.translatewiki.net
 - MediaWiki URL: sandbox.translatewiki.net
 - MediaWiki user: Selenium
+- MediaWiki password variable: MEDIAWIKI_PASSWORD_SELENIUM_SANDBOX_TRANSLATEWIKI_NET
 
 
 
 # VisualEditor
 - Folder: modules/ve-mw/test/browser/
-- MediaWiki user: Selenium_user
 - Repository URL: VisualEditor
+- MediaWiki user: Selenium_user
 
 
 ## VisualEditor-en.wikipedia.beta.wmflabs.org-linux-chrome
@@ -216,21 +221,25 @@
 - bundle exec: cucumber --verbose --profile ci --tags @en.wikipedia.beta.wmflabs.org
 - Recipients: cmcmahon@wikimedia.org zfilipin@wikimedia.org
 - MediaWiki URL: en.wikipedia.beta.wmflabs.org
+- MediaWiki password variable: MEDIAWIKI_PASSWORD_SELENIUM_USER_WMFLABS_ORG
 
 ## VisualEditor-en.wikipedia.beta.wmflabs.org-linux-firefox
 - Browser Label: firefox
 - bundle exec: cucumber --verbose --profile ci --tags @en.wikipedia.beta.wmflabs.org
 - Recipients: cmcmahon@wikimedia.org jforrester@wikimedia.org zfilipin@wikimedia.org
 - MediaWiki URL: en.wikipedia.beta.wmflabs.org
+- MediaWiki password variable: MEDIAWIKI_PASSWORD_SELENIUM_USER_WMFLABS_ORG
 
 ## VisualEditor-test2.wikipedia.org-linux-chrome
 - Browser Label: chrome
 - bundle exec: cucumber --verbose --profile ci --tags @test2.wikipedia.org
 - Recipients: cmcmahon@wikimedia.org zfilipin@wikimedia.org
 - MediaWiki URL: test2.wikipedia.org
+- MediaWiki password variable: MEDIAWIKI_PASSWORD_SELENIUM_USER_WIKIPEDIA_ORG
 
 ## VisualEditor-test2.wikipedia.org-linux-firefox
 - Browser Label: firefox
 - bundle exec: cucumber --verbose --profile ci --tags @test2.wikipedia.org
 - Recipients: cmcmahon@wikimedia.org jforrester@wikimedia.org zfilipin@wikimedia.org
 - MediaWiki URL: test2.wikipedia.org
+- MediaWiki password variable: MEDIAWIKI_PASSWORD_SELENIUM_USER_WIKIPEDIA_ORG
