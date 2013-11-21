@@ -11,7 +11,7 @@
 - Hostname: irc.freenode.net
 - Port: 6667
 - Channels
-  - Name: #wikimedia-mobile
+  - Name: #wikimedia-qa
   - Notification only: check
 - Advanced...
   - Nickname: wmf-selenium-bot
