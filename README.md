@@ -5,23 +5,47 @@ makes it easy to update the shared code.
 
 ## Installation
 
-Add this line to your application's Gemfile:
+To run the Selenium tests you will have to install Ruby. Look at the `Gemfile` file for the exact required version. You also have to install the latest versions of RubyGems and Firefox (the default browser in which the tests run). The easiest way to install Ruby on Linux/Unix/Mac is [RVM](https://rvm.io/) and on Windows [RubyInstaller](http://rubyinstaller.org/).
+ALERT: On Windows you must use Ruby 1.9.3 for now because cucumber/gherkin library currently doesn't work with Ruby 2.x.x.
 
-    gem 'mediawiki-selenium'
+    cd /tests/browser
+    gem update --system
+    gem install bundler
+    bundle install
 
-And then execute:
+If you're not using RVM to manage your Ruby versions, you will need to run the commands as root (using `sudo`).
 
-    $ bundle
+Environment variables MEDIAWIKI_USER and MEDIAWIKI_PASSWORD are required for tests tagged `@login`. For local testing, create a test user on your local wiki and export the user and password as the values for those variables.
+For example:
 
-Or install it yourself as:
+    export MEDIAWIKI_USER=<username here> # Linux/Unix/Mac
+    set MEDIAWIKI_USER=<username here> # Windows
 
-    $ gem install mediawiki-selenium
+    export MEDIAWIKI_PASSWORD=<password here> # Linux/Unix/Mac
+    set MEDIAWIKI_PASSWORD=<password here> # Windows
 
 ## Usage
 
-Add the gem to Gemfile.
+Run the tests with `bundle exec cucumber`, this should start Firefox.
 
-Create `tests/browser/features/support/env.rb` file with this content: `require 'mediawiki/selenium'`
+By default the tests run at en.wikipedia.beta.wmflabs.org. If you want to run the tests elsewhere, set the `MEDIAWIKI_URL` environment variable. For example:
+
+    export MEDIAWIKI_URL=http://commons.wikimedia.beta.wmflabs.org/wiki/ # Linux/Unix/Mac
+    set MEDIAWIKI_URL=http://commons.wikimedia.beta.wmflabs.org/wiki/ # Windows
+
+To run a single test file enter `bundle exec cucumber features/FEATURE_NAME.feature`.
+
+To run a single test scenario, put a colon and the line number (NN) on which the scenario begins after the file name: `bundle exec cucumber features/FEATURE_NAME.feature:NN`.
+
+You can use a different browser with the BROWSER_LABEL env variable, the fastest is probably PhantomJS, a headless browser:
+
+    export BROWSER_LABEL=phantomjs # Linux/Unix/Mac
+    set BROWSER_LABEL=phantomjs # Windows
+
+By default, the browser will close itself at the end of every scenario. If you want the browser to stay open, set the environment variable `KEEP_BROWSER_OPEN` to `true`:
+
+    export KEEP_BROWSER_OPEN=true # Linux/Unix/Mac
+    set KEEP_BROWSER_OPEN=true # Windows
 
 ## Links
 
@@ -46,3 +70,5 @@ Repositories that use the gem:
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
+
+https://www.mediawiki.org/wiki/QA/Browser_testing#How_to_contribute
