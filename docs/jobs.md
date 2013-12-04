@@ -150,17 +150,20 @@
 
 
 # Translate
-
+- Browser Label: firefox
+- Folder: tests/browser/
+- Recipients: aaharoni@wikimedia.org cmcmahon@wikimedia.org nlaxstrom@wikimedia.org smazeland@wikimedia.org zfilipin@wikimedia.org
+- Repository URL: Translate
 
 ## Translate-sandbox.translatewiki.net-linux-firefox
-- Browser Label: firefox
 - bundle exec: cucumber --verbose --profile ci --tags @sandbox.translatewiki.net
-- Recipients: aaharoni@wikimedia.org cmcmahon@wikimedia.org nlaxstrom@wikimedia.org smazeland@wikimedia.org zfilipin@wikimedia.org
 - MediaWiki URL: sandbox.translatewiki.net
-- Folder: tests/browser/
-- Repository URL: Translate
 - MediaWiki user: Selenium
 - MediaWiki password variable: MEDIAWIKI_PASSWORD_SELENIUM_SANDBOX_TRANSLATEWIKI_NET
+
+## Translate-meta.wikimedia.org-linux-firefox
+- bundle exec: cucumber --verbose --profile ci --tags @meta.wikimedia.org
+- MediaWiki URL: meta.wikimedia.org
 
 
 

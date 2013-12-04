@@ -106,6 +106,7 @@
     - en.m.wikipedia.org
     - en.wikipedia.beta.wmflabs.org
     - en.wikipedia.org
+    - meta.wikimedia.org
     - sandbox.translatewiki.net
     - test2.m.wikipedia.org
     - test2.wikipedia.org
