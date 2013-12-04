@@ -9,7 +9,7 @@ mediawiki-selenium top-level directory and at
 https://github.com/zeljkofilipin/mediawiki-selenium/blob/master/CREDITS.
 =end
 
-require "cucumber/formatter/junit"
+require 'cucumber/formatter/junit'
 
 module Cucumber::Formatter
   class Sauce < Junit
