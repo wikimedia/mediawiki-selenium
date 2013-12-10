@@ -30,6 +30,7 @@
     - internet_explorer_8
     - internet_explorer_9
     - internet_explorer_10
+    - phantomjs
 
 ## bundle exec
 
