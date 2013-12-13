@@ -11,6 +11,6 @@ https://github.com/zeljkofilipin/mediawiki-selenium/blob/master/CREDITS.
 
 module Mediawiki
   module Selenium
-    VERSION = "0.1.14"
+    VERSION = "0.1.15"
   end
 end
