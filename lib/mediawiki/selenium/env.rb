@@ -54,7 +54,7 @@ def local_browser(language)
       Watir::Browser.new browser_label, profile: profile
     elsif browser_label == :phantomjs
       capabilities = Selenium::WebDriver::Remote::Capabilities.phantomjs
-      capabilities['phantomjs.page.customHeaders.Accept-Language'] = language
+      capabilities["phantomjs.page.customHeaders.Accept-Language"] = language
       Watir::Browser.new browser_label, desired_capabilities: capabilities
     else
       raise "Changing default language is currently supported only for Chrome, Firefox and PhantomJS!"
@@ -99,7 +99,7 @@ def sauce_browser(test_name, language)
     desired_capabilities: caps)
   browser.window.resize_to 1280, 1024
   browser.wd.file_detector = lambda do |args|
-    # args => ['/path/to/file']
+    # args => ["/path/to/file"]
     str = args.first.to_s
     str if File.exist?(str)
   end
