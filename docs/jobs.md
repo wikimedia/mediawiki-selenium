@@ -2,7 +2,6 @@
 - Browser Label:
 - bundle exec:
 - Recipients:
-- Branch: master
 - MediaWiki URL:
 - Folder:
 - Repository URL:

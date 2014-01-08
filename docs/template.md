@@ -76,20 +76,6 @@
   - Display Name: VisualEditor
   - Value: https://gerrit.wikimedia.org/r/mediawiki/extensions/VisualEditor
 
-## Branch
-
-- ID: BRANCH
-- Display Name: Branch
-- Type: Select a string among many
-- UI Mode: Dropdown list (no inline help, but more compact UI)
-- Options
-  - Display Name: (name)
-  - Value: (name)
-
-  - name:
-    - debug
-    - master
-
 ## MediaWiki URL
 
 - ID: MEDIAWIKI_URL
@@ -183,7 +169,7 @@
         </userRemoteConfigs>
         <branches>
           <hudson.plugins.git.BranchSpec>
-            <name>${BRANCH}</name>
+            <name>master</name>
           </hudson.plugins.git.BranchSpec>
         </branches>
         <disableSubmodules>false</disableSubmodules>
