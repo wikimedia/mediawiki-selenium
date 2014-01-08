@@ -34,8 +34,8 @@
 
 ## bundle exec
 
-- ID: BUNDLE_EXEC
-- Display Name: bundle exec
+- ID: BUNDLE_EXEC_CUCUMBER
+- Display Name: bundle exec cucumber --backtrace --verbose --profile ci
 - Type: Text-field
 
 ## Recipients
@@ -235,7 +235,7 @@
             gem install bundler --no-ri --no-rdoc
             if [ -d "${FOLDER}" ]; then cd ${FOLDER}; fi
             bundle install
-            bundle exec ${BUNDLE_EXEC}
+            bundle exec cucumber --backtrace --verbose --profile ci ${BUNDLE_EXEC_CUCUMBER}
           </command>
         </hudson.tasks.Shell>
       </builders>

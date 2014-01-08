@@ -20,7 +20,7 @@
 
 # browsertests-commons.wikimedia.beta.wmflabs.org
 - MediaWiki URL: commons.wikimedia.beta.wmflabs.org
-- bundle exec: cucumber --verbose --profile ci --tags @commons.wikimedia.beta.wmflabs.org
+- bundle exec cucumber: --tags @commons.wikimedia.beta.wmflabs.org
 - MediaWiki password variable: MEDIAWIKI_PASSWORD_SELENIUM_USER_WMFLABS_ORG
 
 ## browsertests-commons.wikimedia.beta.wmflabs.org-linux-chrome
@@ -38,7 +38,7 @@
 
 
 # browsertests-en.wikipedia.beta.wmflabs.org
-- bundle exec: cucumber --verbose --profile ci --tags @en.wikipedia.beta.wmflabs.org
+- bundle exec cucumber: --tags @en.wikipedia.beta.wmflabs.org
 - MediaWiki URL: en.wikipedia.beta.wmflabs.org
 - MediaWiki password variable: MEDIAWIKI_PASSWORD_SELENIUM_USER_WMFLABS_ORG
 
@@ -50,15 +50,15 @@
 
 ## browsertests-en.wikipedia.beta.wmflabs.org-windows-internet_explorer_6
 - Browser Label: internet_explorer_6
-- bundle exec: cucumber --verbose --profile ci --tags @en.wikipedia.beta.wmflabs.org --tags ~@ie6-bug
+- bundle exec cucumber: --tags @en.wikipedia.beta.wmflabs.org --tags ~@ie6-bug
 
 ## browsertests-en.wikipedia.beta.wmflabs.org-windows-internet_explorer_7
 - Browser Label: internet_explorer_7
-- bundle exec: cucumber --verbose --profile ci --tags @en.wikipedia.beta.wmflabs.org --tags ~@ie7-bug
+- bundle exec cucumber: --tags @en.wikipedia.beta.wmflabs.org --tags ~@ie7-bug
 
 ## browsertests-en.wikipedia.beta.wmflabs.org-windows-internet_explorer_8
 - Browser Label: internet_explorer_8
-- bundle exec: cucumber --verbose --profile ci --tags @en.wikipedia.beta.wmflabs.org --tags ~@ie8-bug
+- bundle exec cucumber: --tags @en.wikipedia.beta.wmflabs.org --tags ~@ie8-bug
 
 ## browsertests-en.wikipedia.beta.wmflabs.org-windows-internet_explorer_9
 - Browser Label: internet_explorer_9
@@ -69,7 +69,7 @@
 
 
 # browsertests-test2.wikipedia.org
-- bundle exec: cucumber --verbose --profile ci --tags @test2.wikipedia.org
+- bundle exec cucumber: --tags @test2.wikipedia.org
 - MediaWiki URL: test2.wikipedia.org
 - MediaWiki password variable: MEDIAWIKI_PASSWORD_SELENIUM_USER_WIKIPEDIA_ORG
 
@@ -81,15 +81,15 @@
 
 ## browsertests-test2.wikipedia.org-windows-internet_explorer_6
 - Browser Label: internet_explorer_6
-- bundle exec: cucumber --verbose --profile ci --tags @test2.wikipedia.org --tags ~@ie6-bug
+- bundle exec cucumber: --tags @test2.wikipedia.org --tags ~@ie6-bug
 
 ## browsertests-test2.wikipedia.org-windows-internet_explorer_7
 - Browser Label: internet_explorer_7
-- bundle exec: cucumber --verbose --profile ci --tags @test2.wikipedia.org --tags ~@ie7-bug
+- bundle exec cucumber: --tags @test2.wikipedia.org --tags ~@ie7-bug
 
 ## browsertests-test2.wikipedia.org-windows-internet_explorer_8
 - Browser Label: internet_explorer_8
-- bundle exec: cucumber --verbose --profile ci --tags @test2.wikipedia.org --tags ~@ie8-bug
+- bundle exec cucumber: --tags @test2.wikipedia.org --tags ~@ie8-bug
 
 ## browsertests-test2.wikipedia.org-windows-internet_explorer_9
 - Browser Label: internet_explorer_9
@@ -100,7 +100,7 @@
 
 
 # Flow
-- bundle exec: cucumber --verbose --profile ci --tags @en.wikipedia.beta.wmflabs.org
+- bundle exec cucumber: --tags @en.wikipedia.beta.wmflabs.org
 - Recipients: zfilipin@wikimedia.org cmcmahon@wikimedia.org
 - MediaWiki URL: en.m.wikipedia.beta.wmflabs.org
 - Folder: tests/browser/
@@ -125,25 +125,25 @@
 
 ## MobileFrontend-en.m.wikipedia.beta.wmflabs.org-linux-chrome
 - Browser Label: chrome
-- bundle exec: cucumber --verbose --profile ci --tags @en.m.wikipedia.beta.wmflabs.org
+- bundle exec cucumber: --tags @en.m.wikipedia.beta.wmflabs.org
 - MediaWiki URL: en.m.wikipedia.beta.wmflabs.org
 - MediaWiki password variable: MEDIAWIKI_PASSWORD_SELENIUM_USER_WMFLABS_ORG
 
 ## MobileFrontend-en.m.wikipedia.beta.wmflabs.org-linux-firefox
 - Browser Label: firefox
-- bundle exec: cucumber --verbose --profile ci --tags @en.m.wikipedia.beta.wmflabs.org
+- bundle exec cucumber: --tags @en.m.wikipedia.beta.wmflabs.org
 - MediaWiki URL: en.m.wikipedia.beta.wmflabs.org
 - MediaWiki password variable: MEDIAWIKI_PASSWORD_SELENIUM_USER_WMFLABS_ORG
 
 ## MobileFrontend-en.m.wikipedia.org-linux-firefox
 - Browser Label: firefox
-- bundle exec: cucumber --verbose --profile ci --tags @en.m.wikipedia.org
+- bundle exec cucumber: --tags @en.m.wikipedia.org
 - MediaWiki URL: en.m.wikipedia.org
 - MediaWiki password variable: MEDIAWIKI_PASSWORD_SELENIUM_USER_WIKIPEDIA_ORG
 
 ## MobileFrontend-test2.m.wikipedia.org-linux-firefox
 - Browser Label: firefox
-- bundle exec: cucumber --verbose --profile ci --tags @test2.m.wikipedia.org
+- bundle exec cucumber: --tags @test2.m.wikipedia.org
 - MediaWiki URL: test2.m.wikipedia.org
 - MediaWiki password variable: MEDIAWIKI_PASSWORD_SELENIUM_USER_WIKIPEDIA_ORG
 
@@ -156,13 +156,13 @@
 - Repository URL: Translate
 
 ## Translate-sandbox.translatewiki.net-linux-firefox
-- bundle exec: cucumber --verbose --profile ci --tags @sandbox.translatewiki.net
+- bundle exec cucumber: --tags @sandbox.translatewiki.net
 - MediaWiki URL: sandbox.translatewiki.net
 - MediaWiki user: Selenium
 - MediaWiki password variable: MEDIAWIKI_PASSWORD_SELENIUM_SANDBOX_TRANSLATEWIKI_NET
 
 ## Translate-meta.wikimedia.org-linux-firefox
-- bundle exec: cucumber --verbose --profile ci --tags @meta.wikimedia.org
+- bundle exec cucumber: --tags @meta.wikimedia.org
 - MediaWiki URL: meta.wikimedia.org
 
 
@@ -172,7 +172,7 @@
 
 ## TwnMainPage-sandbox.translatewiki.net-linux-firefox
 - Browser Label: firefox
-- bundle exec: cucumber --verbose --profile ci --tags @sandbox.translatewiki.net
+- bundle exec cucumber: --tags @sandbox.translatewiki.net
 - Recipients: aaharoni@wikimedia.org cmcmahon@wikimedia.org nlaxstrom@wikimedia.org smazeland@wikimedia.org zfilipin@wikimedia.org
 - MediaWiki URL: sandbox.translatewiki.net
 - Folder: tests/browser/
@@ -191,19 +191,19 @@
 
 
 ## UniversalLanguageSelector-commons.wikimedia.beta.wmflabs.org-linux-firefox
-- bundle exec: cucumber --verbose --profile ci --tags @commons.wikimedia.beta.wmflabs.org
+- bundle exec cucumber: --tags @commons.wikimedia.beta.wmflabs.org
 - MediaWiki URL: commons.wikimedia.beta.wmflabs.org
 - MediaWiki user: Uls
 - MediaWiki password variable: MEDIAWIKI_PASSWORD_ULS_WMFLABS_ORG
 
 ## UniversalLanguageSelector-en.wikipedia.beta.wmflabs.org-linux-firefox
-- bundle exec: cucumber --verbose --profile ci --tags @en.wikipedia.beta.wmflabs.org
+- bundle exec cucumber: --tags @en.wikipedia.beta.wmflabs.org
 - MediaWiki URL: en.wikipedia.beta.wmflabs.org
 - MediaWiki user: Uls
 - MediaWiki password variable: MEDIAWIKI_PASSWORD_ULS_WMFLABS_ORG
 
 ## UniversalLanguageSelector-sandbox.translatewiki.net-linux-firefox
-- bundle exec: cucumber --verbose --profile ci --tags @sandbox.translatewiki.net
+- bundle exec cucumber: --tags @sandbox.translatewiki.net
 - MediaWiki URL: sandbox.translatewiki.net
 - MediaWiki user: Selenium
 - MediaWiki password variable: MEDIAWIKI_PASSWORD_SELENIUM_SANDBOX_TRANSLATEWIKI_NET
@@ -218,28 +218,28 @@
 
 ## VisualEditor-en.wikipedia.beta.wmflabs.org-linux-chrome
 - Browser Label: chrome
-- bundle exec: cucumber --verbose --profile ci --tags @en.wikipedia.beta.wmflabs.org
+- bundle exec cucumber: --tags @en.wikipedia.beta.wmflabs.org
 - Recipients: cmcmahon@wikimedia.org zfilipin@wikimedia.org
 - MediaWiki URL: en.wikipedia.beta.wmflabs.org
 - MediaWiki password variable: MEDIAWIKI_PASSWORD_SELENIUM_USER_WMFLABS_ORG
 
 ## VisualEditor-en.wikipedia.beta.wmflabs.org-linux-firefox
 - Browser Label: firefox
-- bundle exec: cucumber --verbose --profile ci --tags @en.wikipedia.beta.wmflabs.org
+- bundle exec cucumber: --tags @en.wikipedia.beta.wmflabs.org
 - Recipients: cmcmahon@wikimedia.org jforrester@wikimedia.org zfilipin@wikimedia.org
 - MediaWiki URL: en.wikipedia.beta.wmflabs.org
 - MediaWiki password variable: MEDIAWIKI_PASSWORD_SELENIUM_USER_WMFLABS_ORG
 
 ## VisualEditor-test2.wikipedia.org-linux-chrome
 - Browser Label: chrome
-- bundle exec: cucumber --verbose --profile ci --tags @test2.wikipedia.org
+- bundle exec cucumber: --tags @test2.wikipedia.org
 - Recipients: cmcmahon@wikimedia.org zfilipin@wikimedia.org
 - MediaWiki URL: test2.wikipedia.org
 - MediaWiki password variable: MEDIAWIKI_PASSWORD_SELENIUM_USER_WIKIPEDIA_ORG
 
 ## VisualEditor-test2.wikipedia.org-linux-firefox
 - Browser Label: firefox
-- bundle exec: cucumber --verbose --profile ci --tags @test2.wikipedia.org
+- bundle exec cucumber: --tags @test2.wikipedia.org
 - Recipients: cmcmahon@wikimedia.org jforrester@wikimedia.org zfilipin@wikimedia.org
 - MediaWiki URL: test2.wikipedia.org
 - MediaWiki password variable: MEDIAWIKI_PASSWORD_SELENIUM_USER_WIKIPEDIA_ORG
