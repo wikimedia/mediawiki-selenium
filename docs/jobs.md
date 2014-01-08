@@ -7,6 +7,7 @@
 - Repository URL:
 - MediaWiki user:
 - MediaWiki password variable:
+- Build schedule: 0 3,18 * * *
 
 
 

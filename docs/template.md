@@ -125,6 +125,11 @@
 - Display Name: MediaWiki password variable
 - Type: Text-field
 
+## Build schedule
+- ID: BUILD_SCHEDULE
+- Display Name: Build schedule
+- Type: Text-field
+
 ## Jelly-based transformation
 
 - Property
@@ -201,7 +206,7 @@
       <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
       <triggers class="vector">
         <hudson.triggers.TimerTrigger>
-          <spec>0 3,18 * * *</spec>
+          <spec>${BUILD_SCHEDULE}</spec>
         </hudson.triggers.TimerTrigger>
       </triggers>
       <concurrentBuild>false</concurrentBuild>
