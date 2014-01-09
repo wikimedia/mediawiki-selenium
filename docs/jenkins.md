@@ -2,7 +2,7 @@
 
 ## Plugins
 
-- Jenkins > Manage Jenkins > Manage Plugins > Available > ChuckNorris Plugin, Green Balls, Jenkins instant-messaging plugin, Jenkins IRC Plugin
+- Jenkins > Manage Jenkins > Manage Plugins > Available > ChuckNorris Plugin, Green Balls, Jenkins Email Extension Plugin, Jenkins instant-messaging plugin, Jenkins IRC Plugin
 
 ## IRC Notification
 

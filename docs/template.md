@@ -236,11 +236,36 @@
           <keepLongStdio>false</keepLongStdio>
           <testDataPublishers/>
         </hudson.tasks.junit.JUnitResultArchiver>
-        <hudson.tasks.Mailer>
-          <recipients>${RECIPIENTS}</recipients>
-          <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
-          <sendToIndividuals>false</sendToIndividuals>
-        </hudson.tasks.Mailer>
+        <hudson.plugins.emailext.ExtendedEmailPublisher plugin="email-ext@2.36">
+          <recipientList>${RECIPIENTS}</recipientList>
+          <configuredTriggers>
+            <hudson.plugins.emailext.plugins.trigger.FailureTrigger>
+              <email>
+                <recipientList></recipientList>
+                <subject>$PROJECT_DEFAULT_SUBJECT</subject>
+                <body>$PROJECT_DEFAULT_CONTENT</body>
+                <sendToDevelopers>false</sendToDevelopers>
+                <sendToRequester>false</sendToRequester>
+                <includeCulprits>false</includeCulprits>
+                <sendToRecipientList>true</sendToRecipientList>
+                <attachmentsPattern></attachmentsPattern>
+                <attachBuildLog>false</attachBuildLog>
+                <compressBuildLog>false</compressBuildLog>
+                <replyTo>$PROJECT_DEFAULT_REPLYTO</replyTo>
+                <contentType>project</contentType>
+              </email>
+            </hudson.plugins.emailext.plugins.trigger.FailureTrigger>
+          </configuredTriggers>
+          <contentType>text/html</contentType>
+          <defaultSubject>$DEFAULT_SUBJECT</defaultSubject>
+          <defaultContent>$${SCRIPT, template=&quot;wikimedia.template&quot;}</defaultContent>
+          <attachmentsPattern></attachmentsPattern>
+          <presendScript></presendScript>
+          <attachBuildLog>false</attachBuildLog>
+          <compressBuildLog>false</compressBuildLog>
+          <replyTo>$DEFAULT_REPLYTO</replyTo>
+          <saveOutput>false</saveOutput>
+        </hudson.plugins.emailext.ExtendedEmailPublisher>
         <hudson.plugins.ircbot.IrcPublisher plugin="ircbot@2.21">
           <targets class="java.util.Collections$EmptyList"/>
           <strategy>STATECHANGE_ONLY</strategy>
