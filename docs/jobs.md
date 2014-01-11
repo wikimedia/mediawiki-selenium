@@ -158,8 +158,8 @@
 ## Translate-sandbox.translatewiki.net-linux-firefox
 - bundle exec cucumber: --tags @sandbox.translatewiki.net
 - MediaWiki URL: sandbox.translatewiki.net
-- MediaWiki user: Selenium
-- MediaWiki password variable: MEDIAWIKI_PASSWORD_SELENIUM_SANDBOX_TRANSLATEWIKI_NET
+- MediaWiki user: Selenium-Translate
+- MediaWiki password variable: MEDIAWIKI_PASSWORD_SELENIUM_SANDBOX_TRANSLATE_TRANSLATEWIKI_NET
 
 ## Translate-meta.wikimedia.org-linux-firefox
 - bundle exec cucumber: --tags @meta.wikimedia.org
