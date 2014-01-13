@@ -1,6 +1,6 @@
 # all jobs
 - Browser Label:
-- bundle exec:
+- bundle exec cucumber: || echo "Failure in cucumber"
 - Recipients:
 - MediaWiki URL:
 - Folder:
