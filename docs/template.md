@@ -255,6 +255,22 @@
                 <contentType>project</contentType>
               </email>
             </hudson.plugins.emailext.plugins.trigger.FailureTrigger>
+            <hudson.plugins.emailext.plugins.trigger.UnstableTrigger>
+              <email>
+                <recipientList></recipientList>
+                <subject>$PROJECT_DEFAULT_SUBJECT</subject>
+                <body>$PROJECT_DEFAULT_CONTENT</body>
+                <sendToDevelopers>false</sendToDevelopers>
+                <sendToRequester>false</sendToRequester>
+                <includeCulprits>false</includeCulprits>
+                <sendToRecipientList>true</sendToRecipientList>
+                <attachmentsPattern></attachmentsPattern>
+                <attachBuildLog>false</attachBuildLog>
+                <compressBuildLog>false</compressBuildLog>
+                <replyTo>$PROJECT_DEFAULT_REPLYTO</replyTo>
+                <contentType>project</contentType>
+              </email>
+            </hudson.plugins.emailext.plugins.trigger.UnstableTrigger>
           </configuredTriggers>
           <contentType>text/html</contentType>
           <defaultSubject>$DEFAULT_SUBJECT</defaultSubject>
