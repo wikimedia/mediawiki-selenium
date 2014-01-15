@@ -118,7 +118,7 @@
 
 
 # MobileFrontend
-- Recipients: cmcmahon@wikimedia.org mobile-l@lists.wikimedia.org mobile-tech@wikimedia.org zfilipin@wikimedia.org
+- Recipients: cmcmahon@wikimedia.org jhall@wikimedia.org mobile-l@lists.wikimedia.org mobile-tech@wikimedia.org zfilipin@wikimedia.org
 - Folder: tests/browser/
 - Repository URL: MobileFrontend
 - MediaWiki user: Selenium_user
@@ -219,27 +219,27 @@
 ## VisualEditor-en.wikipedia.beta.wmflabs.org-linux-chrome
 - Browser Label: chrome
 - bundle exec cucumber: --tags @en.wikipedia.beta.wmflabs.org
-- Recipients: cmcmahon@wikimedia.org zfilipin@wikimedia.org
+- Recipients: cmcmahon@wikimedia.org jhall@wikimedia.org zfilipin@wikimedia.org
 - MediaWiki URL: en.wikipedia.beta.wmflabs.org
 - MediaWiki password variable: MEDIAWIKI_PASSWORD_SELENIUM_USER_WMFLABS_ORG
 
 ## VisualEditor-en.wikipedia.beta.wmflabs.org-linux-firefox
 - Browser Label: firefox
 - bundle exec cucumber: --tags @en.wikipedia.beta.wmflabs.org
-- Recipients: cmcmahon@wikimedia.org jforrester@wikimedia.org zfilipin@wikimedia.org
+- Recipients: cmcmahon@wikimedia.org jforrester@wikimedia.org jhall@wikimedia.org zfilipin@wikimedia.org
 - MediaWiki URL: en.wikipedia.beta.wmflabs.org
 - MediaWiki password variable: MEDIAWIKI_PASSWORD_SELENIUM_USER_WMFLABS_ORG
 
 ## VisualEditor-test2.wikipedia.org-linux-chrome
 - Browser Label: chrome
 - bundle exec cucumber: --tags @test2.wikipedia.org
-- Recipients: cmcmahon@wikimedia.org zfilipin@wikimedia.org
+- Recipients: cmcmahon@wikimedia.org jhall@wikimedia.org zfilipin@wikimedia.org
 - MediaWiki URL: test2.wikipedia.org
 - MediaWiki password variable: MEDIAWIKI_PASSWORD_SELENIUM_USER_WIKIPEDIA_ORG
 
 ## VisualEditor-test2.wikipedia.org-linux-firefox
 - Browser Label: firefox
 - bundle exec cucumber: --tags @test2.wikipedia.org
-- Recipients: cmcmahon@wikimedia.org jforrester@wikimedia.org zfilipin@wikimedia.org
+- Recipients: cmcmahon@wikimedia.org jforrester@wikimedia.org jhall@wikimedia.org zfilipin@wikimedia.org
 - MediaWiki URL: test2.wikipedia.org
 - MediaWiki password variable: MEDIAWIKI_PASSWORD_SELENIUM_USER_WIKIPEDIA_ORG
