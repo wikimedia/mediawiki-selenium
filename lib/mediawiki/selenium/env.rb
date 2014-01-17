@@ -42,24 +42,27 @@ def local_browser(language)
   end
 
   if language == "default"
-    Watir::Browser.new browser_label
+    browser = Watir::Browser.new browser_label
   else
     if browser_label == :firefox
       profile = Selenium::WebDriver::Firefox::Profile.new
       profile["intl.accept_languages"] = language
-      Watir::Browser.new browser_label, profile: profile
+      browser = Watir::Browser.new browser_label, profile: profile
     elsif browser_label == :chrome
       profile = Selenium::WebDriver::Chrome::Profile.new
       profile["intl.accept_languages"] = language
-      Watir::Browser.new browser_label, profile: profile
+      browser = Watir::Browser.new browser_label, profile: profile
     elsif browser_label == :phantomjs
       capabilities = Selenium::WebDriver::Remote::Capabilities.phantomjs
       capabilities["phantomjs.page.customHeaders.Accept-Language"] = language
-      Watir::Browser.new browser_label, desired_capabilities: capabilities
+      browser = Watir::Browser.new browser_label, desired_capabilities: capabilities
     else
       raise "Changing default language is currently supported only for Chrome, Firefox and PhantomJS!"
     end
   end
+
+  browser.window.resize_to 1280, 1024
+  browser
 end
 def sauce_api(json)
 RestClient::Request.execute(
