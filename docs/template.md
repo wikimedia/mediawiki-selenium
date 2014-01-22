@@ -52,17 +52,20 @@
 - UI Mode: Dropdown list (no inline help, but more compact UI)
 - Options
 
-  - Display Name: browsertests
-  - Value: https://gerrit.wikimedia.org/r/qa/browsertests
-
   - Display Name: CirrusSearch
   - Value: https://gerrit.wikimedia.org/r/mediawiki/extensions/CirrusSearch
+
+  - Display Name: ContentTranslation
+  - Value: https://gerrit.wikimedia.org/r/mediawiki/extensions/ContentTranslation
 
   - Display Name: Flow
   - Value: https://gerrit.wikimedia.org/r/mediawiki/extensions/Flow
 
   - Display Name: MobileFrontend
   - Value: https://gerrit.wikimedia.org/r/mediawiki/extensions/MobileFrontend
+
+  - Display Name: MultimediaViewer
+  - Value: https://gerrit.wikimedia.org/r/mediawiki/extensions/MultimediaViewer
 
   - Display Name: Translate
   - Value: https://gerrit.wikimedia.org/r/mediawiki/extensions/Translate
@@ -75,6 +78,12 @@
 
   - Display Name: VisualEditor
   - Value: https://gerrit.wikimedia.org/r/mediawiki/extensions/VisualEditor
+
+  - Display Name: Wikibase
+  - Value: https://gerrit.wikimedia.org/r/mediawiki/extensions/Wikibase
+
+  - Display Name: browsertests
+  - Value: https://gerrit.wikimedia.org/r/qa/browsertests
 
 ## MediaWiki URL
 

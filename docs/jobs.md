@@ -149,6 +149,21 @@
 
 
 
+# MultimediaViewer
+
+## MultimediaViewer-en.wikipedia.beta.wmflabs.org-linux-firefox
+- Browser Label: firefox
+- bundle exec cucumber: --tags @en.wikipedia.beta.wmflabs.org
+- Recipients: aarcos.wiki@gmail.com cmcmahon@wikimedia.org jhall@wikimedia.org zfilipin@wikimedia.org
+- MediaWiki URL: en.wikipedia.beta.wmflabs.org
+- Folder: tests/browser/
+- Repository URL: MultimediaViewer
+- MediaWiki user: Selenium_user
+- MediaWiki password variable: MEDIAWIKI_PASSWORD_SELENIUM_USER_WMFLABS_ORG
+- Build schedule: 0 3,18 * * *
+
+
+
 # Translate
 - Browser Label: firefox
 - Folder: tests/browser/
