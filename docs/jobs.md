@@ -167,7 +167,7 @@
 # Translate
 - Browser Label: firefox
 - Folder: tests/browser/
-- Recipients: aaharoni@wikimedia.org cmcmahon@wikimedia.org nlaxstrom@wikimedia.org smazeland@wikimedia.org zfilipin@wikimedia.org
+- Recipients: aaharoni@wikimedia.org cmcmahon@wikimedia.org nlaxstrom@wikimedia.org zfilipin@wikimedia.org
 - Repository URL: Translate
 
 ## Translate-sandbox.translatewiki.net-linux-firefox
@@ -188,7 +188,7 @@
 ## TwnMainPage-sandbox.translatewiki.net-linux-firefox
 - Browser Label: firefox
 - bundle exec cucumber: --tags @sandbox.translatewiki.net
-- Recipients: aaharoni@wikimedia.org cmcmahon@wikimedia.org nlaxstrom@wikimedia.org smazeland@wikimedia.org zfilipin@wikimedia.org
+- Recipients: aaharoni@wikimedia.org cmcmahon@wikimedia.org nlaxstrom@wikimedia.org zfilipin@wikimedia.org
 - MediaWiki URL: sandbox.translatewiki.net
 - Folder: tests/browser/
 - Repository URL: TwnMainPage
@@ -200,7 +200,7 @@
 
 # UniversalLanguageSelector
 - Browser Label: firefox
-- Recipients: aaharoni@wikimedia.org cmcmahon@wikimedia.org nlaxstrom@wikimedia.org smazeland@wikimedia.org sthottingal@wikimedia.org zfilipin@wikimedia.org
+- Recipients: aaharoni@wikimedia.org cmcmahon@wikimedia.org nlaxstrom@wikimedia.org sthottingal@wikimedia.org zfilipin@wikimedia.org
 - Folder: tests/browser/
 - Repository URL: UniversalLanguageSelector
 
