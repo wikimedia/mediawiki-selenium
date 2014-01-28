@@ -75,8 +75,44 @@ RestClient::Request.execute(
 )
 end
 def sauce_browser(test_name, language)
-  config = YAML.load_file("config/config.yml")
-  browser_label = config[ENV["BROWSER_LABEL"]]
+  browsers = {
+
+    "chrome" =>
+      {"name" => "chrome",
+       "platform" => "Linux",
+       "version" => nil},
+
+    "firefox" =>
+      {"name" => "firefox",
+       "platform" => "Linux",
+       "version" => 26},
+
+    "internet_explorer_6" =>
+      {"name" => "internet_explorer",
+       "platform" => "Windows XP",
+       "version"=> 6},
+
+    "internet_explorer_7" =>
+      {"name" => "internet_explorer",
+       "platform" => "Windows XP",
+       "version"=> 7},
+
+    "internet_explorer_8" =>
+      {"name" => "internet_explorer",
+       "platform" => "Windows XP",
+       "version"=> 8},
+
+    "internet_explorer_9" =>
+      {"name" => "internet_explorer",
+       "platform" => "Windows 7",
+       "version"=> 9},
+
+    "internet_explorer_10" =>
+      {"name" => "internet_explorer",
+       "platform" => "Windows 8",
+       "version"=> 10}}
+
+  browser_label = browsers[ENV["BROWSER_LABEL"]]
 
   if language == "default"
     caps = Selenium::WebDriver::Remote::Capabilities.send(browser_label["name"])
