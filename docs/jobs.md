@@ -217,13 +217,6 @@
 - MediaWiki user: Uls
 - MediaWiki password variable: MEDIAWIKI_PASSWORD_ULS_WMFLABS_ORG
 
-## UniversalLanguageSelector-en.wikipedia.beta.wmflabs.org-windows-internet_explorer_8
-- Browser Label: internet_explorer_8
-- bundle exec cucumber: --tags @en.wikipedia.beta.wmflabs.org
-- MediaWiki URL: en.wikipedia.beta.wmflabs.org
-- MediaWiki user: Uls
-- MediaWiki password variable: MEDIAWIKI_PASSWORD_ULS_WMFLABS_ORG
-
 ## UniversalLanguageSelector-sandbox.translatewiki.net-linux-firefox
 - bundle exec cucumber: --tags @sandbox.translatewiki.net
 - MediaWiki URL: sandbox.translatewiki.net
