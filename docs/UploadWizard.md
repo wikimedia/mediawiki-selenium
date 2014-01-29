@@ -11,11 +11,12 @@
 
 --
 
-    git fetch https://gerrit.wikimedia.org/r/mediawiki/extensions/UploadWizard refs/changes/61/109661/6 && git checkout FETCH_HEAD
+    set -e
     export MEDIAWIKI_PASSWORD_VARIABLE=MEDIAWIKI_PASSWORD_SELENIUM_USER_WIKIPEDIA_ORG
     virtualenv --distribute DEV
     DEV/bin/pip install -rtests/api/requirements.txt
     DEV/bin/python tests/api/upload-wizard_tests.py --username "Selenium_user" --api_url "https://commons.wikimedia.org/w/api.php"
+    DEV/bin/python tests/api/upload-wizard_tests.py --gen_new_image --username "Selenium_user" --api_url "https://commons.wikimedia.org/w/api.php"
 
 --
 
@@ -33,16 +34,18 @@
   - OK
 - Jenkins > Job > Configure
   - Source Code Management > Git > Repositories > Repository URL: https://gerrit.wikimedia.org/r/mediawiki/extensions/UploadWizard
+  - Build Triggers > Build periodically > Schedule: H */6 * * * (every 6 hours)
   - Build Triggers > Poll SCM > Schedule > * * * * * (every minute)
   - Build > Add build step > Execute shell
 
 --
 
-    git fetch https://gerrit.wikimedia.org/r/mediawiki/extensions/UploadWizard refs/changes/61/109661/6 && git checkout FETCH_HEAD
+    set -e
     export MEDIAWIKI_PASSWORD_VARIABLE=MEDIAWIKI_PASSWORD_SELENIUM_USER_WMFLABS_ORG
     virtualenv --distribute DEV
     DEV/bin/pip install -rtests/api/requirements.txt
     DEV/bin/python tests/api/upload-wizard_tests.py --username "Selenium_user" --api_url "http://commons.wikimedia.beta.wmflabs.org/w/api.php"
+    DEV/bin/python tests/api/upload-wizard_tests.py --gen_new_image --username "Selenium_user" --api_url "http://commons.wikimedia.beta.wmflabs.org/w/api.php"
 
 --
 
