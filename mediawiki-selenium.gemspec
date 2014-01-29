@@ -17,12 +17,12 @@ makes it easy to update the shared code.}
   spec.files         = `git ls-files`.split($/)
   spec.require_paths = ["lib"]
 
-  spec.add_runtime_dependency "cucumber"
+  spec.add_runtime_dependency "cucumber", '~> 0'
   spec.add_runtime_dependency "headless", '~> 0'
-  spec.add_runtime_dependency "json"
-  spec.add_runtime_dependency "net-http-persistent"
-  spec.add_runtime_dependency "page-object"
-  spec.add_runtime_dependency "rest-client"
-  spec.add_runtime_dependency "rspec-expectations"
-  spec.add_runtime_dependency "syntax"
+  spec.add_runtime_dependency "json", '~> 0'
+  spec.add_runtime_dependency "net-http-persistent", '~> 0'
+  spec.add_runtime_dependency "page-object", '~> 0'
+  spec.add_runtime_dependency "rest-client", '~> 0'
+  spec.add_runtime_dependency "rspec-expectations", '~> 0'
+  spec.add_runtime_dependency "syntax", '~> 0'
 end
