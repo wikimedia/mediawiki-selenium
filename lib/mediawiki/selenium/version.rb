@@ -11,6 +11,6 @@ https://git.wikimedia.org/blob/mediawiki%2Fselenium/HEAD/CREDITS.
 
 module Mediawiki
   module Selenium
-    VERSION = "0.1.16"
+    VERSION = "0.1.18"
   end
 end
