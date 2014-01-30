@@ -9,8 +9,6 @@ mediawiki-selenium top-level directory and at
 https://git.wikimedia.org/blob/mediawiki%2Fselenium/HEAD/CREDITS.
 =end
 
-config = YAML.load_file("config/config.yml")
-
 Before("@login") do
   ENV["MEDIAWIKI_PASSWORD"] = ENV[ENV["MEDIAWIKI_PASSWORD_VARIABLE"]] if ENV["MEDIAWIKI_PASSWORD_VARIABLE"]
   puts "MEDIAWIKI_USER environment variable is not defined! Please export a value for that variable before proceeding." unless ENV["MEDIAWIKI_USER"]
@@ -18,7 +16,6 @@ Before("@login") do
 end
 
 Before do |scenario|
-  @config = config
   @random_string = Random.new.rand.to_s
   if ENV["REUSE_BROWSER"] == "true" and $browser # CirrusSearch and VisualEditor need this
     @browser = $browser
