@@ -235,7 +235,7 @@
             gem install bundler --no-ri --no-rdoc
             if [ -d "${FOLDER}" ]; then cd ${FOLDER}; fi
             bundle install
-            bundle exec cucumber --backtrace --verbose --profile ci ${BUNDLE_EXEC_CUCUMBER}
+            bundle exec cucumber --backtrace --verbose --format pretty --format Cucumber::Formatter::Sauce --out reports/junit ${BUNDLE_EXEC_CUCUMBER} || (echo -e "\nJob has failed (exit code: $$?)."; false)
           </command>
         </hudson.tasks.Shell>
       </builders>
