@@ -18,6 +18,7 @@ makes it easy to update the shared code.}
   spec.require_paths = ["lib"]
 
   spec.add_runtime_dependency "cucumber"
+  spec.add_runtime_dependency "headless", '~> 0'
   spec.add_runtime_dependency "json"
   spec.add_runtime_dependency "net-http-persistent"
   spec.add_runtime_dependency "page-object"
