@@ -6,8 +6,8 @@ require 'mediawiki/selenium/version'
 Gem::Specification.new do |spec|
   spec.name          = "mediawiki-selenium"
   spec.version       = Mediawiki::Selenium::VERSION
-  spec.authors       = ["Zeljko Filipin"]
-  spec.email         = ["zeljko.filipin@gmail.com"]
+  spec.authors       = ["Chris McMahon", "Jeff Hall", "Nikolas Everett", "Tobias Gritschacher", "Željko Filipin"]
+  spec.email         = ["cmcmahon@wikimedia.org", "jhall@wikimedia.org", "neverett@wikimedia.org", "tobias.gritschacher@wikimedia.de", "zeljko.filipin@gmail.com"]
   spec.description   = %q{Several MediaWiki extensions share code that makes it easy to run Selenium tests. This gem
 makes it easy to update the shared code.}
   spec.summary       = %q{An easy way to run MediaWiki Selenium tests.}
