@@ -29,6 +29,14 @@ Before do |scenario|
 end
 
 After do |scenario|
+  if scenario.failed? && (ENV["SCREENSHOT_FAILURES"] == "true")
+    require "fileutils"
+    FileUtils.mkdir_p "screenshots"
+    name = test_name(scenario).gsub(/ /, '_')
+    path = "screenshots/#{name}.png"
+    @browser.screenshot.save path
+    embed path, "image/png"
+  end
   if environment == :saucelabs
     sauce_api(%Q{{"passed": #{scenario.passed?}}})
     sauce_api(%Q{{"public": true}})
