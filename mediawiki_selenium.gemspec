@@ -1,7 +1,7 @@
 # coding: utf-8
-lib = File.expand_path('../lib', __FILE__)
+lib = File.expand_path("../lib", __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'mediawiki_selenium/version'
+require "mediawiki_selenium/version"
 
 Gem::Specification.new do |spec|
   spec.name          = "mediawiki_selenium"
@@ -17,12 +17,12 @@ makes it easy to update the shared code.}
   spec.files         = `git ls-files`.split($/)
   spec.require_paths = ["lib"]
 
-  spec.add_runtime_dependency "cucumber", "~> 1.3.10"
-  spec.add_runtime_dependency "headless", "~> 1.0.1"
-  spec.add_runtime_dependency "json", "~> 1.8.1"
-  spec.add_runtime_dependency "net-http-persistent", "~> 2.9.1"
-  spec.add_runtime_dependency "page-object", "~> 0.9.5"
-  spec.add_runtime_dependency "rest-client", "~> 1.6.7"
-  spec.add_runtime_dependency "rspec-expectations", "~> 2.14.4"
-  spec.add_runtime_dependency "syntax", "~> 1.2.0"
+  spec.add_runtime_dependency "cucumber", "~> 1.3", ">= 1.3.10"
+  spec.add_runtime_dependency "headless", "~> 1.0", ">= 1.0.1"
+  spec.add_runtime_dependency "json", "~> 1.8", ">= 1.8.1"
+  spec.add_runtime_dependency "net-http-persistent", "~> 2.9", ">= 2.9.1"
+  spec.add_runtime_dependency "page-object", "~> 0.9", ">= 0.9.5"
+  spec.add_runtime_dependency "rest-client", "~> 1.6", ">= 1.6.7"
+  spec.add_runtime_dependency "rspec-expectations", "~> 2.14", ">= 2.14.4"
+  spec.add_runtime_dependency "syntax", "~> 1.2", ">= 1.2.0"
 end
