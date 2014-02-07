@@ -233,7 +233,7 @@
               source ./use-ruby
 
             gem install bundler --no-ri --no-rdoc
-            if [ -d "${FOLDER}" ]; then cd ${FOLDER}; fi
+            cd ${FOLDER}
             bundle install
             bundle exec cucumber --backtrace --verbose --format pretty --format Cucumber::Formatter::Sauce --out reports/junit ${BUNDLE_EXEC_CUCUMBER} || (echo -e "\nJob has failed (exit code: $$?)."; false)
           </command>

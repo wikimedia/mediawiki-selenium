@@ -3,17 +3,16 @@
 - bundle exec cucumber:
 - Recipients:
 - MediaWiki URL:
-- Folder:
+- Folder: tests/browser/ (if not stated differently)
 - Repository URL:
 - MediaWiki user:
 - MediaWiki password variable:
-- Build schedule: 0 3,18 * * *
+- Build schedule: 0 3,18 * * * (if not stated differently)
 
 
 
 # browsertests
 - Recipients: cmcmahon@wikimedia.org zfilipin@wikimedia.org
-- Folder: root of the repository
 - Repository URL: browsertests
 - MediaWiki user: Selenium_user
 
@@ -103,7 +102,6 @@
 - bundle exec cucumber: --tags @en.wikipedia.beta.wmflabs.org
 - Recipients: zfilipin@wikimedia.org cmcmahon@wikimedia.org
 - MediaWiki URL: en.m.wikipedia.beta.wmflabs.org
-- Folder: tests/browser/
 - Repository URL: Flow
 - MediaWiki user: Selenium_user
 - MediaWiki password variable: MEDIAWIKI_PASSWORD_SELENIUM_USER_WMFLABS_ORG
@@ -119,7 +117,6 @@
 
 # MobileFrontend
 - Recipients: cmcmahon@wikimedia.org jhall@wikimedia.org mobile-l@lists.wikimedia.org mobile-tech@wikimedia.org zfilipin@wikimedia.org
-- Folder: tests/browser/
 - Repository URL: MobileFrontend
 - MediaWiki user: Selenium_user
 
@@ -156,7 +153,6 @@
 - bundle exec cucumber: --tags @en.wikipedia.beta.wmflabs.org
 - Recipients: aarcos.wiki@gmail.com cmcmahon@wikimedia.org jhall@wikimedia.org zfilipin@wikimedia.org
 - MediaWiki URL: en.wikipedia.beta.wmflabs.org
-- Folder: tests/browser/
 - Repository URL: MultimediaViewer
 - MediaWiki user: Selenium_user
 - MediaWiki password variable: MEDIAWIKI_PASSWORD_SELENIUM_USER_WMFLABS_ORG
@@ -166,7 +162,6 @@
 
 # Translate
 - Browser Label: firefox
-- Folder: tests/browser/
 - Recipients: aaharoni@wikimedia.org cmcmahon@wikimedia.org nlaxstrom@wikimedia.org zfilipin@wikimedia.org
 - Repository URL: Translate
 
@@ -190,7 +185,6 @@
 - bundle exec cucumber: --tags @sandbox.translatewiki.net
 - Recipients: aaharoni@wikimedia.org cmcmahon@wikimedia.org nlaxstrom@wikimedia.org zfilipin@wikimedia.org
 - MediaWiki URL: sandbox.translatewiki.net
-- Folder: tests/browser/
 - Repository URL: TwnMainPage
 - MediaWiki user: Selenium
 - MediaWiki password variable: MEDIAWIKI_PASSWORD_SELENIUM_SANDBOX_TRANSLATEWIKI_NET
@@ -201,7 +195,6 @@
 # UniversalLanguageSelector
 - Browser Label: firefox
 - Recipients: aaharoni@wikimedia.org cmcmahon@wikimedia.org nlaxstrom@wikimedia.org sthottingal@wikimedia.org zfilipin@wikimedia.org
-- Folder: tests/browser/
 - Repository URL: UniversalLanguageSelector
 
 
