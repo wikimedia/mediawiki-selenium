@@ -1,11 +1,11 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'mediawiki/selenium/version'
+require 'mediawiki_selenium/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "mediawiki-selenium"
-  spec.version       = Mediawiki::Selenium::VERSION
+  spec.name          = "mediawiki_selenium"
+  spec.version       = MediawikiSelenium::VERSION
   spec.authors       = ["Chris McMahon", "Jeff Hall", "Nikolas Everett", "Tobias Gritschacher", "Željko Filipin"]
   spec.email         = ["cmcmahon@wikimedia.org", "jhall@wikimedia.org", "neverett@wikimedia.org", "tobias.gritschacher@wikimedia.de", "zeljko.filipin@gmail.com"]
   spec.description   = %q{Several MediaWiki extensions share code that makes it easy to run Selenium tests. This gem
