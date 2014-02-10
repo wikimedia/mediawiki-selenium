@@ -31,9 +31,10 @@ end
 After do |scenario|
   if scenario.failed? && (ENV["SCREENSHOT_FAILURES"] == "true")
     require "fileutils"
-    FileUtils.mkdir_p "screenshots"
+    screen_dir = ENV["SCREENSHOT_FAILURES_PATH"] || "screenshots"
+    FileUtils.mkdir_p screen_dir
     name = test_name(scenario).gsub(/ /, '_')
-    path = "screenshots/#{name}.png"
+    path = "#{screen_dir}/#{name}.png"
     @browser.screenshot.save path
     embed path, "image/png"
   end
