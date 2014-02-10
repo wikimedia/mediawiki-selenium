@@ -9,8 +9,8 @@ mediawiki-selenium top-level directory and at
 https://git.wikimedia.org/blob/mediawiki%2Fselenium/HEAD/CREDITS.
 =end
 
-require "mediawiki_selenium/env"
-require "mediawiki_selenium/hooks"
-require "mediawiki_selenium/sauce"
 require "mediawiki_selenium/version"
 
+require "mediawiki_selenium/support/env"
+require "mediawiki_selenium/support/hooks"
+require "mediawiki_selenium/support/sauce"
