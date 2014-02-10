@@ -47,6 +47,14 @@ By default, the browser will close itself at the end of every scenario. If you w
     export KEEP_BROWSER_OPEN=true # Linux/Unix/Mac
     set KEEP_BROWSER_OPEN=true # Windows
 
+## Update your Gemfile
+
+In your repository, the Gemfile specify dependencies and Gemfile.lock defines the whole dependency tree. To update it simply run:
+
+    bundle update
+
+It will fetch all dependencies and updates the Gemfile.lock file, you can then commit back both files.
+
 ## Links
 
 mediawiki-selenium gem: [Gerrit](https://gerrit.wikimedia.org/r/#/admin/projects/mediawiki/selenium), [GitHub](https://github.com/wikimedia/mediawiki-selenium), [RubyGems](https://rubygems.org/gems/mediawiki-selenium), [Code Climate](https://codeclimate.com/github/wikimedia/mediawiki-selenium)
