@@ -49,7 +49,7 @@ By default, the browser will close itself at the end of every scenario. If you w
 
 ## Links
 
-mediawiki-selenium gem: [Gerrit](https://gerrit.wikimedia.org/r/#/admin/projects/mediawiki/selenium), [GitHub](https://github.com/wikimedia/mediawiki-selenium), [RubyGems](https://rubygems.org/gems/mediawiki-selenium), [Code Climate](https://codeclimate.com/github/wikimedia/mediawiki-selenium)
+mediawiki_selenium gem: [Gerrit](https://gerrit.wikimedia.org/r/#/admin/projects/mediawiki/selenium), [GitHub](https://github.com/wikimedia/mediawiki-selenium), [RubyGems](https://rubygems.org/gems/mediawiki_selenium), [Code Climate](https://codeclimate.com/github/wikimedia/mediawiki-selenium)
 
 If not stated differently, Selenium tests are in `/tests/browser` folder.
 
