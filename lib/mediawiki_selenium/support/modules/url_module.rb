@@ -9,12 +9,13 @@ mediawiki-selenium top-level directory and at
 https://git.wikimedia.org/blob/mediawiki%2Fselenium/HEAD/CREDITS.
 =end
 
-require "mediawiki_selenium/version"
-
-require "mediawiki_selenium/support/env"
-require "mediawiki_selenium/support/hooks"
-require "mediawiki_selenium/support/sauce"
-
-require "mediawiki_selenium/support/modules/url_module"
-
-require "mediawiki_selenium/support/pages/login_page"
+module URL
+  def self.url(name)
+    if ENV["MEDIAWIKI_URL"]
+      mediawiki_url = ENV["MEDIAWIKI_URL"]
+    else
+      mediawiki_url = "http://en.wikipedia.beta.wmflabs.org/wiki/"
+    end
+    "#{mediawiki_url}#{name}"
+  end
+end
