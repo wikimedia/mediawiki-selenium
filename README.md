@@ -47,6 +47,12 @@ By default, the browser will close itself at the end of every scenario. If you w
     export KEEP_BROWSER_OPEN=true # Linux/Unix/Mac
     set KEEP_BROWSER_OPEN=true # Windows
 
+## Screenshots
+
+You can get screenshots on failures (since 0.2.1) by setting the environment variable SCREENSHOT_FAILURES to "true", screenshots will be written under the `screenshots` directory relatively to working directory. The SCREENSHOT_FAILURES_PATH environment variable (since 0.2.2) let you override the destination path for screenshots. Example:
+
+  SCREENSHOT_FAILURES=true SCREENSHOT_FAILURES_PATH="/tmp/screenshots" bundle exec cucumber
+
 ## Update your Gemfile
 
 In your repository, the Gemfile specify dependencies and Gemfile.lock defines the whole dependency tree. To update it simply run:
