@@ -9,16 +9,10 @@ mediawiki_selenium top-level directory and at
 https://git.wikimedia.org/blob/mediawiki%2Fselenium/HEAD/CREDITS.
 =end
 
-require "mediawiki_selenium/version"
+class ResetPreferencesPage
+  include PageObject
+  include URL
+  page_url URL.url("Special:Preferences/reset")
 
-require "mediawiki_selenium/support/env"
-require "mediawiki_selenium/support/hooks"
-require "mediawiki_selenium/support/sauce"
-
-require "mediawiki_selenium/step_definitions/login_steps"
-require "mediawiki_selenium/step_definitions/preferences_steps"
-
-require "mediawiki_selenium/support/modules/url_module"
-
-require "mediawiki_selenium/support/pages/login_page"
-require "mediawiki_selenium/support/pages/reset_preferences_page"
+  button(:submit, class: "mw-htmlform-submit")
+end
