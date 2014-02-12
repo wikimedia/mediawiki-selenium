@@ -17,25 +17,6 @@
 - MediaWiki user: Selenium_user
 
 
-# browsertests-commons.wikimedia.beta.wmflabs.org
-- MediaWiki URL: commons.wikimedia.beta.wmflabs.org
-- bundle exec cucumber: --tags @commons.wikimedia.beta.wmflabs.org
-- MediaWiki password variable: MEDIAWIKI_PASSWORD_SELENIUM_USER_WMFLABS_ORG
-
-## browsertests-commons.wikimedia.beta.wmflabs.org-linux-chrome
-- Browser Label: chrome
-
-## browsertests-commons.wikimedia.beta.wmflabs.org-linux-firefox
-- Browser Label: firefox
-
-## browsertests-commons.wikimedia.beta.wmflabs.org-windows-internet_explorer_9
-- Browser Label: internet_explorer_9
-
-## browsertests-commons.wikimedia.beta.wmflabs.org-windows-internet_explorer_10
-- Browser Label: internet_explorer_10
-
-
-
 # browsertests-en.wikipedia.beta.wmflabs.org
 - bundle exec cucumber: --tags @en.wikipedia.beta.wmflabs.org
 - MediaWiki URL: en.wikipedia.beta.wmflabs.org
@@ -64,7 +45,6 @@
 
 ## browsertests-en.wikipedia.beta.wmflabs.org-windows-internet_explorer_10
 - Browser Label: internet_explorer_10
-
 
 
 # browsertests-test2.wikipedia.org
@@ -105,7 +85,6 @@
 - Repository URL: Flow
 - MediaWiki user: Selenium_user
 - MediaWiki password variable: MEDIAWIKI_PASSWORD_SELENIUM_USER_WMFLABS_ORG
-
 
 ## Flow-en.wikipedia.beta.wmflabs.org-linux-chrome
 - Browser Label: chrome
@@ -179,7 +158,6 @@
 
 # TwnMainPage
 
-
 ## TwnMainPage-sandbox.translatewiki.net-linux-firefox
 - Browser Label: firefox
 - bundle exec cucumber: --tags @sandbox.translatewiki.net
@@ -191,12 +169,10 @@
 
 
 
-
 # UniversalLanguageSelector
 - Browser Label: firefox
 - Recipients: aaharoni@wikimedia.org cmcmahon@wikimedia.org nlaxstrom@wikimedia.org sthottingal@wikimedia.org zfilipin@wikimedia.org
 - Repository URL: UniversalLanguageSelector
-
 
 ## UniversalLanguageSelector-commons.wikimedia.beta.wmflabs.org-linux-firefox
 - bundle exec cucumber: --tags @commons.wikimedia.beta.wmflabs.org
@@ -218,11 +194,34 @@
 
 
 
+# UploadWizard
+
+# UploadWizard-commons.wikimedia.beta.wmflabs.org
+- bundle exec cucumber: --tags @commons.wikimedia.beta.wmflabs.org
+- Recipients: cmcmahon@wikimedia.org zfilipin@wikimedia.org
+- MediaWiki URL: commons.wikimedia.beta.wmflabs.org
+- Repository URL: UploadWizard
+- MediaWiki user: Selenium_user
+- MediaWiki password variable: MEDIAWIKI_PASSWORD_SELENIUM_USER_WMFLABS_ORG
+
+## UploadWizard-commons.wikimedia.beta.wmflabs.org-linux-chrome
+- Browser Label: chrome
+
+## UploadWizard-commons.wikimedia.beta.wmflabs.org-linux-firefox
+- Browser Label: firefox
+
+## UploadWizard-commons.wikimedia.beta.wmflabs.org-windows-internet_explorer_9
+- Browser Label: internet_explorer_9
+
+## UploadWizard-commons.wikimedia.beta.wmflabs.org-windows-internet_explorer_10
+- Browser Label: internet_explorer_10
+
+
+
 # VisualEditor
 - Folder: modules/ve-mw/test/browser/
 - Repository URL: VisualEditor
 - MediaWiki user: Selenium_user
-
 
 ## VisualEditor-en.wikipedia.beta.wmflabs.org-linux-chrome
 - Browser Label: chrome

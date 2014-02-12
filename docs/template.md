@@ -76,11 +76,20 @@
   - Display Name: UniversalLanguageSelector
   - Value: https://gerrit.wikimedia.org/r/mediawiki/extensions/UniversalLanguageSelector
 
+  - Display Name: UploadWizard
+  - Value: https://gerrit.wikimedia.org/r/mediawiki/extensions/UploadWizard
+
   - Display Name: VisualEditor
   - Value: https://gerrit.wikimedia.org/r/mediawiki/extensions/VisualEditor
 
   - Display Name: Wikibase
   - Value: https://gerrit.wikimedia.org/r/mediawiki/extensions/Wikibase
+
+  - Display Name: WikiLove
+  - Value: https://gerrit.wikimedia.org/r/mediawiki/extensions/WikiLove
+
+  - Display Name: ZeroRatedMobileAccess
+  - Value: https://gerrit.wikimedia.org/r/mediawiki/extensions/ZeroRatedMobileAccess
 
   - Display Name: browsertests
   - Value: https://gerrit.wikimedia.org/r/qa/browsertests
