@@ -80,7 +80,8 @@ Repositories that use the gem:
 9. UploadWizard: [Gerrit](https://gerrit.wikimedia.org/r/#/admin/projects/mediawiki/extensions/UploadWizard), [GitHub](https://github.com/wikimedia/mediawiki-extensions-UploadWizard), [Jenkins](https://wmf.ci.cloudbees.com/view/r-uw/), [Code Climate](https://codeclimate.com/github/wikimedia/mediawiki-extensions-UploadWizard)
 10. VisualEditor: [Gerrit](https://gerrit.wikimedia.org/r/#/admin/projects/mediawiki/extensions/VisualEditor), [GitHub](https://github.com/wikimedia/mediawiki-extensions-VisualEditor), [Jenkins](https://wmf.ci.cloudbees.com/view/r-ve/), [Code Climate](https://codeclimate.com/github/wikimedia/mediawiki-extensions-VisualEditor), `/modules/ve-mw/test/browser` folder
 11. Wikibase: [Gerrit](https://gerrit.wikimedia.org/r/#/admin/projects/mediawiki/extensions/Wikibase), [GitHub](https://github.com/wikimedia/mediawiki-extensions-Wikibase), [Jenkins](https://wikidata-cloudbees.ci.cloudbees.com/), [Code Climate](https://codeclimate.com/github/wikimedia/mediawiki-extensions-Wikibase)
-12. browsertests: [Gerrit](https://gerrit.wikimedia.org/r/#/admin/projects/qa/browsertests), [GitHub](https://github.com/wikimedia/qa-browsertests), [Jenkins](https://wmf.ci.cloudbees.com/view/r-bt/), [Code Climate](https://codeclimate.com/github/wikimedia/qa-browsertests)
+12. WikiLove: [Gerrit](https://gerrit.wikimedia.org/r/#/admin/projects/mediawiki/extensions/WikiLove), [GitHub](https://github.com/wikimedia/mediawiki-extensions-WikiLove), [Jenkins](https://wmf.ci.cloudbees.com/view/r-vl/), [Code Climate](https://codeclimate.com/github/wikimedia/mediawiki-extensions-WikiLove)
+13. browsertests: [Gerrit](https://gerrit.wikimedia.org/r/#/admin/projects/qa/browsertests), [GitHub](https://github.com/wikimedia/qa-browsertests), [Jenkins](https://wmf.ci.cloudbees.com/view/r-bt/), [Code Climate](https://codeclimate.com/github/wikimedia/qa-browsertests)
 
 ## Contributing
 

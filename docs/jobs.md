@@ -250,3 +250,16 @@
 - Recipients: cmcmahon@wikimedia.org jforrester@wikimedia.org jhall@wikimedia.org zfilipin@wikimedia.org
 - MediaWiki URL: test2.wikipedia.org
 - MediaWiki password variable: MEDIAWIKI_PASSWORD_SELENIUM_USER_WIKIPEDIA_ORG
+
+
+
+# WikiLove
+
+## WikiLove-en.wikipedia.beta.wmflabs.org-linux-firefox
+- Browser Label: firefox
+- bundle exec cucumber: --tags @en.wikipedia.beta.wmflabs.org
+- Recipients: cmcmahon@wikimedia.org zfilipin@wikimedia.org
+- MediaWiki URL: en.wikipedia.beta.wmflabs.org
+- Repository URL: WikiLove
+- MediaWiki user: Selenium_user
+- MediaWiki password variable: MEDIAWIKI_PASSWORD_SELENIUM_USER_WMFLABS_ORG
