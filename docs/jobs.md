@@ -186,10 +186,17 @@
 
 # UniversalLanguageSelector
 - Browser Label: firefox
-- Recipients: aaharoni@wikimedia.org cmcmahon@wikimedia.org nlaxstrom@wikimedia.org sthottingal@wikimedia.org zfilipin@wikimedia.org
+- Recipients: aaharoni@wikimedia.org cmcmahon@wikimedia.org kmistry@wikimedia.org nlaxstrom@wikimedia.org sthottingal@wikimedia.org zfilipin@wikimedia.org
 - Repository URL: UniversalLanguageSelector
 
 ## UniversalLanguageSelector-commons.wikimedia.beta.wmflabs.org-linux-firefox
+- bundle exec cucumber: --tags @commons.wikimedia.beta.wmflabs.org
+- MediaWiki URL: commons.wikimedia.beta.wmflabs.org
+- MediaWiki user: Uls
+- MediaWiki password variable: MEDIAWIKI_PASSWORD_ULS_WMFLABS_ORG
+
+## UniversalLanguageSelector-commons.wikimedia.beta.wmflabs.org-windows-internet_explorer_10
+- Browser Label: internet_explorer_10
 - bundle exec cucumber: --tags @commons.wikimedia.beta.wmflabs.org
 - MediaWiki URL: commons.wikimedia.beta.wmflabs.org
 - MediaWiki user: Uls
