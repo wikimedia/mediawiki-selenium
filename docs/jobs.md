@@ -78,6 +78,21 @@
 
 
 
+# CirrusSearch
+- Browser Label: firefox
+- Recipients: cmcmahon@wikimedia.org neverett@wikimedia.org zfilipin@wikimedia.org
+- Repository URL: CirrusSearch
+
+## CirrusSearch-test2.wikipedia.org-linux-firefox
+- bundle exec cucumber: --tags @test2.wikipedia.org
+- MediaWiki URL: test2.wikipedia.org
+
+## CirrusSearch-en.wikipedia.beta.wmflabs.org-linux-firefox
+- bundle exec cucumber: --tags @en.wikipedia.beta.wmflabs.org
+- MediaWiki URL: en.wikipedia.beta.wmflabs.org
+
+
+
 # Flow
 - bundle exec cucumber: --tags @en.wikipedia.beta.wmflabs.org
 - Recipients: zfilipin@wikimedia.org cmcmahon@wikimedia.org
