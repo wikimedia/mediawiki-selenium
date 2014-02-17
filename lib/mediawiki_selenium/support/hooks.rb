@@ -9,25 +9,26 @@ mediawiki_selenium top-level directory and at
 https://git.wikimedia.org/blob/mediawiki%2Fselenium/HEAD/CREDITS.
 =end
 
+Before("@custom-browser") do |scenario|
+  @scenario = scenario
+end
+
 Before("@login") do
   ENV["MEDIAWIKI_PASSWORD"] = ENV[ENV["MEDIAWIKI_PASSWORD_VARIABLE"]] if ENV["MEDIAWIKI_PASSWORD_VARIABLE"]
   puts "MEDIAWIKI_USER environment variable is not defined! Please export a value for that variable before proceeding." unless ENV["MEDIAWIKI_USER"]
   puts "MEDIAWIKI_PASSWORD environment variable is not defined! Please export a value for that variable before proceeding." unless ENV["MEDIAWIKI_PASSWORD"]
 end
 
-def tagged_with?(scenario, tag)
-  scenario.feature_tags.tags.map{|tag| tag.name}.include? tag
-end
 Before do |scenario|
   @random_string = Random.new.rand.to_s
   if ENV["REUSE_BROWSER"] == "true" and $browser # CirrusSearch and VisualEditor need this
     @browser = $browser
+  elsif scenario.source_tag_names.include? "@custom-browser"
+    # browser will be started in Cucumber step
   else
-    unless tagged_with?(scenario, "@custom-browser")
-      @browser = browser(environment, test_name(scenario), "default")
-      $browser = @browser # CirrusSearch and VisualEditor need this
-      $session_id = @browser.driver.instance_variable_get(:@bridge).session_id
-    end
+    @browser = browser(environment, test_name(scenario), "default")
+    $browser = @browser # CirrusSearch and VisualEditor need this
+    $session_id = @browser.driver.instance_variable_get(:@bridge).session_id
   end
 end
 
