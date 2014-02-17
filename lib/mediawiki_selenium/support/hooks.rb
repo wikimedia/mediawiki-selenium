@@ -15,12 +15,15 @@ Before("@login") do
   puts "MEDIAWIKI_PASSWORD environment variable is not defined! Please export a value for that variable before proceeding." unless ENV["MEDIAWIKI_PASSWORD"]
 end
 
+def tagged_with?(scenario, tag)
+  scenario.feature_tags.tags.map{|tag| tag.name}.include? tag
+end
 Before do |scenario|
   @random_string = Random.new.rand.to_s
   if ENV["REUSE_BROWSER"] == "true" and $browser # CirrusSearch and VisualEditor need this
     @browser = $browser
   else
-    unless @language or @user_agent # only UniversalLanguageSelector needs @language, only MobileFrontend needs @user_agent
+    unless tagged_with?(scenario, "@custom-browser")
       @browser = browser(environment, test_name(scenario), "default")
       $browser = @browser # CirrusSearch and VisualEditor need this
       $session_id = @browser.driver.instance_variable_get(:@bridge).session_id
