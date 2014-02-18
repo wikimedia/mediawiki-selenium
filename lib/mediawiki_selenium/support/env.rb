@@ -27,7 +27,7 @@ def browser(environment, test_name, language)
   end
 end
 def environment
-  if ENV["BROWSER_LABEL"] and ENV["BROWSER_LABEL"] != "phantomjs" and
+  if ENV["BROWSER"] and ENV["BROWSER"] != "phantomjs" and
       ENV["SAUCE_ONDEMAND_USERNAME"] and ENV["SAUCE_ONDEMAND_ACCESS_KEY"]
     :saucelabs
   else
@@ -35,27 +35,27 @@ def environment
   end
 end
 def local_browser(language)
-  if ENV["BROWSER_LABEL"]
-    browser_label = ENV["BROWSER_LABEL"].to_sym
+  if ENV["BROWSER"]
+    browser_name = ENV["BROWSER"].to_sym
   else
-    browser_label = :firefox
+    browser_name = :firefox
   end
 
   if language == "default"
-    browser = Watir::Browser.new browser_label
+    browser = Watir::Browser.new browser_name
   else
-    if browser_label == :firefox
+    if browser_name == :firefox
       profile = Selenium::WebDriver::Firefox::Profile.new
       profile["intl.accept_languages"] = language
-      browser = Watir::Browser.new browser_label, profile: profile
-    elsif browser_label == :chrome
+      browser = Watir::Browser.new browser_name, profile: profile
+    elsif browser_name == :chrome
       profile = Selenium::WebDriver::Chrome::Profile.new
       profile["intl.accept_languages"] = language
-      browser = Watir::Browser.new browser_label, profile: profile
-    elsif browser_label == :phantomjs
+      browser = Watir::Browser.new browser_name, profile: profile
+    elsif browser_name == :phantomjs
       capabilities = Selenium::WebDriver::Remote::Capabilities.phantomjs
       capabilities["phantomjs.page.customHeaders.Accept-Language"] = language
-      browser = Watir::Browser.new browser_label, desired_capabilities: capabilities
+      browser = Watir::Browser.new browser_name, desired_capabilities: capabilities
     else
       raise "Changing default language is currently supported only for Chrome, Firefox and PhantomJS!"
     end
@@ -75,59 +75,22 @@ RestClient::Request.execute(
 )
 end
 def sauce_browser(test_name, language)
-  browsers = {
-
-    "chrome" =>
-      {"name" => "chrome",
-       "platform" => "Linux",
-       "version" => nil},
-
-    "firefox" =>
-      {"name" => "firefox",
-       "platform" => "Linux",
-       "version" => 26},
-
-    "internet_explorer_6" =>
-      {"name" => "internet_explorer",
-       "platform" => "Windows XP",
-       "version"=> 6},
-
-    "internet_explorer_7" =>
-      {"name" => "internet_explorer",
-       "platform" => "Windows XP",
-       "version"=> 7},
-
-    "internet_explorer_8" =>
-      {"name" => "internet_explorer",
-       "platform" => "Windows XP",
-       "version"=> 8},
-
-    "internet_explorer_9" =>
-      {"name" => "internet_explorer",
-       "platform" => "Windows 7",
-       "version"=> 9},
-
-    "internet_explorer_10" =>
-      {"name" => "internet_explorer",
-       "platform" => "Windows 8",
-       "version"=> 10}}
-
-  browser_label = browsers[ENV["BROWSER_LABEL"]]
+  abort "Environment variables BROWSER, PLATFORM and VERSION have to be set" if (ENV["BROWSER"] == nil) or (ENV["PLATFORM"] == nil) or (ENV["VERSION"] == nil)
 
   if language == "default"
-    caps = Selenium::WebDriver::Remote::Capabilities.send(browser_label["name"])
-  elsif browser_label["name"] == "firefox"
+    caps = Selenium::WebDriver::Remote::Capabilities.send(ENV["BROWSER"])
+  elsif ENV["BROWSER"] == "firefox"
     profile = Selenium::WebDriver::Firefox::Profile.new
     profile["intl.accept_languages"] = language
     caps = Selenium::WebDriver::Remote::Capabilities.firefox(:firefox_profile => profile)
-  elsif browser_label["name"] == "chrome"
+  elsif ENV["BROWSER"] == "chrome"
     profile = Selenium::WebDriver::Chrome::Profile.new
     profile["intl.accept_languages"] = language
     caps = Selenium::WebDriver::Remote::Capabilities.chrome("chrome.profile" => profile.as_json["zip"])
   end
 
-  caps.platform = browser_label["platform"]
-  caps.version = browser_label["version"]
+  caps.platform = ENV["PLATFORM"]
+  caps.version = ENV["VERSION"]
   caps[:name] = "#{test_name} #{ENV['JOB_NAME']}##{ENV['BUILD_NUMBER']}"
 
   require "selenium/webdriver/remote/http/persistent" # http_client
