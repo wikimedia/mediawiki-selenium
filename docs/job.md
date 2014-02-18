@@ -14,7 +14,7 @@
     export MEDIAWIKI_USER=${MEDIAWIKI_USER}
     export MEDIAWIKI_PASSWORD_VARIABLE=${MEDIAWIKI_PASSWORD_VARIABLE}
 
-    export BROWSER_LABEL=${BROWSER_LABEL}
+    export BROWSER=${browser}
     export MEDIAWIKI_URL=http://${MEDIAWIKI_URL}/wiki/
 
     curl -s -o use-ruby https://repository-cloudbees.forge.cloudbees.com/distributions/ci-addons/ruby/use-ruby

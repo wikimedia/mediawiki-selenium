@@ -14,10 +14,10 @@
 - Display Name: Name
 - Type: Text-field
 
-## Browser Label
+## Browser
 
-- ID: BROWSER_LABEL
-- Display Name: Browser Label
+- ID: BROWSER
+- Display Name: Browser
 - Type: Select a string among many
 - UI Mode: Dropdown list (no inline help, but more compact UI)
 - Options
@@ -234,7 +234,7 @@
             export MEDIAWIKI_USER=${MEDIAWIKI_USER}
             export MEDIAWIKI_PASSWORD_VARIABLE=${MEDIAWIKI_PASSWORD_VARIABLE}
 
-            export BROWSER_LABEL=${BROWSER_LABEL}
+            export BROWSER=${BROWSER}
             export MEDIAWIKI_URL=http://${MEDIAWIKI_URL}/wiki/
 
             curl -s -o use-ruby https://repository-cloudbees.forge.cloudbees.com/distributions/ci-addons/ruby/use-ruby
