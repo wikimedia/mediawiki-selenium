@@ -10,5 +10,5 @@ https://git.wikimedia.org/blob/mediawiki%2Fselenium/HEAD/CREDITS.
 =end
 
 module MediawikiSelenium
-  VERSION = "0.2.8"
+  VERSION = "0.2.9"
 end
