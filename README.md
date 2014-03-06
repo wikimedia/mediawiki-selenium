@@ -93,3 +93,11 @@ Repositories that use the gem:
 5. Create new Pull Request
 
 https://www.mediawiki.org/wiki/QA/Browser_testing#How_to_contribute
+
+## Release notes
+
+### 0.2.8
+
+#### Enhancements
+
+* Possibility to set BROWSER_TIMEOUT

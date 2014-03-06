@@ -27,8 +27,7 @@ def browser(environment, test_name, language)
   end
 end
 def environment
-  if ENV["BROWSER"] and ENV["BROWSER"] != "phantomjs" and
-      ENV["SAUCE_ONDEMAND_USERNAME"] and ENV["SAUCE_ONDEMAND_ACCESS_KEY"]
+  if ENV["SAUCE_ONDEMAND_USERNAME"] and ENV["SAUCE_ONDEMAND_ACCESS_KEY"] and ENV["BROWSER"] != "phantomjs"
     :saucelabs
   else
     :local
@@ -41,7 +40,17 @@ def local_browser(language)
     browser_name = :firefox
   end
 
-  if language == "default"
+  if language == "default" && ENV["BROWSER_TIMEOUT"] && browser_name == :firefox
+    timeout = ENV["BROWSER_TIMEOUT"].to_i
+
+    client = Selenium::WebDriver::Remote::Http::Default.new
+    client.timeout = timeout
+
+    profile = Selenium::WebDriver::Firefox::Profile.new
+    profile["dom.max_script_run_time"] = timeout
+    profile["dom.max_chrome_script_run_time"] = timeout
+    browser = Watir::Browser.new browser_name, :http_client => client, :profile => profile
+  elsif language == "default"
     browser = Watir::Browser.new browser_name
   else
     if browser_name == :firefox
@@ -77,7 +86,18 @@ end
 def sauce_browser(test_name, language)
   abort "Environment variables BROWSER, PLATFORM and VERSION have to be set" if (ENV["BROWSER"] == nil) or (ENV["PLATFORM"] == nil) or (ENV["VERSION"] == nil)
 
-  if language == "default"
+  require "selenium/webdriver/remote/http/persistent" # http_client
+  client = Selenium::WebDriver::Remote::Http::Persistent.new
+
+  if language == "default" && ENV["BROWSER_TIMEOUT"] && ENV["BROWSER"] == "firefox"
+    timeout = ENV["BROWSER_TIMEOUT"].to_i
+    client.timeout = timeout
+
+    profile = Selenium::WebDriver::Firefox::Profile.new
+    profile["dom.max_script_run_time"] = timeout
+    profile["dom.max_chrome_script_run_time"] = timeout
+    caps = Selenium::WebDriver::Remote::Capabilities.firefox(:firefox_profile => profile)
+  elsif language == "default"
     caps = Selenium::WebDriver::Remote::Capabilities.send(ENV["BROWSER"])
   elsif ENV["BROWSER"] == "firefox"
     profile = Selenium::WebDriver::Firefox::Profile.new
@@ -93,10 +113,9 @@ def sauce_browser(test_name, language)
   caps.version = ENV["VERSION"]
   caps[:name] = "#{test_name} #{ENV['JOB_NAME']}##{ENV['BUILD_NUMBER']}"
 
-  require "selenium/webdriver/remote/http/persistent" # http_client
   browser = Watir::Browser.new(
     :remote,
-    http_client: Selenium::WebDriver::Remote::Http::Persistent.new,
+    http_client: client,
     url: "http://#{ENV['SAUCE_ONDEMAND_USERNAME']}:#{ENV['SAUCE_ONDEMAND_ACCESS_KEY']}@ondemand.saucelabs.com:80/wd/hub",
     desired_capabilities: caps)
   browser.wd.file_detector = lambda do |args|
