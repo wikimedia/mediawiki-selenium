@@ -11,8 +11,8 @@ versions of RubyGems and Firefox (the default browser in which the tests run).
 The easiest way to install Ruby on Linux/Unix/Mac is [RVM](https://rvm.io/) and
 on Windows [RubyInstaller](http://rubyinstaller.org/).
 
-ALERT: On Windows you must use Ruby 1.9.3 for now because cucumber/gherkin
-library currently doesn't work with Ruby 2.x.x.
+ALERT: On Windows you must use Ruby 1.9.3 for now because Cucumber currently
+doesn't work with Ruby 2.
 
     cd /tests/browser
     gem update --system
@@ -22,7 +22,7 @@ library currently doesn't work with Ruby 2.x.x.
 If you're not using RVM to manage your Ruby versions, you will need to run the
 commands as root (using `sudo`).
 
-Environment variables MEDIAWIKI_USER and MEDIAWIKI_PASSWORD are required for
+Environment variables `MEDIAWIKI_USER` and `MEDIAWIKI_PASSWORD` are required for
 tests tagged `@login`. For local testing, create a test user on your local wiki
 and export the user and password as the values for those variables.
 For example:
@@ -46,7 +46,9 @@ the tests elsewhere, set the `MEDIAWIKI_URL` environment variable. For example:
 To run a single test file enter `bundle exec cucumber features/FEATURE_NAME.feature`.
 
 To run a single test scenario, put a colon and the line number (NN) on which
-the scenario begins after the file name: `bundle exec cucumber features/FEATURE_NAME.feature:NN`.
+the scenario begins after the file name:
+
+    bundle exec cucumber features/FEATURE_NAME.feature:NN
 
 You can use a different browser with the `BROWSER` env variable, the fastest is
 probably PhantomJS, a headless browser:
@@ -63,22 +65,22 @@ to `true`:
 
 ## Screenshots
 
-You can get screenshots on failures (since 0.2.1) by setting the environment
-variable SCREENSHOT_FAILURES to "true", screenshots will be written under the
+You can get screenshots on failures by setting the environment
+variable `SCREENSHOT_FAILURES` to `true`. Screenshots will be written under the
 `screenshots` directory relatively to working directory. The
-SCREENSHOT_FAILURES_PATH environment variable (since 0.2.2) let you override
+`SCREENSHOT_FAILURES_PATH` environment variable lets you override
 the destination path for screenshots. Example:
 
-  SCREENSHOT_FAILURES=true SCREENSHOT_FAILURES_PATH="/tmp/screenshots" bundle exec cucumber
+    SCREENSHOT_FAILURES=true SCREENSHOT_FAILURES_PATH="/tmp/screenshots" bundle exec cucumber
 
 ## Update your Gemfile
 
-In your repository, the Gemfile specify dependencies and Gemfile.lock defines
+In your repository, the `Gemfile` specifies dependencies and `Gemfile.lock` defines
 the whole dependency tree. To update it simply run:
 
     bundle update
 
-It will fetch all dependencies and updates the Gemfile.lock file, you can then
+It will fetch all dependencies and update the `Gemfile.lock` file, you can then
 commit back both files.
 
 ## Links
@@ -112,12 +114,19 @@ Repositories that use the gem:
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
 
-https://www.mediawiki.org/wiki/QA/Browser_testing#How_to_contribute
+Also see https://www.mediawiki.org/wiki/QA/Browser_testing#How_to_contribute
 
 ## Release notes
 
 ### 0.2.8
 
-#### Enhancements
+* Possibility to set BROWSER_TIMEOUT.
 
-* Possibility to set BROWSER_TIMEOUT
+### 0.2.2
+
+* `SCREENSHOT_FAILURES_PATH` environment variable lets you override the destination path for screenshots.
+
+### 0.2.1
+
+* Get screenshots on failures by setting the environment variable `SCREENSHOT_FAILURES` to `true`.
+
