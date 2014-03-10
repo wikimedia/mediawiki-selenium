@@ -16,9 +16,11 @@ require "mediawiki_selenium/support/hooks"
 require "mediawiki_selenium/support/sauce"
 
 require "mediawiki_selenium/step_definitions/login_steps"
+require "mediawiki_selenium/step_definitions/navigation_steps"
 require "mediawiki_selenium/step_definitions/preferences_steps"
 
 require "mediawiki_selenium/support/modules/url_module"
 
 require "mediawiki_selenium/support/pages/login_page"
+require "mediawiki_selenium/support/pages/random_page"
 require "mediawiki_selenium/support/pages/reset_preferences_page"

@@ -9,6 +9,6 @@ mediawiki_selenium top-level directory and at
 https://git.wikimedia.org/blob/mediawiki%2Fselenium/HEAD/CREDITS.
 =end
 
-module MediawikiSelenium
-  VERSION = "0.2.10"
+Given(/^I am at a random page.*$/) do
+  visit RandomPage
 end
