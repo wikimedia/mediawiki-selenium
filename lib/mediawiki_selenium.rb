@@ -18,6 +18,7 @@ require "mediawiki_selenium/support/sauce"
 require "mediawiki_selenium/step_definitions/login_steps"
 require "mediawiki_selenium/step_definitions/navigation_steps"
 require "mediawiki_selenium/step_definitions/preferences_steps"
+require "mediawiki_selenium/step_definitions/resource_loader_steps"
 
 require "mediawiki_selenium/support/modules/url_module"
 
