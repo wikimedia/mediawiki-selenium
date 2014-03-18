@@ -26,7 +26,7 @@ Before do |scenario|
   elsif scenario.source_tag_names.include? "@custom-browser"
     # browser will be started in Cucumber step
   else
-    @browser = browser(environment, test_name(scenario), "default")
+    @browser = browser(test_name(scenario))
     $browser = @browser # CirrusSearch and VisualEditor need this
     $session_id = @browser.driver.instance_variable_get(:@bridge).session_id
   end
