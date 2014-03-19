@@ -71,7 +71,7 @@ def local_browser(configuration)
   end
 
   browser.window.resize_to 1280, 1024
-  set_cookie
+  set_cookie(browser)
   browser
 end
 def sauce_api(json)
@@ -131,7 +131,7 @@ def sauce_browser(test_name, configuration)
 
   browser
 end
-def set_cookie
+def set_cookie(browser)
   # implement this method in env.rb of the repository where it is needed
 end
 def test_name(scenario)
