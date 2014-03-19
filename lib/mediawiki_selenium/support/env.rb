@@ -26,6 +26,13 @@ def browser(test_name, configuration = nil)
     local_browser(configuration)
   end
 end
+def browser_name
+  if ENV["BROWSER"]
+    ENV["BROWSER"].to_sym
+  else
+    :firefox
+  end
+end
 def environment
   if ENV["SAUCE_ONDEMAND_USERNAME"] and ENV["SAUCE_ONDEMAND_ACCESS_KEY"] and ENV["BROWSER"] != "phantomjs"
     :saucelabs
@@ -34,12 +41,6 @@ def environment
   end
 end
 def local_browser(configuration)
-  if ENV["BROWSER"]
-    browser_name = ENV["BROWSER"].to_sym
-  else
-    browser_name = :firefox
-  end
-
   if ENV["BROWSER_TIMEOUT"] && browser_name == :firefox
     timeout = ENV["BROWSER_TIMEOUT"].to_i
 
@@ -70,6 +71,7 @@ def local_browser(configuration)
   end
 
   browser.window.resize_to 1280, 1024
+  set_cookie
   browser
 end
 def sauce_api(json)
@@ -128,6 +130,9 @@ def sauce_browser(test_name, configuration)
   end
 
   browser
+end
+def set_cookie
+  # implement this method in env.rb of the repository where it is needed
 end
 def test_name(scenario)
   if scenario.respond_to? :feature
