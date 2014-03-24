@@ -32,6 +32,6 @@ class LoginPage
     self.password_element.when_present.send_keys(password)
     login_element.fire_event("onfocus")
     login_element.when_present.click
-    logout_element.when_present if wait_for_logout_element
+    logout_element.when_present(10) if wait_for_logout_element
   end
 end
