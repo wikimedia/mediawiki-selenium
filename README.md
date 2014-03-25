@@ -11,9 +11,6 @@ versions of RubyGems and Firefox (the default browser in which the tests run).
 The easiest way to install Ruby on Linux/Unix/Mac is [RVM](https://rvm.io/) and
 on Windows [RubyInstaller](http://rubyinstaller.org/).
 
-ALERT: On Windows you must use Ruby 1.9.3 for now because Cucumber currently
-doesn't work with Ruby 2.
-
     cd /tests/browser
     gem update --system
     gem install bundler
@@ -28,10 +25,12 @@ and export the user and password as the values for those variables.
 For example:
 
     export MEDIAWIKI_USER=<username here> # Linux/Unix/Mac
-    set MEDIAWIKI_USER=<username here> # Windows
+    set MEDIAWIKI_USER=<username here> # Windows Command Prompt
+    $env:MEDIAWIKI_USER="<username here>" # Windows PowerShell
 
     export MEDIAWIKI_PASSWORD=<password here> # Linux/Unix/Mac
-    set MEDIAWIKI_PASSWORD=<password here> # Windows
+    set MEDIAWIKI_PASSWORD=<password here> # Windows Command Prompt
+    $env:MEDIAWIKI_PASSWORD="<password here>" # Windows PowerShell
 
 ## Usage
 
@@ -41,9 +40,12 @@ By default the tests run at en.wikipedia.beta.wmflabs.org. If you want to run
 the tests elsewhere, set the `MEDIAWIKI_URL` environment variable. For example:
 
     export MEDIAWIKI_URL=http://commons.wikimedia.beta.wmflabs.org/wiki/ # Linux/Unix/Mac
-    set MEDIAWIKI_URL=http://commons.wikimedia.beta.wmflabs.org/wiki/ # Windows
+    set MEDIAWIKI_URL=http://commons.wikimedia.beta.wmflabs.org/wiki/ # Windows Command Prompt
+    $env:MEDIAWIKI_URL="http://commons.wikimedia.beta.wmflabs.org/wiki/" # Windows PowerShell
 
-To run a single test file enter `bundle exec cucumber features/FEATURE_NAME.feature`.
+To run a single test file:
+
+    bundle exec cucumber features/FEATURE_NAME.feature
 
 To run a single test scenario, put a colon and the line number (NN) on which
 the scenario begins after the file name:
@@ -54,14 +56,16 @@ You can use a different browser with the `BROWSER` env variable, the fastest is
 probably PhantomJS, a headless browser:
 
     export BROWSER=phantomjs # Linux/Unix/Mac
-    set BROWSER=phantomjs # Windows
+    set BROWSER=phantomjs # Windows Command Prompt
+    $env:BROWSER="internet_explorer" # Windows PowerShell
 
 By default, the browser will close itself at the end of every scenario. If you
 want the browser to stay open, set the environment variable `KEEP_BROWSER_OPEN`
 to `true`:
 
     export KEEP_BROWSER_OPEN=true # Linux/Unix/Mac
-    set KEEP_BROWSER_OPEN=true # Windows
+    set KEEP_BROWSER_OPEN=true # Windows Command Prompt
+    $env:KEEP_BROWSER_OPEN="true" # Windows PowerShell
 
 ## Screenshots
 
