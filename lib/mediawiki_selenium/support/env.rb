@@ -34,7 +34,7 @@ def browser_name
   end
 end
 def environment
-  if ENV["SAUCE_ONDEMAND_USERNAME"] and ENV["SAUCE_ONDEMAND_ACCESS_KEY"] and ENV["BROWSER"] != "phantomjs"
+  if ENV["SAUCE_ONDEMAND_USERNAME"] and ENV["SAUCE_ONDEMAND_ACCESS_KEY"] and ENV["BROWSER"] != "phantomjs" and ENV["HEADLESS"] != "true"
     :saucelabs
   else
     :local
