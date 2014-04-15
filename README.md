@@ -122,6 +122,11 @@ Also see https://www.mediawiki.org/wiki/QA/Browser_testing#How_to_contribute
 
 ## Release notes
 
+### 0.2.20
+
+* Updated readme file with release notes
+* `APIPage#create` should use `title` and `content` variables when creating a page
+
 ### 0.2.19
 
 * APIPage can create pages via API
