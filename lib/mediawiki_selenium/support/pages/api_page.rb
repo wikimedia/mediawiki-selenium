@@ -6,6 +6,6 @@ class APIPage
 
     client = MediawikiApi::Client.new ENV["MEDIAWIKI_API_URL"]
     client.log_in ENV["MEDIAWIKI_USER"], ENV["MEDIAWIKI_PASSWORD"]
-    client.create_page @random_string, @random_string
+    client.create_page title, content
   end
 end
