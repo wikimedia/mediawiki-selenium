@@ -17,7 +17,9 @@ module Cucumber::Formatter
     private
 
     def format_exception(exception)
-      if $session_id
+      if ENV["HEADLESS"] == "true"
+        sauce_job_page = ""
+      elsif $session_id
         sauce_job_page = "Sauce Labs job URL: http://saucelabs.com/jobs/#{$session_id}\n"
       else
         sauce_job_page = "Uh-oh. Could not find link to Sauce Labs job URL."
