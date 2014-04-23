@@ -136,9 +136,9 @@ def set_cookie(browser)
 end
 def test_name(scenario)
   if scenario.respond_to? :feature
-    "#{scenario.feature.name}: #{scenario.name}"
+    "#{scenario.feature.title}: #{scenario.title}"
   elsif scenario.respond_to? :scenario_outline
-    "#{scenario.scenario_outline.feature.name}: #{scenario.scenario_outline.name}: #{scenario.name}"
+    "#{scenario.scenario_outline.feature.title}: #{scenario.scenario_outline.title}: #{scenario.name}"
   end
 end
 
