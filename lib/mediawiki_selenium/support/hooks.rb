@@ -33,7 +33,7 @@ Before do |scenario|
 end
 
 After do |scenario|
-  if scenario.failed? && (ENV["SCREENSHOT_FAILURES"] == "true")
+  if @browser && scenario.failed? && (ENV["SCREENSHOT_FAILURES"] == "true")
     require "fileutils"
     screen_dir = ENV["SCREENSHOT_FAILURES_PATH"] || "screenshots"
     FileUtils.mkdir_p screen_dir
