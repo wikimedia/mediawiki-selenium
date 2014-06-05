@@ -21,7 +21,7 @@ makes it easy to update the shared code.}
   spec.add_runtime_dependency "headless", "~> 1.0", ">= 1.0.1"
   spec.add_runtime_dependency "json", "~> 1.8", ">= 1.8.1"
   spec.add_runtime_dependency "net-http-persistent", "~> 2.9", ">= 2.9.1"
-  spec.add_runtime_dependency "page-object", "~> 0.9", ">= 0.9.5"
+  spec.add_runtime_dependency "page-object", "~> 1.0"
   spec.add_runtime_dependency "rest-client", "~> 1.6", ">= 1.6.7"
   spec.add_runtime_dependency "rspec-expectations", "~> 2.14", ">= 2.14.4"
   spec.add_runtime_dependency "syntax", "~> 1.2", ">= 1.2.0"
