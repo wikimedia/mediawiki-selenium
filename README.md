@@ -122,6 +122,24 @@ Also see https://www.mediawiki.org/wiki/QA/Browser_testing#How_to_contribute
 
 ## Release notes
 
+### 0.2.24
+
+* No longer using net-http-persistent Ruby gem. Looks like net-http-persistent is causing failures sometimes. Testing if
+  things will be more stable without it.
+
+### 0.2.23
+
+* Take screen shot only if browser is opened
+* Upgrade to page-object gem 1.0. New version has better debugging.
+
+### 0.2.22
+
+* Fixed "File name too long" error message
+
+### 0.2.21
+
+* Do not output link to Sauce Labs when running a local browser
+
 ### 0.2.20
 
 * Updated readme file with release notes

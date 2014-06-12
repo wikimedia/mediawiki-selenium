@@ -87,8 +87,7 @@ end
 def sauce_browser(test_name, configuration)
   abort "Environment variables BROWSER, PLATFORM and VERSION have to be set" if (ENV["BROWSER"] == nil) or (ENV["PLATFORM"] == nil) or (ENV["VERSION"] == nil)
 
-  require "selenium/webdriver/remote/http/persistent" # http_client
-  client = Selenium::WebDriver::Remote::Http::Persistent.new
+  client = Selenium::WebDriver::Remote::Http::Default.new
 
   if ENV["BROWSER_TIMEOUT"] && ENV["BROWSER"] == "firefox"
     timeout = ENV["BROWSER_TIMEOUT"].to_i
