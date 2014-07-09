@@ -110,8 +110,7 @@ Repositories that use the gem:
 1. VisualEditor: [Gerrit](https://gerrit.wikimedia.org/r/#/admin/projects/mediawiki/extensions/VisualEditor), [GitHub](https://github.com/wikimedia/mediawiki-extensions-VisualEditor), [Code Climate](https://codeclimate.com/github/wikimedia/mediawiki-extensions-VisualEditor), `/modules/ve-mw/test/browser` folder
 1. WikidataBrowserTests: [GitHub](https://github.com/wmde/WikidataBrowserTests), [Code Climate](https://codeclimate.com/github/wmde/WikidataBrowserTests), [Jenkins](http://wdjenkins.wmflabs.org/ci/)
 1. WikiLove: [Gerrit](https://gerrit.wikimedia.org/r/#/admin/projects/mediawiki/extensions/WikiLove), [GitHub](https://github.com/wikimedia/mediawiki-extensions-WikiLove), [Code Climate](https://codeclimate.com/github/wikimedia/mediawiki-extensions-WikiLove)
-1. ZeroRatedMobileAccess: [Gerrit](https://gerrit.wikimedia.org/r/#/admin/projects/mediawiki/extensions/ZeroRatedMobileAccess), [GitHub](https://github.com/wikimedia/mediawiki-extensions-ZeroRatedMobileAccess), [Code Climate](https://codeclimate.com/github/wikimedia/mediawiki-extensions-ZeroRatedMobileAccess)
-1. browsertests: [Gerrit](https://gerrit.wikimedia.org/r/#/admin/projects/qa/browsertests), [GitHub](https://github.com/wikimedia/qa-browsertests), [Code Climate](https://codeclimate.com/github/wikimedia/qa-browsertests)
+1. ZeroBanner: [Gerrit](https://gerrit.wikimedia.org/r/#/admin/projects/mediawiki/extensions/ZeroBanner), [GitHub](https://github.com/wikimedia/mediawiki-extensions-ZeroBanner), [Code Climate](https://codeclimate.com/github/wikimedia/mediawiki-extensions-ZeroBanner)
 
 ## Contributing
 
