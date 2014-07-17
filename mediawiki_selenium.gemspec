@@ -20,6 +20,7 @@ makes it easy to update the shared code.}
   spec.add_runtime_dependency "cucumber", "~> 1.3", ">= 1.3.10"
   spec.add_runtime_dependency "headless", "~> 1.0", ">= 1.0.1"
   spec.add_runtime_dependency "json", "~> 1.8", ">= 1.8.1"
+  spec.add_runtime_dependency "mediawiki_api", "~> 0.1.3"
   spec.add_runtime_dependency "page-object", "~> 1.0"
   spec.add_runtime_dependency "rest-client", "~> 1.6", ">= 1.6.7"
   spec.add_runtime_dependency "rspec-expectations", "~> 2.14", ">= 2.14.4"

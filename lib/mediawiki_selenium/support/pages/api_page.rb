@@ -1,3 +1,5 @@
+require "mediawiki_api"
+
 class APIPage
   include PageObject
 
