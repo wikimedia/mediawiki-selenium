@@ -15,7 +15,6 @@ require "page-object"
 require "page-object/page_factory"
 require "rest_client"
 require "watir-webdriver"
-require "yaml"
 
 World(PageObject::PageFactory)
 
