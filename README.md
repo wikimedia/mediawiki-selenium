@@ -112,6 +112,12 @@ Repositories that use the gem:
 1. WikiLove: [Gerrit](https://gerrit.wikimedia.org/r/#/admin/projects/mediawiki/extensions/WikiLove), [GitHub](https://github.com/wikimedia/mediawiki-extensions-WikiLove), [Code Climate](https://codeclimate.com/github/wikimedia/mediawiki-extensions-WikiLove)
 1. ZeroBanner: [Gerrit](https://gerrit.wikimedia.org/r/#/admin/projects/mediawiki/extensions/ZeroBanner), [GitHub](https://github.com/wikimedia/mediawiki-extensions-ZeroBanner), [Code Climate](https://codeclimate.com/github/wikimedia/mediawiki-extensions-ZeroBanner)
 
+### Alumni
+
+1. Wikibase: [Gerrit](https://gerrit.wikimedia.org/r/#/admin/projects/mediawiki/extensions/Wikibase), [GitHub](https://github.com/wikimedia/mediawiki-extensions-Wikibase), [Code Climate](https://codeclimate.com/github/wikimedia/mediawiki-extensions-Wikibase)
+1. ZeroRatedMobileAccess: [Gerrit](https://gerrit.wikimedia.org/r/#/admin/projects/mediawiki/extensions/ZeroRatedMobileAccess), [GitHub](https://github.com/wikimedia/mediawiki-extensions-ZeroRatedMobileAccess), [Code Climate](https://codeclimate.com/github/wikimedia/mediawiki-extensions-ZeroRatedMobileAccess)
+1. browsertests: [Gerrit](https://gerrit.wikimedia.org/r/#/admin/projects/qa/browsertests), [GitHub](https://github.com/wikimedia/qa-browsertests), [Code Climate](https://codeclimate.com/github/wikimedia/qa-browsertests)
+
 ## Contributing
 
 1. Fork it
