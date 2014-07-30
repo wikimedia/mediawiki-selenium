@@ -16,7 +16,10 @@ require "page-object/page_factory"
 require "rest_client"
 require "watir-webdriver"
 
+require "mediawiki_selenium/support/modules/api_helper"
+
 World(PageObject::PageFactory)
+World(MediawikiSelenium::ApiHelper)
 
 def browser(test_name, configuration = nil)
   if environment == :saucelabs
