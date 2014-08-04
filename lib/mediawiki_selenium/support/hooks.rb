@@ -19,9 +19,45 @@ Before("@login") do
   puts "MEDIAWIKI_PASSWORD environment variable is not defined! Please export a value for that variable before proceeding." unless ENV["MEDIAWIKI_PASSWORD"]
 end
 
+# Install a formatter that can be used to show feature-related warnings
+AfterConfiguration do |config|
+  pretty_format, io = config.formats.find { |(format, io)| format == "pretty" }
+  config.formats << ["MediawikiSelenium::WarningsFormatter", io] if pretty_format
+end
+
+# Enforce a dependency check for all scenarios tagged with @extension- tags
+Before do |scenario|
+  # Backgrounds themselves don't have tags, so get them from the feature
+  if scenario.is_a?(Cucumber::Ast::Background)
+    tag_source = scenario.feature
+  else
+    tag_source = scenario
+  end
+
+  tags = tag_source.source_tag_names
+  dependencies = tags.map { |tag| tag.match(/^@extension-(.+)$/) { |m| m[1] } }.compact
+
+  unless dependencies.empty?
+    extensions = api.meta(:siteinfo, siprop: "extensions").data["extensions"]
+    extensions = extensions.map { |ext| ext["type"] }
+    missing = dependencies - extensions
+
+    if missing.any?
+      scenario.skip_invoke!
+
+      if scenario.feature.respond_to?(:mw_warn)
+        warning = "Skipped feature due to missing wiki extensions: #{missing.join(", ")}"
+        scenario.feature.mw_warn(warning, "missing wiki extensions")
+      end
+    end
+  end
+end
+
 Before do |scenario|
   @random_string = Random.new.rand.to_s
-  if ENV["REUSE_BROWSER"] == "true" and $browser # CirrusSearch and VisualEditor need this
+
+  # CirrusSearch and VisualEditor need this
+  if ENV["REUSE_BROWSER"] == "true" && $browser
     @browser = $browser
   elsif scenario.source_tag_names.include? "@custom-browser"
     # browser will be started in Cucumber step
@@ -42,10 +78,15 @@ After do |scenario|
     @browser.screenshot.save path
     embed path, "image/png"
   end
+
   if environment == :saucelabs
     sauce_api(%Q{{"passed": #{scenario.passed?}}})
     sauce_api(%Q{{"public": true}})
     sauce_api(%Q{{"build": #{ENV["BUILD_NUMBER"]}}}) if ENV["BUILD_NUMBER"]
   end
-  @browser.close unless ENV["KEEP_BROWSER_OPEN"] == "true" or ENV["REUSE_BROWSER"] == "true" # CirrusSearch and VisualEditor need this
+
+  if @browser
+    # CirrusSearch and VisualEditor need this
+    @browser.close unless ENV["KEEP_BROWSER_OPEN"] == "true" || ENV["REUSE_BROWSER"] == "true"
+  end
 end
