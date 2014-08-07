@@ -11,7 +11,7 @@ versions of RubyGems and Firefox (the default browser in which the tests run).
 The easiest way to install Ruby on Linux/Unix/Mac is [RVM](https://rvm.io/) and
 on Windows [RubyInstaller](http://rubyinstaller.org/).
 
-    cd /tests/browser
+    cd mediawiki/tests/browser
     gem update --system
     gem install bundler
     bundle install
