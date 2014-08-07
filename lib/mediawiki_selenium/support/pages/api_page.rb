@@ -17,10 +17,10 @@ class APIPage
   end
 
   def create(title, content)
-    @client.create_page title, content
+    client.create_page title, content
   end
 
   def protect(title, reason)
-    @client.protect_page title, reason
+    client.protect_page title, reason
   end
 end
