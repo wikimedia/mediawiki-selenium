@@ -130,6 +130,13 @@ See https://www.mediawiki.org/wiki/Gerrit
 
 ## Release notes
 
+### 0.3.0 2014-08-08
+
+* Support for MediaWiki extension dependencies via `@extension-<name>` tags
+* World `api` helper method for direct access to a pre-authenticated API client
+* Gem dependency fixes
+* Updated readme
+
 ### 0.2.26 2014-07-18
 
 * Added runtime dependency on mediawiki_api
