@@ -11,7 +11,7 @@ versions of RubyGems and Firefox (the default browser in which the tests run).
 The easiest way to install Ruby on Linux/Unix/Mac is [RVM](https://rvm.io/) and
 on Windows [RubyInstaller](http://rubyinstaller.org/).
 
-    cd /tests/browser
+    cd tests/browser
     gem update --system
     gem install bundler
     bundle install
@@ -126,13 +126,7 @@ Repositories that use the gem:
 
 ## Contributing
 
-1. Fork it
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create new Pull Request
-
-Also see https://www.mediawiki.org/wiki/QA/Browser_testing#How_to_contribute
+See https://www.mediawiki.org/wiki/Gerrit
 
 ## Release notes
 
