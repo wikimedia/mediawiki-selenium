@@ -37,11 +37,19 @@ For example:
 Run the tests with `bundle exec cucumber`, this should start Firefox.
 
 By default the tests run at en.wikipedia.beta.wmflabs.org. If you want to run
-the tests elsewhere, set the `MEDIAWIKI_URL` environment variable. For example:
+the tests on another web server, set the `MEDIAWIKI_URL` environment variable. For example:
 
     export MEDIAWIKI_URL=http://commons.wikimedia.beta.wmflabs.org/wiki/ # Linux/Unix/Mac
     set MEDIAWIKI_URL=http://commons.wikimedia.beta.wmflabs.org/wiki/ # Windows Command Prompt
     $env:MEDIAWIKI_URL="http://commons.wikimedia.beta.wmflabs.org/wiki/" # Windows PowerShell
+
+Some tests use the [MediaWiki web API](https://www.mediawiki.org/wiki/API:Main_page) 
+to interact with the web server in addition to driving a browser.
+If you want these tests to run on another web server,
+you must also set the `MEDIAWIKI_API_URL` environment variable. For example:
+
+    export MEDIAWIKI_URL=http://commons.wikimedia.beta.wmflabs.org/w/api.php # Linux/Unix/Mac
+
 
 To run a single test file:
 
