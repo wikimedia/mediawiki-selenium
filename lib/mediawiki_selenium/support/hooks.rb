@@ -35,11 +35,11 @@ Before do |scenario|
   end
 
   tags = tag_source.source_tag_names
-  dependencies = tags.map { |tag| tag.match(/^@extension-(.+)$/) { |m| m[1] } }.compact
+  dependencies = tags.map { |tag| tag.match(/^@extension-(.+)$/) { |m| m[1].downcase } }.compact
 
   unless dependencies.empty?
     extensions = api.meta(:siteinfo, siprop: "extensions").data["extensions"]
-    extensions = extensions.map { |ext| ext["type"] }
+    extensions = extensions.map { |ext| ext["name"] }.compact.map(&:downcase)
     missing = dependencies - extensions
 
     if missing.any?
