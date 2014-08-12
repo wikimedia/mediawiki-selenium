@@ -139,6 +139,11 @@ See https://www.mediawiki.org/wiki/Gerrit
 
 ## Release notes
 
+### 0.3.1 2014-08-12
+
+* Fixed API request for wiki extensions in dependency check
+* Updated readme to include documentation on MEDIAWIKI_API_URL
+
 ### 0.3.0 2014-08-08
 
 * Support for MediaWiki extension dependencies via `@extension-<name>` tags
