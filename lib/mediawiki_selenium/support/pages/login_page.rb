@@ -8,6 +8,8 @@ Copyright 2013 by the Mediawiki developers. See the CREDITS file in the
 mediawiki_selenium top-level directory and at
 https://git.wikimedia.org/blob/mediawiki%2Fselenium/HEAD/CREDITS.
 =end
+require "page-object"
+require "mediawiki_selenium/support/modules/url_module"
 
 class LoginPage
   include PageObject

@@ -11,7 +11,6 @@ https://git.wikimedia.org/blob/mediawiki%2Fselenium/HEAD/CREDITS.
 
 # before all
 require "bundler/setup"
-require "page-object"
 require "page-object/page_factory"
 require "rest_client"
 require "watir-webdriver"
@@ -24,6 +23,8 @@ World(PageObject::PageFactory)
 World(MediawikiSelenium::ApiHelper)
 World(MediawikiSelenium::SauceHelper)
 World(MediawikiSelenium::StrictPending)
+
+World { MediawikiSelenium::Environment.new(ENV) }
 
 def browser(test_name, configuration = nil)
   if environment == :saucelabs

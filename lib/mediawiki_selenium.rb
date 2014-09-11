@@ -9,22 +9,9 @@ mediawiki_selenium top-level directory and at
 https://git.wikimedia.org/blob/mediawiki%2Fselenium/HEAD/CREDITS.
 =end
 
-require "mediawiki_selenium/version"
-
-require "mediawiki_selenium/support/env"
-require "mediawiki_selenium/support/hooks"
-require "mediawiki_selenium/support/sauce"
-
-require "mediawiki_selenium/step_definitions/login_steps"
-require "mediawiki_selenium/step_definitions/navigation_steps"
-require "mediawiki_selenium/step_definitions/preferences_steps"
-require "mediawiki_selenium/step_definitions/resource_loader_steps"
-require "mediawiki_selenium/step_definitions/upload_file_steps"
-
-require "mediawiki_selenium/support/modules/api_helper"
-require "mediawiki_selenium/support/modules/url_module"
-
-require "mediawiki_selenium/support/pages/api_page"
-require "mediawiki_selenium/support/pages/login_page"
-require "mediawiki_selenium/support/pages/random_page"
-require "mediawiki_selenium/support/pages/reset_preferences_page"
+module MediawikiSelenium
+  autoload :VERSION, "mediawiki_selenium/version"
+  autoload :ApiHelper, "mediawiki_selenium/support/modules/api_helper"
+  autoload :BrowserFactory, "mediawiki_selenium/browser_factory"
+  autoload :Environment, "mediawiki_selenium/environment"
+end

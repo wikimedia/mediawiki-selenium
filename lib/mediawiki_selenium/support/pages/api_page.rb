@@ -1,3 +1,4 @@
+require "page-object"
 require "mediawiki_api"
 
 class APIPage
