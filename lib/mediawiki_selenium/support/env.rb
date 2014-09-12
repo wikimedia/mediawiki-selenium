@@ -18,10 +18,12 @@ require "watir-webdriver"
 
 require "mediawiki_selenium/support/modules/api_helper"
 require "mediawiki_selenium/support/modules/sauce_helper"
+require "mediawiki_selenium/support/modules/strict_pending"
 
 World(PageObject::PageFactory)
 World(MediawikiSelenium::ApiHelper)
 World(MediawikiSelenium::SauceHelper)
+World(MediawikiSelenium::StrictPending)
 
 def browser(test_name, configuration = nil)
   if environment == :saucelabs
