@@ -25,4 +25,7 @@ makes it easy to update the shared code.}
   spec.add_runtime_dependency "rest-client", "~> 1.6", ">= 1.6.7"
   spec.add_runtime_dependency "rspec-expectations", "~> 2.14", ">= 2.14.4"
   spec.add_runtime_dependency "syntax", "~> 1.2", ">= 1.2.0"
+
+  spec.add_development_dependency "redcarpet"
+  spec.add_development_dependency "yard"
 end
