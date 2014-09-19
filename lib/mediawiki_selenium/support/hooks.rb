@@ -64,8 +64,9 @@ Before do |scenario|
   else
     @browser = browser(test_name(scenario))
     $browser = @browser # CirrusSearch and VisualEditor need this
-    $session_id = @browser.driver.instance_variable_get(:@bridge).session_id
   end
+
+  $session_id = sauce_session_id
 end
 
 After do |scenario|
@@ -80,9 +81,10 @@ After do |scenario|
   end
 
   if environment == :saucelabs
-    sauce_api(%Q{{"passed": #{scenario.passed?}}})
-    sauce_api(%Q{{"public": true}})
-    sauce_api(%Q{{"build": #{ENV["BUILD_NUMBER"]}}}) if ENV["BUILD_NUMBER"]
+    sid = $session_id || sauce_session_id
+    sauce_api(%Q{{"passed": #{scenario.passed?}}}, sid)
+    sauce_api(%Q{{"public": true}}, sid)
+    sauce_api(%Q{{"build": #{ENV["BUILD_NUMBER"]}}}, sid) if ENV["BUILD_NUMBER"]
   end
 
   if @browser

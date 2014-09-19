@@ -17,9 +17,11 @@ require "rest_client"
 require "watir-webdriver"
 
 require "mediawiki_selenium/support/modules/api_helper"
+require "mediawiki_selenium/support/modules/sauce_helper"
 
 World(PageObject::PageFactory)
 World(MediawikiSelenium::ApiHelper)
+World(MediawikiSelenium::SauceHelper)
 
 def browser(test_name, configuration = nil)
   if environment == :saucelabs
@@ -76,10 +78,10 @@ def local_browser(configuration)
   set_cookie(browser)
   browser
 end
-def sauce_api(json)
+def sauce_api(json, session_id)
 RestClient::Request.execute(
   :method => :put,
-  :url => "https://saucelabs.com/rest/v1/#{ENV['SAUCE_ONDEMAND_USERNAME']}/jobs/#{$session_id}",
+  :url => "https://saucelabs.com/rest/v1/#{ENV['SAUCE_ONDEMAND_USERNAME']}/jobs/#{session_id}",
   :user => ENV["SAUCE_ONDEMAND_USERNAME"],
   :password => ENV["SAUCE_ONDEMAND_ACCESS_KEY"],
   :headers => {:content_type => "application/json"},
