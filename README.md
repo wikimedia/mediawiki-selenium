@@ -142,6 +142,11 @@ See https://www.mediawiki.org/wiki/Gerrit
 
 ## Release notes
 
+### 0.4.0 2014-09-23
+
+* Stricter pending behavior for falsely passing steps
+* Fixed interoperability of custom browser settings and Sauce sessions
+
 ### 0.3.2 2014-08-26
 
 * Bumped runtime dependency for mediawiki_api
