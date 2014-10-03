@@ -76,6 +76,39 @@ to `true`:
     set KEEP_BROWSER_OPEN=true # Windows Command Prompt
     $env:KEEP_BROWSER_OPEN="true" # Windows PowerShell
 
+## Headless Mode
+
+Headless operation can be useful when running tests in an environment where
+there's no GUI available, environments such as a continuous integration
+server, or a remote SSH session.
+
+There are two basic ways to run in headless mode. The first is achieved by
+simply using an inherently headless browser such as PhantomJS.
+
+    BROWSER=phantomjs bundle exec cucumber ...
+
+The second method is to specify a `HEADLESS` environment variable in
+combination with a non-headless browser. With this invocation
+MediaWiki-Selenium will start up a virtual display to which the browser can
+render. (Note that the underlying implementation relies on
+[Xvfb](https://en.wikipedia.org/wiki/Xvfb) and so is only supported on Linux.)
+
+    HEADLESS=true BROWSER=firefox bundle exec cucumber ...
+
+Some additional options are available to further customize the headless
+behavior.
+
+    export HEADLESS=true
+
+    # Use a different display port (the default is 99)
+    HEADLESS_DISPLAY=100 bundle exec cucumber ...
+
+    # Don't reuse an already running xvfb (the default is to reuse)
+    HEADLESS_REUSE=false bundle exec cucumber ...
+
+    # Keep xvfb running after execution (the default is to kill it)
+    HEADLESS_DESTROY_AT_EXIT=false bundle exec cucumber ...
+
 ## Screenshots
 
 You can get screenshots on failures by setting the environment
@@ -86,7 +119,7 @@ the destination path for screenshots. Example:
 
     SCREENSHOT_FAILURES=true SCREENSHOT_FAILURES_PATH="/tmp/screenshots" bundle exec cucumber
 
-## Update your Gemfile
+## Updating Your Gemfile
 
 In your repository, the `Gemfile` specifies dependencies and `Gemfile.lock` defines
 the whole dependency tree. To update it simply run:

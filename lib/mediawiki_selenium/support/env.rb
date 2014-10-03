@@ -146,13 +146,3 @@ def test_name(scenario)
     "#{scenario.scenario_outline.feature.title}: #{scenario.scenario_outline.title}: #{scenario.name}"
   end
 end
-
-if ENV["HEADLESS"] == "true"
-  require "headless"
-  headless = Headless.new
-  headless.start
-end
-
-at_exit do
-  headless.destroy if headless
-end

@@ -19,10 +19,24 @@ Before("@login") do
   puts "MEDIAWIKI_PASSWORD environment variable is not defined! Please export a value for that variable before proceeding." unless ENV["MEDIAWIKI_PASSWORD"]
 end
 
-# Install a formatter that can be used to show feature-related warnings
 AfterConfiguration do |config|
+  # Install a formatter that can be used to show feature-related warnings
   pretty_format, io = config.formats.find { |(format, io)| format == "pretty" }
   config.formats << ["MediawikiSelenium::WarningsFormatter", io] if pretty_format
+
+  # Initiate headless mode
+  if ENV["HEADLESS"] == "true"
+    require "headless"
+
+    headless_options = {}.tap do |options|
+      options[:display] = ENV["HEADLESS_DISPLAY"] if ENV.include?("HEADLESS_DISPLAY")
+      options[:reuse] = false if ENV["HEADLESS_REUSE"] == "false"
+      options[:destroy_at_exit] = false if ENV["HEADLESS_DESTROY_AT_EXIT"] == "false"
+    end
+
+    headless = Headless.new(headless_options)
+    headless.start
+  end
 end
 
 # Enforce a dependency check for all scenarios tagged with @extension- tags
