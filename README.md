@@ -162,6 +162,7 @@ Repositories that use the gem:
 1. WikidataBrowserTests: [GitHub](https://github.com/wmde/WikidataBrowserTests), [Code Climate](https://codeclimate.com/github/wmde/WikidataBrowserTests), [Jenkins](http://wdjenkins.wmflabs.org/ci/)
 1. WikiLove: [Gerrit](https://gerrit.wikimedia.org/r/#/admin/projects/mediawiki/extensions/WikiLove), [GitHub](https://github.com/wikimedia/mediawiki-extensions-WikiLove), [Code Climate](https://codeclimate.com/github/wikimedia/mediawiki-extensions-WikiLove)
 1. ZeroBanner: [Gerrit](https://gerrit.wikimedia.org/r/#/admin/projects/mediawiki/extensions/ZeroBanner), [GitHub](https://github.com/wikimedia/mediawiki-extensions-ZeroBanner), [Code Climate](https://codeclimate.com/github/wikimedia/mediawiki-extensions-ZeroBanner)
+1. ZeroPortal: [Gerrit](https://gerrit.wikimedia.org/r/#/admin/projects/mediawiki/extensions/ZeroPortal), [GitHub](https://github.com/wikimedia/mediawiki-extensions-ZeroPortal), [Code Climate](https://codeclimate.com/github/wikimedia/mediawiki-extensions-ZeroPortal)
 
 ### Alumni
 
