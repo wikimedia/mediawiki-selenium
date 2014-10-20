@@ -143,6 +143,7 @@ If not stated differently, Selenium tests are in `/tests/browser` folder and Jen
 Repositories that use the gem:
 
 1. ArticleFeedbackv5: [Gerrit](https://gerrit.wikimedia.org/r/#/admin/projects/mediawiki/extensions/ArticleFeedbackv5), [GitHub](https://github.com/wikimedia/mediawiki-extensions-ArticleFeedbackv5), [Code Climate](https://codeclimate.com/github/wikimedia/mediawiki-extensions-ArticleFeedbackv5)
+1. CentralAuth: [Gerrit](https://gerrit.wikimedia.org/r/#/admin/projects/mediawiki/extensions/CentralAuth), [GitHub](https://github.com/wikimedia/mediawiki-extensions-CentralAuth), [Code Climate](https://codeclimate.com/github/wikimedia/mediawiki-extensions-CentralAuth)
 1. CirrusSearch: [Gerrit](https://gerrit.wikimedia.org/r/#/admin/projects/mediawiki/extensions/CirrusSearch), [GitHub](https://github.com/wikimedia/mediawiki-extensions-CirrusSearch), [Code Climate](https://codeclimate.com/github/wikimedia/mediawiki-extensions-CirrusSearch)
 1. ContentTranslation: [Gerrit](https://gerrit.wikimedia.org/r/#/admin/projects/mediawiki/extensions/ContentTranslation), [GitHub](https://github.com/wikimedia/mediawiki-extensions-ContentTranslation), [Code Climate](https://codeclimate.com/github/wikimedia/mediawiki-extensions-ContentTranslation)
 1. Echo: [Gerrit](https://gerrit.wikimedia.org/r/#/admin/projects/mediawiki/extensions/Echo), [GitHub](https://github.com/wikimedia/mediawiki-extensions-Echo), [Code Climate](https://codeclimate.com/github/wikimedia/mediawiki-extensions-Echo)
