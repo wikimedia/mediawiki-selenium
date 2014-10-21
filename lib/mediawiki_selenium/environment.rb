@@ -41,8 +41,12 @@ module MediawikiSelenium
       @config = other.config.clone
     end
 
-    # Two environments are considered equal if they have identical
-    # configuration.
+    # Whether the given environment is equal to this one. Two environments are
+    # considered equal if they have identical configuration.
+    #
+    # @param other [Environment]
+    #
+    # @return [true, false]
     #
     def ==(other)
       @config == other.config
@@ -64,10 +68,17 @@ module MediawikiSelenium
 
     # Binds new possible configuration for the given browser.
     #
+    # @example Allow setting of Firefox's language by way of :browser_language
+    #   env = Environment.new(browser_language: "eo")
+    #   env.bind(:firefox, :browser_language) do |language, options|
+    #     options[:desired_capabilities][:firefox_profile]["intl.accept_languages"] = language
+    #   end
+    #
     # @param browser_name [Symbol] Browser name.
     # @param option_name [Symbol] Option name.
     #
-    # @yield []
+    # @yield [value, browser_options] A block that binds the configuration to
+    #                                 the browser options.
     #
     def bind(browser_name, option_name, &blk)
       browser_factory(browser_name).bind(option_name, &blk)
@@ -81,6 +92,12 @@ module MediawikiSelenium
       browser_factory.browser_for(self)
     end
 
+    # Factory used to instantiate and open new browsers.
+    #
+    # @param type [Symbol] Browser name.
+    #
+    # @return [BrowserFactory]
+    #
     def browser_factory(type = browser_name)
       type = type.to_s.downcase.to_sym
 
@@ -97,6 +114,13 @@ module MediawikiSelenium
       lookup(:browser).downcase.to_sym
     end
 
+    # Returns the configured value for the given env variable name.
+    #
+    # @param key [Symbol] Environment variable name.
+    # @param id [Symbol] Alternative variable suffix.
+    #
+    # @return [String]
+    #
     def lookup(key, id = nil)
       key = "#{key}_#{id}" unless id.nil?
       key = key.to_sym
@@ -117,6 +141,13 @@ module MediawikiSelenium
       end
     end
 
+    # Returns the configured values for the given env variable names.
+    #
+    # @param key [Array<Symbol>] Environment variable names.
+    # @param id [Symbol] Alternative variable suffix.
+    #
+    # @return [Array<String>]
+    #
     def lookup_all(keys, id = nil)
       keys.each.with_object({}) do |key, hash|
         value = lookup(key, id)
@@ -143,16 +174,16 @@ module MediawikiSelenium
     # options that correspond to the given ones but have the given ID
     # appended.
     #
-    # @example Overwrite :option with the value from :option_b
-    #   # given an environment with { option: "x", option_b: "y", ... }
-    #   env.with_alternative(:option, :b) do |env|
-    #     env # => { option: "y", ... }
+    # @example Overwrite :foo with the :b alternative
+    #   # given an environment with { foo: "x", foo_b: "y", ... }
+    #   env.with_alternative(:foo, :b) do |env|
+    #     env # => { foo: "y", ... }
     #   end
     #
-    # @example Overwrite both :option and :other with :option_b and :other_b
-    #   # given { option: "x", option_b: "y", other: "w", other_b: "z" }
-    #   env.with_alternative([:option, :other], :b) do |env|
-    #     env # => { option: "y", other: "z", ... }
+    # @example Overwrite both :foo and :bar with the :b alternatives
+    #   # given { foo: "x", foo_b: "y", bar: "w", bar_b: "z" }
+    #   env.with_alternative([:foo, :bar], :b) do |env|
+    #     env # => { foo: "y", bar: "z", ... }
     #   end
     #
     # @param names [Array|Symbol] Configuration option or options.

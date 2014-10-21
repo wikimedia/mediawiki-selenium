@@ -48,18 +48,6 @@ module MediawikiSelenium
         @browser_cache[config] ||= Watir::Browser.new(type, browser_options(config))
       end
 
-      protected
-
-      def capabilities
-        Selenium::WebDriver::Remote::Capabilities.send(type)
-      end
-
-      def http_client
-        Selenium::WebDriver::Remote::Http::Default.new
-      end
-
-      private
-
       def browser_options(config)
         { http_client: http_client, desired_capabilities: capabilities }.tap do |watir_options|
           bindings.each do |(name, bindings_for_option)|
@@ -69,6 +57,16 @@ module MediawikiSelenium
             end
           end
         end
+      end
+
+      protected
+
+      def capabilities
+        Selenium::WebDriver::Remote::Capabilities.send(type)
+      end
+
+      def http_client
+        Selenium::WebDriver::Remote::Http::Default.new
       end
     end
   end

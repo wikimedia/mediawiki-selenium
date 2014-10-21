@@ -7,26 +7,19 @@ module MediawikiSelenium
         opts[:desired_capabilities][:firefox_profile]["dom.max_chrome_script_run_time"] = timeout
       end
 
+      bind(:browser_language) do |language, opts|
+        opts[:desired_capabilities][:firefox_profile]["intl.accept_languages"] = language
+      end
+
+      bind(:browser_user_agent) do |user_agent, opts|
+        opts[:desired_capabilities][:firefox_profile]["general.useragent.override"] = user_agent
+      end
+
+      protected
+
       def capabilities
         super.tap do |capabilities|
           capabilities[:firefox_profile] = Selenium::WebDriver::Firefox::Profile.new
-        end
-      end
-
-      def profile
-        Selenium::WebDriver::Firefox::Profile.new.tap do |profile|
-          bind(:browser_timeout) do |timeout|
-            profile["dom.max_script_run_time"] = timeout
-            profile["dom.max_chrome_script_run_time"] = timeout
-          end
-
-          bind(:browser_language) do |language|
-            profile["intl.accept_languages"] = language
-          end
-
-          bind(:browser_user_agent) do |user_agent|
-            profile["general.useragent.override"] = user_agent
-          end
         end
       end
     end

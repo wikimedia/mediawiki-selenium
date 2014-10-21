@@ -7,7 +7,11 @@ module MediawikiSelenium
     autoload :Chrome, "mediawiki_selenium/browser_factory/chrome"
     autoload :Phantomjs, "mediawiki_selenium/browser_factory/phantomjs"
 
-    # Resolves a new factory for the given browser name.
+    # Resolves and instantiates a new factory for the given browser name.
+    #
+    # @example Create a new firefox browser factory
+    #   factory = BrowserFactory.new(:firefox)
+    #   # => #<MediawikiSelenium::BrowserFactory::Firefox>
     #
     # @param name [Symbol] Browser name.
     #
