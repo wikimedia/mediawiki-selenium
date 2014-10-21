@@ -17,7 +17,7 @@ module MediawikiSelenium
 
       protected
 
-      def capabilities
+      def desired_capabilities
         super.tap do |capabilities|
           capabilities[:firefox_profile] = Selenium::WebDriver::Firefox::Profile.new
         end

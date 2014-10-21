@@ -58,18 +58,18 @@ module MediawikiSelenium
           end
         end
 
-        finalize_options(options)
+        finalize_options!(options)
 
         options
       end
 
       protected
 
-      def capabilities
+      def desired_capabilities
         Selenium::WebDriver::Remote::Capabilities.send(type)
       end
 
-      def finalize_options(options)
+      def finalize_options!(options)
       end
 
       def http_client
@@ -79,7 +79,7 @@ module MediawikiSelenium
       private
 
       def default_browser_options
-        { http_client: http_client, desired_capabilities: capabilities }
+        { http_client: http_client, desired_capabilities: desired_capabilities }
       end
     end
   end

@@ -11,7 +11,7 @@ module MediawikiSelenium
 
       protected
 
-      def capabilities
+      def desired_capabilities
         super.tap do |capabilities|
           capabilities["chromeOptions"] = {
             "args" => [],
@@ -20,10 +20,11 @@ module MediawikiSelenium
         end
       end
 
-      def finalize_options(options)
+      def finalize_options!(options)
         options[:desired_capabilities]["chromeOptions"].tap do |options|
           options["profile"] = options["profile"].as_json["zip"]
         end
+        super
       end
     end
   end
