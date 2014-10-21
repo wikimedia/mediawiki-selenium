@@ -49,7 +49,7 @@ module MediawikiSelenium
       end
 
       def browser_options(config)
-        { http_client: http_client, desired_capabilities: capabilities }.tap do |watir_options|
+        options = default_browser_options.tap do |watir_options|
           bindings.each do |(name, bindings_for_option)|
             bindings_for_option.each do |binding|
               value = config[name]
@@ -57,6 +57,10 @@ module MediawikiSelenium
             end
           end
         end
+
+        finalize_options(options)
+
+        options
       end
 
       protected
@@ -65,8 +69,17 @@ module MediawikiSelenium
         Selenium::WebDriver::Remote::Capabilities.send(type)
       end
 
+      def finalize_options(options)
+      end
+
       def http_client
         Selenium::WebDriver::Remote::Http::Default.new
+      end
+
+      private
+
+      def default_browser_options
+        { http_client: http_client, desired_capabilities: capabilities }
       end
     end
   end
