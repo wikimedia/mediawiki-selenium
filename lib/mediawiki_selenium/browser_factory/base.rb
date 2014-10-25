@@ -2,17 +2,43 @@ require "watir-webdriver"
 
 module MediawikiSelenium
   module BrowserFactory
+    # Browser factories instantiate browsers of a certain type, configure
+    # them according to bound environmental variables, and cache them
+    # according to the uniqueness of that configuration.
+    #
     class Base
-      attr_reader :type
-
       class << self
-        def bind(name, &blk)
+        # Binds environmental configuration to any browser created by
+        # factories of this type. Use of this method should generally be
+        # reserved for macro-style invocation in derived classes.
+        #
+        # @example Always configure Firefox's language according to `:browser_language`
+        #   module MediawikiSelenium::BrowserFactory
+        #     class Firefox < Base
+        #       bind(:browser_language) do |language, options|
+        #         options[:desired_capabilities][:firefox_profile]["intl.accept_languages"] = language
+        #       end
+        #     end
+        #   end
+        #
+        # @param names [Symbol] One or more option names.
+        #
+        # @yield [values, browser_options] A block that binds the configuration to
+        #                                  the browser options.
+        #
+        def bind(*names, &blk)
           raise ArgumentError, "no block given" unless block_given?
 
-          default_bindings[name] ||= []
-          default_bindings[name] << blk
+          key = names.length == 1 ? names.first : names
+          default_bindings[key] ||= []
+          default_bindings[key] << blk
         end
 
+        # All bindings for this factory class combined with those of super
+        # classes.
+        #
+        # @return [Hash]
+        #
         def bindings
           if superclass <= Base
             default_bindings.merge(superclass.bindings) { |key, old, new| old + new }
@@ -21,39 +47,116 @@ module MediawikiSelenium
           end
         end
 
+        # Bindings for this factory class.
+        #
+        # @return [Hash]
+        #
         def default_bindings
           @default_bindings ||= {}
         end
       end
 
+      attr_reader :browser_name
+
       bind(:browser_timeout) { |value, options| options[:http_client].timeout = value.to_i }
 
-      def initialize(type)
-        @type = type
+      # Initializes new factory instances.
+      #
+      # @param browser_name [Symbol]
+      #
+      def initialize(browser_name)
+        @browser_name = browser_name
         @bindings = {}
         @browser_cache = {}
       end
 
-      def bind(name, &blk)
-        @bindings[name] ||= []
-        @bindings[name] << (blk || proc {})
+      # Binds environmental configuration to any browser created by this
+      # factory instance.
+      #
+      # @example Override the user agent according :browser_user_agent
+      #   factory = BrowserFactory.new(:firefox)
+      #   factory.bind(:browser_user_agent) do |agent, options|
+      #     options[:desired_capabilities][:firefox_profile]["general.useragent.override"] = agent
+      #   end
+      #
+      # @example Annotate the session with our build information
+      #   factory.bind(:job_name, :build_number) do |job, build, options|
+      #     options[:desired_capabilities][:name] = "#{job} (#{build})"
+      #   end
+      #
+      # @example Bindings aren't invoked unless all given options are configured
+      #   factory.bind(:foo, :bar) do |foo, bar, options|
+      #     # this never happens!
+      #     options[:desired_capabilities][:name] = "#{foo} #{bar}"
+      #   end
+      #   factory.browser_for(Environment.new(foo: "x"))
+      #
+      # @param names [Symbol] One or more option names.
+      #
+      # @yield [values, browser_options] A block that binds the configuration to
+      #                                  the browser options.
+      #
+      def bind(*names, &blk)
+        key = names.length == 1 ? names.first : names
+        @bindings[key] ||= []
+        @bindings[key] << (blk || proc {})
       end
 
+      # Effective bindings for this factory, those defined at the class level
+      # and those defined for this instance.
+      #
+      # @return [Hash]
+      #
       def bindings
         self.class.bindings.merge(@bindings) { |key, old, new| old + new }
       end
 
+      # Instantiate a browser using the given environmental configuration.
+      # Browsers are cached and reused as long as the *bound* configuration is
+      # the same.
+      #
+      # @example Browser is reused given the same effective configuration
+      #   factory.bind(:foo) { ... }
+      #   factory.bind(:bar) { ... }
+      #
+      #   b1 = factory.browser_for(Environment.new(foo: "x", bar: "y"))
+      #   b2 = factory.browser_for(Environment.new(bar: "x", bar: "y", baz: "z"))
+      #
+      #   b1.object_id == b2.object_id # => true
+      #
+      # @example A new browser is instantiated given different configuration
+      #   factory.bind(:foo) { ... }
+      #   factory.bind(:bar) { ... }
+      #
+      #   b1 = factory.browser_for(Environment.new(foo: "x", bar: "y"))
+      #   b2 = factory.browser_for(Environment.new(bar: "x", bar: "a"))
+      #
+      #   b1.object_id == b2.object_id # => false
+      #
+      # @param env [Environment]
+      #
+      # @return [Watir::Browser]
+      #
       def browser_for(env)
-        config = env.lookup_all(bindings.keys)
-        @browser_cache[config] ||= Watir::Browser.new(type, browser_options(config))
+        config = env.lookup_all(bindings.keys.flatten.uniq)
+        @browser_cache[config] ||= new_browser(browser_options(config))
       end
 
+      # Browser options for the given configuration.
+      #
+      # @param config [Hash]
+      #
+      # @return [Hash]
+      #
       def browser_options(config)
-        options = default_browser_options.tap do |watir_options|
-          bindings.each do |(name, bindings_for_option)|
+        options = default_browser_options.tap do |default_options|
+          bindings.each do |(names, bindings_for_option)|
             bindings_for_option.each do |binding|
-              value = config[name]
-              binding.call(value, watir_options) unless value.nil? || value.to_s.empty?
+              values = config.values_at(*Array(names))
+
+              unless values.any? { |value| value.nil? || value.to_s.empty? }
+                binding.call(*values, default_options)
+              end
             end
           end
         end
@@ -66,7 +169,7 @@ module MediawikiSelenium
       protected
 
       def desired_capabilities
-        Selenium::WebDriver::Remote::Capabilities.send(type)
+        Selenium::WebDriver::Remote::Capabilities.send(browser_name)
       end
 
       def finalize_options!(options)
@@ -74,6 +177,10 @@ module MediawikiSelenium
 
       def http_client
         Selenium::WebDriver::Remote::Http::Default.new
+      end
+
+      def new_browser(options)
+        Watir::Browser.new(options[:desired_capabilities].browser_name, options)
       end
 
       private

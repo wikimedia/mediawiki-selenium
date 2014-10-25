@@ -3,8 +3,8 @@ require "spec_helper"
 module MediawikiSelenium::BrowserFactory
   describe Base do
     let(:factory_class) { Class.new(Base) }
-    let(:factory) { factory_class.new(browser_type) }
-    let(:browser_type) { :lynx }
+    let(:factory) { factory_class.new(browser_name) }
+    let(:browser_name) { :lynx }
 
     describe ".bind" do
       subject { factory_class.bind(option_name, &block) }
@@ -118,8 +118,10 @@ module MediawikiSelenium::BrowserFactory
       before do
         factory.bind(:foo)
 
-        expect(Selenium::WebDriver::Remote::Capabilities).to receive(browser_type).
+        expect(Selenium::WebDriver::Remote::Capabilities).to receive(browser_name).
           at_least(:once).and_return(capabilities)
+        expect(capabilities).to receive(:browser_name).
+          at_least(:once).and_return(browser_name)
       end
 
       it "creates a new Watir::Browser" do
@@ -158,6 +160,62 @@ module MediawikiSelenium::BrowserFactory
           it "returns a cached browser" do
             expect(Watir::Browser).to receive(:new).once.and_return(watir_browser)
             expect(factory.browser_for(env1)).to be(factory.browser_for(env2))
+          end
+        end
+      end
+    end
+
+    describe "#browser_options" do
+      subject { factory.browser_options(config) }
+
+      let(:config) { {} }
+
+      let(:capabilities) { double(Selenium::WebDriver::Remote::Capabilities) }
+      let(:client) { double(Selenium::WebDriver::Remote::Http::Default) }
+      let(:options) { { desired_capabilities: capabilities, http_client: client } }
+
+      before do
+        expect(Selenium::WebDriver::Remote::Capabilities).to receive(browser_name).
+          at_least(:once).and_return(capabilities)
+        expect(Selenium::WebDriver::Remote::Http::Default).to receive(:new).
+          and_return(client)
+      end
+
+      it { is_expected.to be_a(Hash) }
+      it { is_expected.to include(desired_capabilities: capabilities, http_client: client) }
+
+      context "with a binding" do
+        context "and corresponding configuration" do
+          let(:config) { { foo: "x" } }
+
+          it "invokes the binding with the configured value" do
+            expect { |block| factory.bind(:foo, &block) && subject }.to yield_with_args("x", options)
+          end
+        end
+
+        context "but no configuration" do
+          let(:config) { {} }
+
+          it "never invokes the binding" do
+            expect { |block| factory.bind(:foo, &block) && subject }.to_not yield_control
+          end
+        end
+      end
+
+      context "with a multi-option binding" do
+        context "and complete configuration for all options" do
+          let(:config) { { foo: "x", bar: "y" } }
+
+          it "invokes the binding with the configured values" do
+            expect { |block| factory.bind(:foo, :bar, &block) && subject }.to yield_with_args("x", "y", options)
+          end
+        end
+
+        context "but incomplete configuration for all options" do
+          let(:config) { { foo: "x" } }
+
+          it "never invokes the binding" do
+            expect { |block| factory.bind(:foo, :bar, &block) && subject }.to_not yield_control
           end
         end
       end

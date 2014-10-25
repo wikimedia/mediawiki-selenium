@@ -1,5 +1,11 @@
 module MediawikiSelenium
   module BrowserFactory
+    # Constructs new Phantomjs browser instances. The following configuration is
+    # supported.
+    #
+    #  - browser_language
+    #  - browser_user_agent
+    #
     class Phantomjs < Base
       bind(:browser_language) do |language, opts|
         opts[:desired_capabilities]["phantomjs.page.customHeaders.Accept-Language"] = language

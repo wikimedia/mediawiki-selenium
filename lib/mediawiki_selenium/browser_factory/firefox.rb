@@ -1,6 +1,14 @@
 module MediawikiSelenium
   module BrowserFactory
+    # Constructs new Firefox browser instances. The following configuration is
+    # supported.
+    #
+    #  - browser_language
+    #  - browser_timeout
+    #  - browser_user_agent
+    #
     class Firefox < Base
+
       bind(:browser_timeout) do |timeout, opts|
         timeout = timeout.to_i
         opts[:desired_capabilities][:firefox_profile]["dom.max_script_run_time"] = timeout

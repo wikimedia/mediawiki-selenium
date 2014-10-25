@@ -18,6 +18,7 @@ module MediawikiSelenium
     end
 
     CORE_BROWSER_OPTIONS = [
+      :browser,
       :mediawiki_url,
       :mediawiki_user,
     ]
@@ -31,6 +32,7 @@ module MediawikiSelenium
     ]
 
     attr_reader :config
+    protected :config
 
     def initialize(config)
       @config = normalize_config(config)
@@ -46,7 +48,7 @@ module MediawikiSelenium
     #
     # @param other [Environment]
     #
-    # @return [true, false]
+    # @return [Boolean]
     #
     def ==(other)
       @config == other.config
@@ -69,18 +71,26 @@ module MediawikiSelenium
     # Binds new possible configuration for the given browser.
     #
     # @example Allow setting of Firefox's language by way of :browser_language
-    #   env = Environment.new(browser_language: "eo")
-    #   env.bind(:firefox, :browser_language) do |language, options|
-    #     options[:desired_capabilities][:firefox_profile]["intl.accept_languages"] = language
+    #   Before do
+    #     env.bind(:firefox, :browser_language) do |language, options|
+    #       options[:desired_capabilities][:firefox_profile]["intl.accept_languages"] = language
+    #     end
+    #   end
+    #
+    # @example Annotate the session with the scenario name Jenkins job info
+    #   Before do |scenario|
+    #     env.bind(:firefox, :job_name, :build_number) do |job, build, options|
+    #       options[:desired_capabilities][:name] = "#{scenario.name} - #{job} ##{build}"
+    #     end
     #   end
     #
     # @param browser_name [Symbol] Browser name.
-    # @param option_name [Symbol] Option name.
+    # @param option_names [*Symbol] Option names.
     #
     # @yield [value, browser_options] A block that binds the configuration to
     #                                 the browser options.
     #
-    def bind(browser_name, option_name, &blk)
+    def bind(browser_name, *option_names, &blk)
       browser_factory(browser_name).bind(option_name, &blk)
     end
 
@@ -94,15 +104,16 @@ module MediawikiSelenium
 
     # Factory used to instantiate and open new browsers.
     #
-    # @param type [Symbol] Browser name.
+    # @param browser [Symbol] Browser name.
     #
-    # @return [BrowserFactory]
+    # @return [BrowserFactory::Base]
     #
-    def browser_factory(type = browser_name)
-      type = type.to_s.downcase.to_sym
+    def browser_factory(browser = browser_name)
+      browser = browser.to_s.downcase.to_sym
 
-      @factory_cache[type] ||= BrowserFactory.new(type).tap do |factory|
+      @factory_cache[[remote?, browser]] ||= BrowserFactory.new(browser).tap do |factory|
         CORE_BROWSER_OPTIONS.each { |name| factory.bind(name) }
+        factory.extend(RemoteBrowserFactory) if remote?
       end
     end
 
@@ -143,7 +154,7 @@ module MediawikiSelenium
 
     # Returns the configured values for the given env variable names.
     #
-    # @param key [Array<Symbol>] Environment variable names.
+    # @param keys [Array<Symbol>] Environment variable names.
     # @param id [Symbol] Alternative variable suffix.
     #
     # @return [Array<String>]
@@ -167,6 +178,15 @@ module MediawikiSelenium
     #
     def on_wiki(id, &blk)
       with_alternative([:mediawiki_url, :mediawiki_api_url], id, &blk)
+    end
+
+    # Whether this environment has been configured to use remote browser
+    # sessions.
+    #
+    # @return [Boolean]
+    #
+    def remote?
+      RemoteBrowserFactory::REQUIRED_CONFIG.all? { |name| lookup(name) }
     end
 
     # Yields a new environment using the alternative versions of the given
@@ -197,6 +217,8 @@ module MediawikiSelenium
     def with_alternative(names, id, &blk)
       with(lookup_all(Array(names), id), &blk)
     end
+
+    protected
 
     private
 

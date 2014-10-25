@@ -27,7 +27,7 @@ module MediawikiSelenium
       subject { env == other }
 
       context "given an environment with the same configuration" do
-        let(:other) { Environment.new(env.config) }
+        let(:other) { Environment.new(config) }
 
         it "considers them equal" do
           expect(subject).to be(true)
@@ -35,7 +35,7 @@ module MediawikiSelenium
       end
 
       context "given an environment with different configuration" do
-        let(:other) { Environment.new(env.config.merge(some: "extra")) }
+        let(:other) { Environment.new(config.merge(some: "extra")) }
 
         it "considers them not equal" do
           expect(subject).to be(false)
@@ -73,11 +73,69 @@ module MediawikiSelenium
         expect(subject.bindings).to include(*Environment::CORE_BROWSER_OPTIONS)
       end
 
-      context "given a type" do
+      context "given an explicit type of browser" do
         subject { env.browser_factory(:chrome) }
 
         it "is a factory for that type" do
           expect(subject).to be_a(BrowserFactory::Chrome)
+        end
+      end
+
+      context "caching in a cloned environment" do
+        let(:env1) { env }
+        let(:env2) { env1.clone }
+
+        let(:factory1) { env.browser_factory(browser1) }
+        let(:factory2) { env2.browser_factory(browser2) }
+
+        context "with the same local/remote behavior as before" do
+          before do
+            expect(env1).to receive(:remote?).at_least(:once).and_return(false)
+            expect(env2).to receive(:remote?).at_least(:once).and_return(false)
+          end
+
+          context "and the same type of browser as before" do
+            let(:browser1) { :firefox }
+            let(:browser2) { :firefox }
+
+            it "returns a cached factory" do
+              expect(factory1).to be(factory2)
+            end
+          end
+
+          context "and a different type of browser than before" do
+            let(:browser1) { :firefox }
+            let(:browser2) { :chrome }
+
+            it "returns a new factory" do
+              expect(factory1).not_to be(factory2)
+            end
+          end
+        end
+
+        context "with different local/remote behavior as before" do
+          before do
+            expect(env1).to receive(:remote?).at_least(:once).and_return(false)
+            expect(env2).to receive(:remote?).at_least(:once).and_return(true)
+          end
+
+          context "but the same type of browser as before" do
+            let(:browser1) { :firefox }
+            let(:browser2) { :firefox }
+
+            it "returns a cached factory" do
+              expect(factory1).not_to be(factory2)
+            end
+          end
+
+          context "and a different type of browser than before" do
+            let(:browser1) { :firefox }
+            let(:browser2) { :chrome }
+
+            it "returns a new factory" do
+              expect(factory1).not_to be(factory2)
+            end
+          end
         end
       end
     end

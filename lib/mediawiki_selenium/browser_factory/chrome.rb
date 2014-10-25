@@ -1,5 +1,11 @@
 module MediawikiSelenium
   module BrowserFactory
+    # Constructs new Chrome browser instances. The following configuration is
+    # supported.
+    #
+    #  - browser_language
+    #  - browser_user_agent
+    #
     class Chrome < Base
       bind(:browser_language) do |language, opts|
         opts[:desired_capabilities]["chromeOptions"]["profile"]["intl.accept_languages"] = language
