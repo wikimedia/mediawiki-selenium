@@ -125,6 +125,12 @@ module MediawikiSelenium
       lookup(:browser).downcase.to_sym
     end
 
+    # Whether browsers should be left open after each scenario completes.
+    #
+    def keep_browser_open?
+      lookup(:keep_browser_open) == "true"
+    end
+
     # Returns the configured value for the given env variable name.
     #
     # @param key [Symbol] Environment variable name.
@@ -189,6 +195,21 @@ module MediawikiSelenium
       RemoteBrowserFactory::REQUIRED_CONFIG.all? { |name| lookup(name) }
     end
 
+    # Executes teardown tasks including instructing all browser factories to
+    # close any open browsers and perform their own teardown tasks.
+    #
+    # @example Teardown environment resources after each scenario completes
+    #   After do
+    #     teardown
+    #   end
+    #
+    def teardown
+      @factories.each do |factory|
+        factory.each { |browser| browser.close } unless keep_browser_open?
+        factory.teardown
+      end
+    end
+
     # Yields a new environment using the alternative versions of the given
     # configuration options. The alternative values are resolved by looking up
     # options that correspond to the given ones but have the given ID
@@ -217,8 +238,6 @@ module MediawikiSelenium
     def with_alternative(names, id, &blk)
       with(lookup_all(Array(names), id), &blk)
     end
-
-    protected
 
     private
 

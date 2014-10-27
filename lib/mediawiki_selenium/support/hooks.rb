@@ -101,8 +101,5 @@ After do |scenario|
     sauce_api(%Q{{"build": #{ENV["BUILD_NUMBER"]}}}, sid) if ENV["BUILD_NUMBER"]
   end
 
-  if @browser
-    # CirrusSearch and VisualEditor need this
-    @browser.close unless ENV["KEEP_BROWSER_OPEN"] == "true" || ENV["REUSE_BROWSER"] == "true"
-  end
+  teardown
 end

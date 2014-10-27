@@ -166,6 +166,20 @@ module MediawikiSelenium
         options
       end
 
+      # Iterate over each browser created by this factory.
+      #
+      # @yield [browser]
+      #
+      def each
+        @browser_cache.each { |_, browser| yield browser }
+      end
+
+      # Executes additional teardown tasks.
+      #
+      def teardown
+        # abstract
+      end
+
       protected
 
       def desired_capabilities
@@ -173,6 +187,7 @@ module MediawikiSelenium
       end
 
       def finalize_options!(options)
+        # abstract
       end
 
       def http_client
