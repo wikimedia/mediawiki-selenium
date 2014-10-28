@@ -75,24 +75,12 @@ Before do |scenario|
   bind(:job_name, :build_number) do |job, build, options|
     options[:desired_capabilities][:name] = "#{test_name(scenario)} #{job}##{build}"
   end
-
-  # CirrusSearch and VisualEditor need this
-  if ENV["REUSE_BROWSER"] == "true" && $browser
-    @browser = $browser
-  elsif scenario.source_tag_names.include? "@custom-browser"
-    # browser will be started in Cucumber step
-  else
-    @browser = browser(test_name(scenario))
-    $browser = @browser # CirrusSearch and VisualEditor need this
-  end
-
-  $session_id = sauce_session_id
 end
 
 After do |scenario|
-  if @browser && scenario.failed? && (ENV["SCREENSHOT_FAILURES"] == "true")
+  if @browser && scenario.failed? && lookup(:screenshot_failures) == "true"
     require "fileutils"
-    screen_dir = ENV["SCREENSHOT_FAILURES_PATH"] || "screenshots"
+    screen_dir = lookup(:screenshot_failures_path) || "screenshots"
     FileUtils.mkdir_p screen_dir
     name = test_name(scenario).gsub(/ /, '_')
     path = "#{screen_dir}/#{name}.png"
@@ -100,12 +88,5 @@ After do |scenario|
     embed path, "image/png"
   end
 
-  if environment == :saucelabs
-    sid = $session_id || sauce_session_id
-    sauce_api(%Q{{"passed": #{scenario.passed?}}}, sid)
-    sauce_api(%Q{{"public": true}}, sid)
-    sauce_api(%Q{{"build": #{ENV["BUILD_NUMBER"]}}}, sid) if ENV["BUILD_NUMBER"]
-  end
-
-  teardown
+  teardown(scenario.status)
 end
