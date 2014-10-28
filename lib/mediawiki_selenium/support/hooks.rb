@@ -68,7 +68,13 @@ Before do |scenario|
 end
 
 Before do |scenario|
+  # Create a unique random string for this scenario
   @random_string = Random.new.rand.to_s
+
+  # Annotate sessions with Jenkins build info
+  bind(:job_name, :build_number) do |job, build, options|
+    options[:desired_capabilities][:name] = "#{test_name(scenario)} #{job}##{build}"
+  end
 
   # CirrusSearch and VisualEditor need this
   if ENV["REUSE_BROWSER"] == "true" && $browser

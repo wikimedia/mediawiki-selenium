@@ -200,13 +200,31 @@ module MediawikiSelenium
     #
     # @example Teardown environment resources after each scenario completes
     #   After do
-    #     teardown
+    #     teardown(scenario.passed?)
     #   end
     #
-    def teardown
+    # @param status [Symbol] Status of the executed scenario.
+    #
+    def teardown(status = :passed)
       @factories.each do |factory|
         factory.each { |browser| browser.close } unless keep_browser_open?
-        factory.teardown
+        factory.teardown(self, status)
+      end
+    end
+
+    # Returns a name from the given scenario.
+    #
+    # @param scenario [Cucumber::Ast::Scenario]
+    #
+    # @return [String]
+    #
+    def test_name(scenario)
+      if scenario.respond_to? :feature
+        "#{scenario.feature.title}: #{scenario.title}"
+      elsif scenario.respond_to? :scenario_outline
+        "#{scenario.scenario_outline.feature.title}: #{scenario.scenario_outline.title}: #{scenario.name}"
+      else
+        scenario.name
       end
     end
 

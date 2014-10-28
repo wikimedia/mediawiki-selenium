@@ -3,8 +3,12 @@ require "mediawiki_selenium/browser_factory/base"
 
 module MediawikiSelenium
   describe RemoteBrowserFactory do
+    subject { factory }
+
     let(:factory_class) { Class.new(BrowserFactory::Base) }
     let(:factory) { factory_class.new(:foo).extend(RemoteBrowserFactory) }
+
+    it { is_expected.to be_a(RemoteBrowserFactory) }
 
     describe "#browser_options" do
       subject { factory.browser_options(config) }

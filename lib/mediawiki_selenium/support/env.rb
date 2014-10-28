@@ -12,7 +12,6 @@ https://git.wikimedia.org/blob/mediawiki%2Fselenium/HEAD/CREDITS.
 # before all
 require "bundler/setup"
 require "page-object/page_factory"
-require "rest_client"
 require "watir-webdriver"
 
 require "mediawiki_selenium/support/modules/api_helper"
@@ -139,11 +138,4 @@ def sauce_browser(test_name, configuration)
 end
 def set_cookie(browser)
   # implement this method in env.rb of the repository where it is needed
-end
-def test_name(scenario)
-  if scenario.respond_to? :feature
-    "#{scenario.feature.title}: #{scenario.title}"
-  elsif scenario.respond_to? :scenario_outline
-    "#{scenario.scenario_outline.feature.title}: #{scenario.scenario_outline.title}: #{scenario.name}"
-  end
 end

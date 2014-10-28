@@ -170,13 +170,16 @@ module MediawikiSelenium
       #
       # @yield [browser]
       #
-      def each
-        @browser_cache.each { |_, browser| yield browser }
+      def each(&blk)
+        @browser_cache.values.each(&blk)
       end
 
       # Executes additional teardown tasks.
       #
-      def teardown
+      # @param env [Environment] Environment.
+      # @param status [Symbol] Status of the executed scenario.
+      #
+      def teardown(env, status)
         # abstract
       end
 
