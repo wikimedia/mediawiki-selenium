@@ -72,7 +72,7 @@ Before do |scenario|
   @random_string = Random.new.rand.to_s
 
   # Annotate sessions with Jenkins build info
-  bind(:job_name, :build_number) do |job, build, options|
+  browser_factory.bind(:job_name, :build_number) do |job, build, options|
     options[:desired_capabilities][:name] = "#{test_name(scenario)} #{job}##{build}"
   end
 end

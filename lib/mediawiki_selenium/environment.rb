@@ -68,32 +68,6 @@ module MediawikiSelenium
       with_alternative([:mediawiki_user, :mediawiki_password], id, &blk)
     end
 
-    # Binds new possible configuration for the given browser.
-    #
-    # @example Allow setting of Firefox's language by way of :browser_language
-    #   Before do
-    #     env.bind(:firefox, :browser_language) do |language, options|
-    #       options[:desired_capabilities][:firefox_profile]["intl.accept_languages"] = language
-    #     end
-    #   end
-    #
-    # @example Annotate the session with the scenario name Jenkins job info
-    #   Before do |scenario|
-    #     env.bind(:firefox, :job_name, :build_number) do |job, build, options|
-    #       options[:desired_capabilities][:name] = "#{scenario.name} - #{job} ##{build}"
-    #     end
-    #   end
-    #
-    # @param browser_name [Symbol] Browser name.
-    # @param option_names [*Symbol] Option names.
-    #
-    # @yield [value, browser_options] A block that binds the configuration to
-    #                                 the browser options.
-    #
-    def bind(browser_name, *option_names, &blk)
-      browser_factory(browser_name).bind(option_name, &blk)
-    end
-
     # Browser with which to drive tests.
     #
     # @return [Watir::Browser]
