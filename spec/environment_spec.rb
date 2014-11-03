@@ -153,7 +153,7 @@ module MediawikiSelenium
         let(:browser) { nil }
 
         it "raises a ConfigurationError" do
-          expect { subject }.to raise_error(Environment::ConfigurationError)
+          expect { subject }.to raise_error(ConfigurationError)
         end
       end
     end

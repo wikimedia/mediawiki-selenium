@@ -5,18 +5,6 @@ module MediawikiSelenium
   class Environment
     include Comparable
 
-    class ConfigurationError < StandardError
-      attr_reader :name
-
-      def initialize(name)
-        @name = name
-      end
-
-      def to_s
-        "missing configuration for #{name}"
-      end
-    end
-
     CORE_BROWSER_OPTIONS = [
       :browser,
       :mediawiki_url,
