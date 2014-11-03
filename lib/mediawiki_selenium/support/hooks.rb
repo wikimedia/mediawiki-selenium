@@ -88,5 +88,9 @@ After do |scenario|
     embed path, "image/png"
   end
 
-  teardown(scenario.status)
+  if scenario.respond_to?(:status)
+    teardown(scenario.status)
+  else
+    teardown
+  end
 end

@@ -180,7 +180,7 @@ module MediawikiSelenium
     # @param status [Symbol] Status of the executed scenario.
     #
     def teardown(status = :passed)
-      @factories.each do |factory|
+      @factory_cache.each do |_, factory|
         factory.each { |browser| browser.close } unless keep_browser_open?
         factory.teardown(self, status)
       end

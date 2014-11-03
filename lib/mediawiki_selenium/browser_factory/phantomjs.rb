@@ -7,12 +7,12 @@ module MediawikiSelenium
     #  - browser_user_agent
     #
     class Phantomjs < Base
-      bind(:browser_language) do |language, opts|
-        opts[:desired_capabilities]["phantomjs.page.customHeaders.Accept-Language"] = language
+      bind(:browser_language) do |language, options|
+        options[:desired_capabilities]["phantomjs.page.customHeaders.Accept-Language"] = language
       end
 
-      bind(:browser_user_agent) do |user_agent, opts|
-        opts[:desired_capabilities]["phantomjs.page.settings.userAgent"] = user_agent
+      bind(:browser_user_agent) do |user_agent, options|
+        options[:desired_capabilities]["phantomjs.page.settings.userAgent"] = user_agent
       end
     end
   end

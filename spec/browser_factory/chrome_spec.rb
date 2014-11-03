@@ -16,21 +16,11 @@ module MediawikiSelenium::BrowserFactory
     describe "#browser_options" do
       subject { factory.browser_options(config) }
 
-      let(:profile) { double(Selenium::WebDriver::Chrome::Profile) }
-      let(:profile_hash) { double(Hash) }
-
-      before do
-        expect(Selenium::WebDriver::Chrome::Profile).to receive(:new).and_return(profile)
-        expect(profile).to receive(:as_json).and_return(profile_hash)
-        expect(profile_hash).to receive(:[]).with("zip")
-      end
-
       context "given a custom browser_language" do
         let(:config) { { browser_language: "eo" } }
 
-        it "sets intl.accept_languages to the given language" do
-          expect(profile).to receive(:[]=).with("intl.accept_languages", "eo")
-          subject
+        it "sets the intl.accept_languages preference to the given language" do
+          expect(subject[:prefs]).to include("intl.accept_languages" => "eo")
         end
       end
 
@@ -38,8 +28,7 @@ module MediawikiSelenium::BrowserFactory
         let(:config) { { browser_user_agent: "FooBot" } }
 
         it "includes it as --user-agent in the chrome arguments" do
-          arguments = subject[:desired_capabilities]["chromeOptions"]["args"]
-          expect(arguments).to include("--user-agent=FooBot")
+          expect(subject[:args]).to include("--user-agent=FooBot")
         end
       end
     end

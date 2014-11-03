@@ -185,6 +185,10 @@ module MediawikiSelenium
 
       protected
 
+      def default_browser_options
+        { http_client: http_client, desired_capabilities: desired_capabilities }
+      end
+
       def desired_capabilities
         Selenium::WebDriver::Remote::Capabilities.send(browser_name)
       end
@@ -199,12 +203,6 @@ module MediawikiSelenium
 
       def new_browser(options)
         Watir::Browser.new(options[:desired_capabilities].browser_name, options)
-      end
-
-      private
-
-      def default_browser_options
-        { http_client: http_client, desired_capabilities: desired_capabilities }
       end
     end
   end
