@@ -158,6 +158,12 @@ module MediawikiSelenium
       end
     end
 
+    describe "#env" do
+      subject { env.env }
+
+      it { is_expected.to be(env) }
+    end
+
     describe "#on_wiki" do
       let(:config) do
         {

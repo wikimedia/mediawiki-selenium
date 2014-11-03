@@ -42,6 +42,18 @@ module MediawikiSelenium
       @config == other.config
     end
 
+    # Returns the configured value for the given env variable name.
+    #
+    # @see #lookup
+    #
+    # @param key [Symbol] Environment variable name.
+    #
+    # @return [String]
+    #
+    def [](key)
+      lookup(key)
+    end
+
     # Executes the given block within the context of an environment that's
     # using the given alternative user and its password.
     #
@@ -85,6 +97,21 @@ module MediawikiSelenium
     #
     def browser_name
       lookup(:browser).downcase.to_sym
+    end
+
+    # A reference to this environment. Can be used in conjunction with {#[]}
+    # for syntactic sugar in looking up environment configuration where `self`
+    # would otherwise seem ambiguous.
+    #
+    # @example
+    #   Then(/^I see my username on the page$/) do
+    #     expect(on(SomePage).html).to include(env[:mediawiki_user])
+    #   end
+    #
+    # @return [self]
+    #
+    def env
+      self
     end
 
     # Whether browsers should be left open after each scenario completes.
