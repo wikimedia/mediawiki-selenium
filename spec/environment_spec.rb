@@ -69,10 +69,6 @@ module MediawikiSelenium
         expect(subject).to be_a(BrowserFactory::Firefox)
       end
 
-      it "binds the core browser options" do
-        expect(subject.bindings).to include(*Environment::CORE_BROWSER_OPTIONS)
-      end
-
       context "given an explicit type of browser" do
         subject { env.browser_factory(:chrome) }
 
@@ -181,6 +177,53 @@ module MediawikiSelenium
         ))
         expect { |block| env.on_wiki(:b, &block) }.to yield_with_args(expected_env)
       end
+    end
+
+    describe "#wiki_url" do
+      subject { env.wiki_url(url) }
+
+      let(:env) { Environment.new(mediawiki_url: "http://an.example/wiki/") }
+
+      context "with no given url" do
+        let(:url) { nil }
+
+        it "is the configured :mediawiki_url" do
+          expect(subject).to eq("http://an.example/wiki/")
+        end
+      end
+
+      context "when the given URL is a relative path" do
+        let(:url) { "some/path" }
+
+        it "is the configured :mediawiki_url with the path appended" do
+          expect(subject).to eq("http://an.example/wiki/some/path")
+        end
+      end
+
+      context "when the given URL is an absolute path" do
+        let(:url) { "/some/path" }
+
+        it "is the configured :mediawiki_url with the path replaced" do
+          expect(subject).to eq("http://an.example/some/path")
+        end
+      end
+
+      context "when the given URL is an absolute URL" do
+        let(:url) { "http://another.example" }
+
+        it "is given absolute URL" do
+          expect(subject).to eq("http://another.example")
+        end
+      end
+
+      context "when the given URL is a relative path with a namespace" do
+        let(:url) { "some:path" }
+
+        it "is the configured :mediawiki_url with the path replaced" do
+          expect(subject).to eq("http://an.example/wiki/some:path")
+        end
+      end
+
     end
 
     describe "#with_alternative" do

@@ -1,6 +1,8 @@
 module MediawikiSelenium
-  # Provides an abstraction layer between the environmental configuration and
-  # step definitions.
+  # Provides an interface that unifies environmental configuration, page
+  # objects, and browser initialization. Additionally, it provides step
+  # definition grammars for switching between environmental contexts and
+  # isolated browser sessions within a single test scenario.
   #
   class Environment
     include Comparable
@@ -215,6 +217,50 @@ module MediawikiSelenium
       else
         scenario.name
       end
+    end
+
+    # Navigates the current browser to the given wiki.
+    #
+    # @param id [Symbol] Alternative wiki ID.
+    #
+    # @yield [env]
+    # @yieldparam env [Environment] Environment
+    #
+    # @return [Environment]
+    #
+    def visit_wiki(id, &blk)
+      on_wiki(id) do |env|
+        browser.goto env.wiki_url
+        blk.call(env) unless blk.nil?
+      end
+    end
+
+    # Qualifies any given relative path using the configured `:mediawiki_url`.
+    # Absolute URLs are left untouched.
+    #
+    # @example
+    #   env = Environment.new(mediawiki_url: "http://an.example/wiki/")
+    #
+    #   env.wiki_url("page") # => "http://an.example/wiki/page"
+    #   env.wiki_url("/page") # => "http://an.example/page"
+    #   env.wiki_url("http://other.example") # => "http://other.example"
+    #
+    def wiki_url(path = nil)
+      url = lookup(:mediawiki_url)
+
+      if path
+        # Prefixing relative paths with an explicit "./" guarantees proper
+        # parsing of paths like "Special:Page" that would otherwise be
+        # confused for URI schemes.
+        if path.include?(":")
+          path_uri = URI.parse(path)
+          path = "./#{path}" if path_uri.class == URI::Generic && !path.start_with?("/")
+        end
+
+        url = URI.parse(url).merge(path).to_s
+      end
+
+      url
     end
 
     # Yields a new environment using the alternative versions of the given
