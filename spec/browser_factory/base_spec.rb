@@ -108,16 +108,14 @@ module MediawikiSelenium::BrowserFactory
     end
 
     describe "#browser_for" do
-      subject { factory.browser_for(env) }
+      subject { factory.browser_for(config) }
 
-      let(:env) { MediawikiSelenium::Environment.new(foo: "x", bar: "y") }
+      let(:config) { { foo: "x" } }
 
       let(:watir_browser) { double(Watir::Browser) }
       let(:capabilities) { double(Selenium::WebDriver::Remote::Capabilities) }
 
       before do
-        factory.bind(:foo)
-
         expect(Selenium::WebDriver::Remote::Capabilities).to receive(browser_name).
           at_least(:once).and_return(capabilities)
         expect(capabilities).to receive(:browser_name).
@@ -130,36 +128,25 @@ module MediawikiSelenium::BrowserFactory
       end
 
       context "called more than once" do
-        let(:env1) { env }
+        let(:config1) { config }
 
-        context "with differing env configuration" do
-          context "that is bound" do
-            let(:env2) { MediawikiSelenium::Environment.new(foo: "z") }
-
-            it "returns two distinct browsers" do
-              expect(Watir::Browser).to receive(:new).twice
-
-              factory.browser_for(env1)
-              factory.browser_for(env2)
-            end
-          end
-
-          context "that is not bound" do
-            let(:env2) { MediawikiSelenium::Environment.new(foo: "x", bar: "z") }
-
-            it "returns a cached browser" do
-              expect(Watir::Browser).to receive(:new).once.and_return(watir_browser)
-              expect(factory.browser_for(env1)).to be(factory.browser_for(env2))
-            end
-          end
-        end
-
-        context "with the same env configuration" do
-          let(:env2) { MediawikiSelenium::Environment.new(foo: "x") }
+        context "with the same configuration" do
+          let(:config2) { config }
 
           it "returns a cached browser" do
             expect(Watir::Browser).to receive(:new).once.and_return(watir_browser)
-            expect(factory.browser_for(env1)).to be(factory.browser_for(env2))
+            expect(factory.browser_for(config1)).to be(factory.browser_for(config2))
+          end
+        end
+
+        context "with different configuration" do
+          let(:config2) { { foo: "y" } }
+
+          it "returns two distinct browsers" do
+            expect(Watir::Browser).to receive(:new).twice
+
+            factory.browser_for(config1)
+            factory.browser_for(config2)
           end
         end
       end

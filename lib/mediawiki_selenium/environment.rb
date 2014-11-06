@@ -1,17 +1,11 @@
 module MediawikiSelenium
   # Provides an interface that unifies environmental configuration, page
-  # objects, and browser initialization. Additionally, it provides step
-  # definition grammars for switching between environmental contexts and
-  # isolated browser sessions within a single test scenario.
+  # objects, and browser setup. Additionally, it provides grammars for
+  # switching between user/wiki/browser contexts in ways that help promote
+  # decouple test implementation.
   #
   class Environment
     include Comparable
-
-    CORE_BROWSER_OPTIONS = [
-      :browser,
-      :mediawiki_url,
-      :mediawiki_user,
-    ]
 
     REQUIRED_CONFIG = [
       :browser,
@@ -75,7 +69,7 @@ module MediawikiSelenium
     # @return [Watir::Browser]
     #
     def browser
-      browser_factory.browser_for(self)
+      browser_factory.browser_for(browser_config)
     end
 
     # Factory used to instantiate and open new browsers.
@@ -88,7 +82,7 @@ module MediawikiSelenium
       browser = browser.to_s.downcase.to_sym
 
       @factory_cache[[remote?, browser]] ||= BrowserFactory.new(browser).tap do |factory|
-        CORE_BROWSER_OPTIONS.each { |name| factory.bind(name) }
+        factory.bind(:_browser_session)
         factory.extend(RemoteBrowserFactory) if remote?
       end
     end
@@ -293,6 +287,10 @@ module MediawikiSelenium
     end
 
     private
+
+    def browser_config
+      lookup_all(browser_factory.all_binding_keys)
+    end
 
     def normalize_config(hash)
       hash.each.with_object({}) { |(k, v), acc| acc[k.to_s.downcase.to_sym] = v }

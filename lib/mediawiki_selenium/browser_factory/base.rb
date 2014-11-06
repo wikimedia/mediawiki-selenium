@@ -70,6 +70,14 @@ module MediawikiSelenium
         @browser_cache = {}
       end
 
+      # Returns a unique set of all the binding keys.
+      #
+      # @return [Array]
+      #
+      def all_binding_keys
+        bindings.keys.flatten.uniq
+      end
+
       # Binds environmental configuration to any browser created by this
       # factory instance.
       #
@@ -112,34 +120,17 @@ module MediawikiSelenium
       end
 
       # Instantiate a browser using the given environmental configuration.
-      # Browsers are cached and reused as long as the *bound* configuration is
-      # the same.
+      # Browsers are cached and reused as long as the configuration is the
+      # same.
       #
-      # @example Browser is reused given the same effective configuration
-      #   factory.bind(:foo) { ... }
-      #   factory.bind(:bar) { ... }
-      #
-      #   b1 = factory.browser_for(Environment.new(foo: "x", bar: "y"))
-      #   b2 = factory.browser_for(Environment.new(bar: "x", bar: "y", baz: "z"))
-      #
-      #   b1.object_id == b2.object_id # => true
-      #
-      # @example A new browser is instantiated given different configuration
-      #   factory.bind(:foo) { ... }
-      #   factory.bind(:bar) { ... }
-      #
-      #   b1 = factory.browser_for(Environment.new(foo: "x", bar: "y"))
-      #   b2 = factory.browser_for(Environment.new(bar: "x", bar: "a"))
-      #
-      #   b1.object_id == b2.object_id # => false
-      #
-      # @param env [Environment]
+      # @param config [Hash] Browser configuration.
       #
       # @return [Watir::Browser]
       #
-      def browser_for(env)
-        config = env.lookup_all(bindings.keys.flatten.uniq)
-        @browser_cache[config] ||= new_browser(browser_options(config))
+      # @see #new_browser_for
+      #
+      def browser_for(config)
+        @browser_cache[config] ||= new_browser_for(config)
       end
 
       # Browser options for the given configuration.
@@ -172,6 +163,18 @@ module MediawikiSelenium
       #
       def each(&blk)
         @browser_cache.values.each(&blk)
+      end
+
+      # A new browser for the given environmental configuration.
+      #
+      # @param config [Hash] Browser configuration.
+      #
+      # @return [Watir::Browser]
+      #
+      # @see #browser_for
+      #
+      def new_browser_for(config)
+        new_browser(browser_options(config))
       end
 
       # Executes additional teardown tasks.
