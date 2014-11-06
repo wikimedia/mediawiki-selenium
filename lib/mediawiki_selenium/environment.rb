@@ -110,6 +110,47 @@ module MediawikiSelenium
       self
     end
 
+    # Executes the given block within the context of an environment that uses
+    # a unique browser session and possibly different configuration. Note that
+    # any given configuration overrides are scoped with a `:browser_` prefix.
+    #
+    # @example Implement a "logged out" step following some authenticated one
+    #   When(/^I do something while logged in$/) do
+    #     in_browser(:a) do
+    #       # perform action in logged in session
+    #     end
+    #   end
+    #
+    #   When(/^I do something else after logging out$/) do
+    #     in_browser(:b) do
+    #       # perform action in logged out session without actually logging
+    #       # out since that would affect all auth sessions for the user
+    #     end
+    #   end
+    #
+    # @example Perform a subsequent step requiring a different browser language
+    #   When(/^I visit the same page with my browser in Spanish$/) do |scenario, block|
+    #     in_browser(:a, language: "es") do
+    #       # test that it now serves up Spanish text
+    #     end
+    #   end
+    #
+    # @param id [Symbol] Browser session ID.
+    # @param overrides [Hash] Browser configuration overrides.
+    #
+    # @yield [env]
+    # @yieldparam env [Environment] Environment
+    #
+    # @return [Environment]
+    #
+    def in_browser(id, overrides = {}, &blk)
+      overrides = overrides.each.with_object({}) do |(name, value), hash|
+        hash["browser_#{name}".to_sym] = value
+      end
+
+      with(overrides.merge(_browser_session: id), &blk)
+    end
+
     # Whether browsers should be left open after each scenario completes.
     #
     def keep_browser_open?

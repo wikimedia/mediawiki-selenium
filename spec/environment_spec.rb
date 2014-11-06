@@ -160,6 +160,27 @@ module MediawikiSelenium
       it { is_expected.to be(env) }
     end
 
+    describe "#in_browser" do
+      subject { env.in_browser(id, overrides, &blk) }
+
+      let(:id) { :a }
+      let(:overrides) { {} }
+
+      it "yields an environment with a new browser session" do
+        expected_env = Environment.new(config.merge(_browser_session: id))
+        expect { |block| env.in_browser(id, overrides, &block) }.to yield_with_args(expected_env)
+      end
+
+      context "given browser configuration overrides" do
+        let(:overrides) { { language: "eo" } }
+
+        it "yields an environment with the prefixed overrides" do
+          expected_env = Environment.new(config.merge(_browser_session: id, browser_language: "eo"))
+          expect { |block| env.in_browser(id, overrides, &block) }.to yield_with_args(expected_env)
+        end
+      end
+    end
+
     describe "#on_wiki" do
       let(:config) do
         {
