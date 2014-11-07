@@ -44,6 +44,8 @@ module MediawikiSelenium
     end
 
     describe "#as_user" do
+      subject { env.as_user(:b) {} }
+
       let(:config) do
         {
           mediawiki_user: "user",
@@ -53,12 +55,21 @@ module MediawikiSelenium
         }
       end
 
-      it "yields a new environment for the alternative user and its password" do
-        expected_env = Environment.new(config.merge(
+      let(:new_env) { double(Environment) }
+      let(:new_config) { double(Hash) }
+
+      before do
+        expect(env).to receive(:clone).and_return(new_env)
+        expect(new_env).to receive(:config).and_return(new_config)
+      end
+
+      it "executes in the new environment for the alternative user and its password" do
+        expect(new_config).to receive(:merge!).with(
           mediawiki_user: "user b",
           mediawiki_password: "pass b",
-        ))
-        expect { |block| env.as_user(:b, &block) }.to yield_with_args(expected_env)
+        )
+        expect(new_env).to receive(:instance_exec).with("user b", "pass b")
+        subject
       end
     end
 
@@ -161,27 +172,39 @@ module MediawikiSelenium
     end
 
     describe "#in_browser" do
-      subject { env.in_browser(id, overrides, &blk) }
+      subject { env.in_browser(id, overrides) {} }
 
       let(:id) { :a }
       let(:overrides) { {} }
 
-      it "yields an environment with a new browser session" do
-        expected_env = Environment.new(config.merge(_browser_session: id))
-        expect { |block| env.in_browser(id, overrides, &block) }.to yield_with_args(expected_env)
+      let(:new_env) { double(Environment) }
+      let(:new_config) { double(Hash) }
+
+      before do
+        expect(env).to receive(:clone).and_return(new_env)
+        expect(new_env).to receive(:config).and_return(new_config)
+      end
+
+      it "executes in the new environment with a new browser session" do
+        expect(new_config).to receive(:merge!).with(_browser_session: id)
+        expect(new_env).to receive(:instance_exec).with(id)
+        subject
       end
 
       context "given browser configuration overrides" do
         let(:overrides) { { language: "eo" } }
 
-        it "yields an environment with the prefixed overrides" do
-          expected_env = Environment.new(config.merge(_browser_session: id, browser_language: "eo"))
-          expect { |block| env.in_browser(id, overrides, &block) }.to yield_with_args(expected_env)
+        it "executes in the new environment with the prefixed overrides" do
+          expect(new_config).to receive(:merge!).with(_browser_session: id, browser_language: "eo")
+          expect(new_env).to receive(:instance_exec).with("eo", id)
+          subject
         end
       end
     end
 
     describe "#on_wiki" do
+      subject { env.on_wiki(:b) {} }
+
       let(:config) do
         {
           mediawiki_url: "http://an.example/wiki",
@@ -191,12 +214,24 @@ module MediawikiSelenium
         }
       end
 
-      it "yields a new environment for the alternative wiki and API urls" do
-        expected_env = Environment.new(config.merge(
+      let(:new_env) { double(Environment) }
+      let(:new_config) { double(Hash) }
+
+      before do
+        expect(env).to receive(:clone).and_return(new_env)
+        expect(new_env).to receive(:config).and_return(new_config)
+      end
+
+      it "executes in the new environment using the alternative wiki and API urls" do
+        expect(new_config).to receive(:merge!).with(
           mediawiki_url: "http://alt.example/wiki",
-          mediawiki_api_url: "http://alt.example/api",
-        ))
-        expect { |block| env.on_wiki(:b, &block) }.to yield_with_args(expected_env)
+          mediawiki_api_url: "http://alt.example/api"
+        )
+        expect(new_env).to receive(:instance_exec).with(
+          "http://alt.example/wiki",
+          "http://alt.example/api"
+        )
+        subject
       end
     end
 
@@ -248,6 +283,8 @@ module MediawikiSelenium
     end
 
     describe "#with_alternative" do
+      subject { env.with_alternative(names, id) {} }
+
       let(:config) do
         {
           mediawiki_url: "http://an.example/wiki",
@@ -257,26 +294,39 @@ module MediawikiSelenium
         }
       end
 
+      let(:new_env) { double(Environment) }
+      let(:new_config) { double(Hash) }
+
+      before do
+        expect(env).to receive(:clone).and_return(new_env)
+        expect(new_env).to receive(:config).and_return(new_config)
+      end
+
       context "given one option name and an ID" do
         let(:names) { :mediawiki_url }
+        let(:id) { :b }
 
-        it "yields an environment that substitutes it using the alternative" do
-          expected_env = Environment.new(config.merge(
-            mediawiki_url: "http://alt.example/wiki",
-          ))
-          expect { |block| env.with_alternative(names, :b, &block) }.to yield_with_args(expected_env)
+        it "executes in the new environment that substitutes it using the alternative" do
+          expect(new_config).to receive(:merge!).with(mediawiki_url: "http://alt.example/wiki")
+          expect(new_env).to receive(:instance_exec).with("http://alt.example/wiki")
+          subject
         end
       end
 
       context "given multiple option names and an ID" do
         let(:names) { [:mediawiki_url, :mediawiki_api_url] }
+        let(:id) { :b }
 
-        it "yields an environment that substitutes both using the alternatives" do
-          expected_env = Environment.new(config.merge(
+        it "executes in the new environment that substitutes both using the alternatives" do
+          expect(new_config).to receive(:merge!).with(
             mediawiki_url: "http://alt.example/wiki",
-            mediawiki_api_url: "http://alt.example/api",
-          ))
-          expect { |block| env.with_alternative(names, :b, &block) }.to yield_with_args(expected_env)
+            mediawiki_api_url: "http://alt.example/api"
+          )
+          expect(new_env).to receive(:instance_exec).with(
+            "http://alt.example/wiki",
+            "http://alt.example/api"
+          )
+          subject
         end
       end
     end

@@ -55,8 +55,9 @@ module MediawikiSelenium
     #
     # @param id [Symbol] Alternative user ID.
     #
-    # @yield [env]
-    # @yieldparam env [Environment] Environment
+    # @yield [user, password]
+    # @yieldparam user [String] Alternative MediaWiki user.
+    # @yieldparam password [String] Alternative MediaWiki password.
     #
     # @return [Environment]
     #
@@ -138,8 +139,7 @@ module MediawikiSelenium
     # @param id [Symbol] Browser session ID.
     # @param overrides [Hash] Browser configuration overrides.
     #
-    # @yield [env]
-    # @yieldparam env [Environment] Environment
+    # @yield [*args] Overridden browser configuration.
     #
     # @return [Environment]
     #
@@ -201,10 +201,14 @@ module MediawikiSelenium
     # Executes the given block within the context of an environment that's
     # using the given alternative wiki URL and its corresponding API endpoint.
     #
+    # @example Visit a random page on wiki B
+    #   on_wiki(:b) { visit(RandomPage) }
+    #
     # @param id [Symbol] Alternative wiki ID.
     #
-    # @yield [env]
-    # @yieldparam env [Environment] Environment
+    # @yield [wiki_url, api_url]
+    # @yieldparam wiki_url [String] Alternative wiki URL.
+    # @yieldparam api_url [String] Alternative API URL.
     #
     # @return [Environment]
     #
@@ -258,15 +262,15 @@ module MediawikiSelenium
     #
     # @param id [Symbol] Alternative wiki ID.
     #
-    # @yield [env]
-    # @yieldparam env [Environment] Environment
+    # @yield [url]
+    # @yieldparam url [String] Wiki URL.
     #
     # @return [Environment]
     #
     def visit_wiki(id, &blk)
-      on_wiki(id) do |env|
-        browser.goto env.wiki_url
-        blk.call(env) unless blk.nil?
+      on_wiki(id) do |url|
+        browser.goto url
+        instance_exec(url, &blk) unless blk.nil?
       end
     end
 
@@ -298,28 +302,30 @@ module MediawikiSelenium
       url
     end
 
-    # Yields a new environment using the alternative versions of the given
-    # configuration options. The alternative values are resolved by looking up
-    # options that correspond to the given ones but have the given ID
-    # appended.
+    # Executes the given block within the context of a new environment
+    # configured using the alternative versions of the given options. The
+    # alternative configuration values are resolved using the given ID and
+    # passed to the block as arguments.
     #
     # @example Overwrite :foo with the :b alternative
-    #   # given an environment with { foo: "x", foo_b: "y", ... }
-    #   env.with_alternative(:foo, :b) do |env|
-    #     env # => { foo: "y", ... }
+    #   # given an environment with config { foo: "x", foo_b: "y", ... }
+    #   with_alternative(:foo, :b) do |foo|
+    #     self # => #<Environment @config = { foo: "y", ... }>
+    #     foo # => "y"
     #   end
     #
     # @example Overwrite both :foo and :bar with the :b alternatives
-    #   # given { foo: "x", foo_b: "y", bar: "w", bar_b: "z" }
-    #   env.with_alternative([:foo, :bar], :b) do |env|
-    #     env # => { foo: "y", bar: "z", ... }
+    #   # given an environment with config { foo: "x", foo_b: "y", bar: "w", bar_b: "z" }
+    #   with_alternative([:foo, :bar], :b) do |foo, bar|
+    #     self # => #<Environment @config = { foo: "y", bar: "z", ... }>
+    #     foo # => "y"
+    #     bar # => "z"
     #   end
     #
-    # @param names [Array|Symbol] Configuration option or options.
+    # @param names [Symbol|Array<Symbol>] Configuration option or options.
     # @param id [Symbol] Alternative user ID.
     #
-    # @yield [env]
-    # @yieldparam env [Environment] The modified environment.
+    # @yield [*args] Values of the overridden configuration.
     #
     # @return [Environment] The modified environment.
     #
@@ -337,10 +343,12 @@ module MediawikiSelenium
       hash.each.with_object({}) { |(k, v), acc| acc[k.to_s.downcase.to_sym] = v }
     end
 
-    def with(overrides = {})
+    def with(overrides = {}, &blk)
+      overrides = normalize_config(overrides)
+
       clone.tap do |env|
-        env.config.merge!(normalize_config(overrides))
-        yield env
+        env.config.merge!(overrides)
+        env.instance_exec(*overrides.values, &blk) unless blk.nil?
       end
     end
   end
