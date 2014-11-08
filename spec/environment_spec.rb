@@ -282,6 +282,50 @@ module MediawikiSelenium
       end
     end
 
+    describe "#user" do
+      subject { env.user(id) }
+
+      let(:config) { { mediawiki_user: "mw_user", mediawiki_user_b: "mw_user_b" } }
+
+      context "given no alternative ID" do
+        let(:id) { nil }
+
+        it "returns the configured :mediawiki_user" do
+          expect(subject).to eq("mw_user")
+        end
+      end
+
+      context "given an alternative ID" do
+        let(:id) { :b }
+
+        it "returns the configured alternative :mediawiki_user" do
+          expect(subject).to eq("mw_user_b")
+        end
+      end
+    end
+
+    describe "#user_label" do
+      subject { env.user_label(id) }
+
+      let(:config) { { mediawiki_user: "mw_user", mediawiki_user_b: "mw_user_b" } }
+
+      context "given no alternative ID" do
+        let(:id) { nil }
+
+        it "returns the configured :mediawiki_user with underscores replaced" do
+          expect(subject).to eq("mw user")
+        end
+      end
+
+      context "given an alternative ID" do
+        let(:id) { :b }
+
+        it "returns the configured alternative :mediawiki_user with underscores replaced" do
+          expect(subject).to eq("mw user b")
+        end
+      end
+    end
+
     describe "#wiki_url" do
       subject { env.wiki_url(url) }
 

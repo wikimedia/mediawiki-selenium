@@ -280,6 +280,17 @@ module MediawikiSelenium
       lookup(:mediawiki_user, id)
     end
 
+    # Returns the current user, or the one for the given alternative, with all
+    # "_" replaced with " ".
+    #
+    # @param id [Symbol] Alternative user ID.
+    #
+    # @return [String]
+    #
+    def user_label(id = nil)
+      user(id).gsub("_", " ")
+    end
+
     # Navigates the current browser to the given wiki.
     #
     # @param id [Symbol] Alternative wiki ID.
