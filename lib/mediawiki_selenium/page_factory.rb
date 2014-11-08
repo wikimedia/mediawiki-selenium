@@ -31,5 +31,8 @@ module MediawikiSelenium
       end
     end
 
+    # @see #on_page
+    alias on on_page
+
   end
 end

@@ -202,6 +202,53 @@ module MediawikiSelenium
       end
     end
 
+    describe "#lookup" do
+      subject { env.lookup(key, id) }
+
+      let(:config) { { foo: "foo_value", foo_b: "foo_b_value", bar: "bar_value" } }
+
+      context "given no alternative ID" do
+        let(:id) { nil }
+        let(:key) { :foo }
+
+        it "looks up the given key only" do
+          expect(subject).to eq("foo_value")
+        end
+
+        context "and a key that doesn't exist" do
+          let(:key) { :baz }
+
+          it { is_expected.to be(nil) }
+        end
+      end
+
+      context "given an alternative ID" do
+        let(:id) { :b }
+
+        context "for an alternative that exists" do
+          let(:key) { :foo }
+
+          it "returns the alternative value" do
+            expect(subject).to eq("foo_b_value")
+          end
+        end
+
+        context "for an alternative that doesn't exist" do
+          let(:key) { :bar }
+
+          it "falls back to the base value" do
+            expect(subject).to eq("bar_value")
+          end
+        end
+
+        context "and a key that doesn't exist" do
+          let(:key) { :baz }
+
+          it { is_expected.to be(nil) }
+        end
+      end
+    end
+
     describe "#on_wiki" do
       subject { env.on_wiki(:b) {} }
 

@@ -13,12 +13,6 @@ Before("@custom-browser") do |scenario|
   @scenario = scenario
 end
 
-Before("@login") do
-  ENV["MEDIAWIKI_PASSWORD"] = ENV[ENV["MEDIAWIKI_PASSWORD_VARIABLE"]] if ENV["MEDIAWIKI_PASSWORD_VARIABLE"]
-  puts "MEDIAWIKI_USER environment variable is not defined! Please export a value for that variable before proceeding." unless ENV["MEDIAWIKI_USER"]
-  puts "MEDIAWIKI_PASSWORD environment variable is not defined! Please export a value for that variable before proceeding." unless ENV["MEDIAWIKI_PASSWORD"]
-end
-
 AfterConfiguration do |config|
   # Install a formatter that can be used to show feature-related warnings
   pretty_format, io = config.formats.find { |(format, io)| format == "pretty" }

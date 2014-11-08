@@ -1,8 +1,8 @@
 module MediawikiSelenium
   # Provides an interface that unifies environmental configuration, page
-  # objects, and browser setup. Additionally, it provides grammars for
-  # switching between user/wiki/browser contexts in ways that help promote
-  # decouple test implementation.
+  # objects, and browser setup. Additionally, it provides a DSL for switching
+  # between user/wiki/browser contexts in ways that help to decouple test
+  # implementation from the target wikis.
   #
   class Environment
     include Comparable
@@ -62,7 +62,7 @@ module MediawikiSelenium
     # @return [Environment]
     #
     def as_user(id, &blk)
-      with_alternative([:mediawiki_user, :mediawiki_password], id, &blk)
+      with_alternative([:mediawiki_user, password_variable], id, &blk)
     end
 
     # Browser with which to drive tests.
@@ -165,14 +165,14 @@ module MediawikiSelenium
     # @return [String]
     #
     def lookup(key, id = nil)
-      key = "#{key}_#{id}" unless id.nil?
-      key = key.to_sym
-      value = @config[key]
+      full_key = id.nil? ? key : "#{key}_#{id}"
+      full_key = full_key.to_sym
+      value = @config[full_key]
 
       if value.nil? || value.to_s.empty?
         if id.nil?
-          if REQUIRED_CONFIG.include?(key)
-            raise ConfigurationError, key
+          if REQUIRED_CONFIG.include?(full_key)
+            raise ConfigurationError, full_key
           else
             nil
           end
@@ -216,6 +216,17 @@ module MediawikiSelenium
       with_alternative([:mediawiki_url, :mediawiki_api_url], id, &blk)
     end
 
+    # Returns the current value for `:mediawiki_password` or the value for the
+    # given alternative.
+    #
+    # @param id [Symbol] Alternative user ID.
+    #
+    # @return [String]
+    #
+    def password(id = nil)
+      lookup(password_variable, id)
+    end
+
     # Whether this environment has been configured to use remote browser
     # sessions.
     #
@@ -256,6 +267,17 @@ module MediawikiSelenium
       else
         scenario.name
       end
+    end
+
+    # Returns the current value for `:mediawiki_user` or the value for the
+    # given alternative.
+    #
+    # @param id [Symbol] Alternative user ID.
+    #
+    # @return [String]
+    #
+    def user(id = nil)
+      lookup(:mediawiki_user, id)
     end
 
     # Navigates the current browser to the given wiki.
@@ -337,6 +359,11 @@ module MediawikiSelenium
 
     def browser_config
       lookup_all(browser_factory.all_binding_keys)
+    end
+
+    def password_variable
+      name = lookup(:mediawiki_password_variable)
+      (name.nil? || name.empty?) ? :mediawiki_password : name.to_sym
     end
 
     def normalize_config(hash)
