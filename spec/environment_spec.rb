@@ -203,48 +203,63 @@ module MediawikiSelenium
     end
 
     describe "#lookup" do
-      subject { env.lookup(key, id) }
+      subject { env.lookup(key, options) }
 
       let(:config) { { foo: "foo_value", foo_b: "foo_b_value", bar: "bar_value" } }
 
-      context "given no alternative ID" do
-        let(:id) { nil }
+      context "for a key that exists" do
         let(:key) { :foo }
+        let(:options) { {} }
 
-        it "looks up the given key only" do
+        it "returns the configuration" do
           expect(subject).to eq("foo_value")
-        end
-
-        context "and a key that doesn't exist" do
-          let(:key) { :baz }
-
-          it { is_expected.to be(nil) }
         end
       end
 
-      context "given an alternative ID" do
-        let(:id) { :b }
+      context "for a key that doesn't exist" do
+        let(:key) { :baz }
 
-        context "for an alternative that exists" do
-          let(:key) { :foo }
+        context "given no default value" do
+          let(:options) { {} }
 
-          it "returns the alternative value" do
-            expect(subject).to eq("foo_b_value")
+          it "raises a ConfigurationError" do
+            expect { subject }.to raise_error(ConfigurationError)
           end
         end
 
-        context "for an alternative that doesn't exist" do
-          let(:key) { :bar }
+        context "given a default value" do
+          let(:options) { { default: default } }
+          let(:default) { double(Object) }
 
-          it "falls back to the base value" do
-            expect(subject).to eq("bar_value")
+          it { is_expected.to be(default) }
+        end
+      end
+
+      context "for an alternative that exists" do
+        let(:key) { :foo }
+        let(:options) { { id: :b } }
+
+        it "returns the configured alternative" do
+          expect(subject).to eq("foo_b_value")
+        end
+      end
+
+      context "for an alternative that doesn't exist" do
+        let(:key) { :foo }
+
+        context "given no default value" do
+          let(:options) { { id: :c } }
+
+          it "raises a ConfigurationError" do
+            expect { subject }.to raise_error(ConfigurationError)
           end
         end
 
-        context "and a key that doesn't exist" do
-          let(:key) { :baz }
+        context "given a default value" do
+          let(:options) { { id: :c, default: default } }
+          let(:default) { double(Object) }
 
-          it { is_expected.to be(nil) }
+          it { is_expected.to be(default) }
         end
       end
     end

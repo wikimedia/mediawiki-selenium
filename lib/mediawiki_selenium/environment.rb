@@ -7,14 +7,6 @@ module MediawikiSelenium
   class Environment
     include Comparable
 
-    REQUIRED_CONFIG = [
-      :browser,
-      :mediawiki_api_url,
-      :mediawiki_password,
-      :mediawiki_url,
-      :mediawiki_user,
-    ]
-
     attr_reader :config
     protected :config
 
@@ -154,30 +146,38 @@ module MediawikiSelenium
     # Whether browsers should be left open after each scenario completes.
     #
     def keep_browser_open?
-      lookup(:keep_browser_open) == "true"
+      lookup(:keep_browser_open, default: "false") == "true"
     end
 
     # Returns the configured value for the given env variable name.
     #
+    # @example Value of `:browser_language` and fail if it wasn't provided
+    #   env.lookup(:browser_language)
+    #
+    # @example Value of `:browser_language` alternative `:b`
+    #   env.lookup(:browser_language, id: :b)
+    #
+    # @example Value of `:browser_language` or try `:browser_lang`
+    #   env.lookup(:browser_language, default: -> { env.lookup(:browser_lang) })
+    #
     # @param key [Symbol] Environment variable name.
-    # @param id [Symbol] Alternative variable suffix.
+    # @param options [Hash] Options.
+    # @option options [Symbol] :id Alternative ID.
+    # @option options [Object, Proc] :default Default value or promise of a value.
     #
     # @return [String]
     #
-    def lookup(key, id = nil)
-      full_key = id.nil? ? key : "#{key}_#{id}"
-      full_key = full_key.to_sym
-      value = @config[full_key]
+    def lookup(key, options = {})
+      key = "#{key}_#{options[:id]}" if options.fetch(:id, nil)
+      key = normalize_key(key)
+
+      value = @config[key]
 
       if value.nil? || value.to_s.empty?
-        if id.nil?
-          if REQUIRED_CONFIG.include?(full_key)
-            raise ConfigurationError, full_key
-          else
-            nil
-          end
+        if options.include?(:default)
+          options[:default].is_a?(Proc) ? options[:default].call : options[:default]
         else
-          lookup(key)
+          raise ConfigurationError, key
         end
       else
         value
@@ -187,14 +187,17 @@ module MediawikiSelenium
     # Returns the configured values for the given env variable names.
     #
     # @param keys [Array<Symbol>] Environment variable names.
-    # @param id [Symbol] Alternative variable suffix.
+    # @param options [Hash] Options.
+    # @option options [Symbol] :id Alternative ID.
+    # @option options [Object] :default Default if no configuration is found.
     #
     # @return [Array<String>]
     #
-    def lookup_all(keys, id = nil)
+    # @see #lookup
+    #
+    def lookup_all(keys, options = {})
       keys.each.with_object({}) do |key, hash|
-        value = lookup(key, id)
-        hash[key] = value unless value.nil?
+        hash[key] = lookup(key, options)
       end
     end
 
@@ -233,7 +236,7 @@ module MediawikiSelenium
     # @return [Boolean]
     #
     def remote?
-      RemoteBrowserFactory::REQUIRED_CONFIG.all? { |name| lookup(name) }
+      RemoteBrowserFactory::REQUIRED_CONFIG.all? { |name| lookup(name, default: false) }
     end
 
     # Executes teardown tasks including instructing all browser factories to
@@ -363,22 +366,26 @@ module MediawikiSelenium
     # @return [Environment] The modified environment.
     #
     def with_alternative(names, id, &blk)
-      with(lookup_all(Array(names), id), &blk)
+      with(lookup_all(Array(names), id: id), &blk)
     end
 
     private
 
     def browser_config
-      lookup_all(browser_factory.all_binding_keys)
+      lookup_all(browser_factory.all_binding_keys, default: nil).reject { |k, v| v.nil? }
     end
 
     def password_variable
-      name = lookup(:mediawiki_password_variable)
-      (name.nil? || name.empty?) ? :mediawiki_password : name.to_sym
+      name = lookup(:mediawiki_password_variable, default: "")
+      name.empty? ? :mediawiki_password : normalize_key(name)
     end
 
     def normalize_config(hash)
-      hash.each.with_object({}) { |(k, v), acc| acc[k.to_s.downcase.to_sym] = v }
+      hash.each.with_object({}) { |(k, v), acc| acc[normalize_key(k)] = v }
+    end
+
+    def normalize_key(key)
+      key.to_s.downcase.to_sym
     end
 
     def with(overrides = {}, &blk)
