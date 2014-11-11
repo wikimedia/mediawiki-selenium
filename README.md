@@ -177,6 +177,9 @@ See https://www.mediawiki.org/wiki/Gerrit
 
 ## Release notes
 
+### 0.4.1 2014-11-11
+* Additional headless environment variables: HEADLESS_DISPLAY, HEADLESS_REUSE, HEADLESS_DESTROY_AT_EXIT.
+
 ### 0.4.0 2014-09-23
 
 * Stricter pending behavior for falsely passing steps
