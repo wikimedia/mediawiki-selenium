@@ -265,14 +265,17 @@ module MediawikiSelenium
     end
 
     describe "#on_wiki" do
-      subject { env.on_wiki(:b) {} }
+      subject { env.on_wiki(id) {} }
+
+      let(:id) { :b }
 
       let(:config) do
         {
           mediawiki_url: "http://an.example/wiki",
-          mediawiki_url_b: "http://alt.example/wiki",
-          mediawiki_api_url: "http://an.example/api",
-          mediawiki_api_url_b: "http://alt.example/api",
+          mediawiki_api_url: "http://an.example/w/api.php",
+          mediawiki_url_b: "http://altb.example/wiki",
+          mediawiki_api_url_b: "http://altb.example/w/api.php",
+          mediawiki_url_c: "http://altc.example/wiki",
         }
       end
 
@@ -286,14 +289,30 @@ module MediawikiSelenium
 
       it "executes in the new environment using the alternative wiki and API urls" do
         expect(new_config).to receive(:merge!).with(
-          mediawiki_url: "http://alt.example/wiki",
-          mediawiki_api_url: "http://alt.example/api"
+          mediawiki_url: "http://altb.example/wiki",
+          mediawiki_api_url: "http://altb.example/w/api.php"
         )
         expect(new_env).to receive(:instance_exec).with(
-          "http://alt.example/wiki",
-          "http://alt.example/api"
+          "http://altb.example/wiki",
+          "http://altb.example/w/api.php"
         )
         subject
+      end
+
+      context "and no explicit API URL is configured for the wiki" do
+        let(:id) { :c }
+
+        it "constructs one relative to the wiki URL" do
+          expect(new_config).to receive(:merge!).with(
+            mediawiki_url: "http://altc.example/wiki",
+            mediawiki_api_url: "http://altc.example/w/api.php"
+          )
+          expect(new_env).to receive(:instance_exec).with(
+            "http://altc.example/wiki",
+            "http://altc.example/w/api.php"
+          )
+          subject
+        end
       end
     end
 

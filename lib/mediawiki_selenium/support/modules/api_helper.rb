@@ -5,16 +5,19 @@ module MediawikiSelenium
   # definitions.
   #
   module ApiHelper
-    # A pre-authenticated API client.
+    # An authenticated MediaWiki API client.
     #
     # @return [MediawikiApi::Client]
     #
     def api
-      return @api if defined?(@api)
+      @api_cache ||= {}
 
-      @api = MediawikiApi::Client.new(ENV["MEDIAWIKI_API_URL"])
-      @api.log_in(*ENV.values_at("MEDIAWIKI_USER", "MEDIAWIKI_PASSWORD")) unless @api.logged_in?
-      @api
+      url = lookup(:mediawiki_api_url, default: api_url_from(lookup(:mediawiki_url)))
+
+      @api_cache[url] ||= MediawikiApi::Client.new(url).tap do |client|
+        client.log_in(user, password)
+      end
     end
+
   end
 end

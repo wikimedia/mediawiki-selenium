@@ -204,6 +204,9 @@ module MediawikiSelenium
     # Executes the given block within the context of an environment that's
     # using the given alternative wiki URL and its corresponding API endpoint.
     #
+    # If no API URL is explicitly defined for the given alternative, one is
+    # constructed relative to the wiki URL.
+    #
     # @example Visit a random page on wiki B
     #   on_wiki(:b) { visit(RandomPage) }
     #
@@ -216,7 +219,10 @@ module MediawikiSelenium
     # @return [Environment]
     #
     def on_wiki(id, &blk)
-      with_alternative([:mediawiki_url, :mediawiki_api_url], id, &blk)
+      url = lookup(:mediawiki_url, id: id)
+      api_url = lookup(:mediawiki_api_url, id: id, default: -> { api_url_from(url) })
+
+      with(mediawiki_url: url, mediawiki_api_url: api_url, &blk)
     end
 
     # Returns the current value for `:mediawiki_password` or the value for the
@@ -227,7 +233,7 @@ module MediawikiSelenium
     # @return [String]
     #
     def password(id = nil)
-      lookup(password_variable, id)
+      lookup(password_variable, id: id)
     end
 
     # Whether this environment has been configured to use remote browser
@@ -280,7 +286,7 @@ module MediawikiSelenium
     # @return [String]
     #
     def user(id = nil)
-      lookup(:mediawiki_user, id)
+      lookup(:mediawiki_user, id: id)
     end
 
     # Returns the current user, or the one for the given alternative, with all
@@ -370,6 +376,10 @@ module MediawikiSelenium
     end
 
     private
+
+    def api_url_from(wiki_url)
+      URI.parse(wiki_url).merge("/w/api.php").to_s
+    end
 
     def browser_config
       lookup_all(browser_factory.all_binding_keys, default: nil).reject { |k, v| v.nil? }
