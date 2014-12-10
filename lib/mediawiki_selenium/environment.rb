@@ -1,3 +1,5 @@
+require "yaml"
+
 module MediawikiSelenium
   # Provides an interface that unifies environmental configuration, page
   # objects, and browser setup. Additionally, it provides a DSL for switching
@@ -10,8 +12,36 @@ module MediawikiSelenium
     attr_reader :config
     protected :config
 
-    def initialize(config)
-      @config = normalize_config(config)
+    class << self
+      attr_accessor :default_configuration
+
+      # Instantiates a new environment using the given set of default
+      # configuration from `environments.yml` in the current working
+      # directory, and the additional hash of environment variables.
+      #
+      # @param name [String] Name of the environment.
+      # @param extra [Hash] Additional configuration to use.
+      #
+      def load(name, extra = {})
+        name = name.to_s
+        configs = []
+
+        unless name.empty?
+          envs = YAML.load_file(default_configuration)
+          raise ConfigurationError, "unknown environment `#{name}`" unless envs.include?(name)
+          configs << envs[name]
+        end
+
+        configs << extra
+
+        new(*configs)
+      end
+    end
+
+    self.default_configuration = "environments.yml"
+
+    def initialize(*configs)
+      @config = configs.map { |config| normalize_config(config) }.reduce(:merge)
       @factory_cache = {}
     end
 
@@ -177,7 +207,7 @@ module MediawikiSelenium
         if options.include?(:default)
           options[:default].is_a?(Proc) ? options[:default].call : options[:default]
         else
-          raise ConfigurationError, key
+          raise ConfigurationError, "missing configuration for `#{key}`"
         end
       else
         value

@@ -23,6 +23,44 @@ module MediawikiSelenium
     let(:mediawiki_user) { "mw user" }
     let(:mediawiki_password) { "mw password" }
 
+    describe ".load" do
+      subject { Environment.load(name, extra) }
+
+      let(:name) { "foo" }
+      let(:extra) { {} }
+
+      before do
+        expect(YAML).to receive(:load_file).with("environments.yml").
+          and_return("foo" => { "x" => "a", "y" => "b" })
+      end
+
+      it "returns a new environment" do
+        expect(subject).to be_a(Environment)
+      end
+
+      it "uses the given configuration in `environments.yml`" do
+        expect(subject[:x]).to eq("a")
+        expect(subject[:y]).to eq("b")
+      end
+
+      context "when the given environment does not exist in `environments.yml`" do
+        let(:name) { "bar" }
+
+        it "raises a ConfigurationError" do
+          expect { subject }.to raise_error(ConfigurationError, "unknown environment `bar`")
+        end
+      end
+
+      context "when extra configuration is given" do
+        let(:extra) { { x: "c" } }
+
+        it "overwrites the loaded configuration" do
+          expect(subject[:x]).to eq("c")
+          expect(subject[:y]).to eq("b")
+        end
+      end
+    end
+
     describe "#==" do
       subject { env == other }
 
