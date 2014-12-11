@@ -39,10 +39,10 @@ module MediawikiSelenium
 
     # Submits status and Jenkins build info to Sauce Labs.
     #
-    def teardown_for(env, status)
+    def teardown(env, status)
       each do |browser|
         sid = browser.driver.session_id
-        url = URI.parse(browser.driver.http.server_url)
+        url = browser.driver.send(:bridge).http.send(:server_url)
         username = url.user
         key = url.password
 
@@ -55,13 +55,24 @@ module MediawikiSelenium
           payload: {
             public: true,
             passed: status == :passed,
-            build: env.lookup(:build_number),
+            build: env.lookup(:build_number, default: nil),
           }.to_json
         )
       end
     end
 
     protected
+
+    def finalize_options!(options)
+      case @browser_name
+      when :firefox
+        options[:desired_capabilities][:firefox_profile] = options.delete(:profile)
+      when :chrome
+        options[:desired_capabilities]["chromeOptions"] ||= {}
+        options[:desired_capabilities]["chromeOptions"]["prefs"] = options.delete(:prefs)
+        options[:desired_capabilities]["chromeOptions"]["args"] = options.delete(:args)
+      end
+    end
 
     def new_browser(options)
       Watir::Browser.new(:remote, options).tap do |browser|
