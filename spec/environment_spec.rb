@@ -61,6 +61,16 @@ module MediawikiSelenium
       end
     end
 
+    describe ".load_default" do
+      subject { Environment.load_default }
+
+      it "loads the environment configuration specified by MEDIAWIKI_ENVIRONMENT" do
+        expect(ENV).to receive(:[]).with("MEDIAWIKI_ENVIRONMENT").and_return("foo")
+        expect(Environment).to receive(:load).with("foo", ENV)
+        subject
+      end
+    end
+
     describe "#==" do
       subject { env == other }
 

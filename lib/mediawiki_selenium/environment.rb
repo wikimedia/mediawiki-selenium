@@ -36,6 +36,17 @@ module MediawikiSelenium
 
         new(*configs)
       end
+
+      # Instantiates a new environment from the values of `ENV` and the
+      # default configuration corresponding to `ENV["MEDIAWIKI_ENVIRONMENT"]`,
+      # if one is defined.
+      #
+      # @see load
+      #
+      def load_default
+        load(ENV["MEDIAWIKI_ENVIRONMENT"], ENV)
+      end
+
     end
 
     self.default_configuration = "environments.yml"

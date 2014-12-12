@@ -18,7 +18,7 @@ require "mediawiki_selenium/support/modules/api_helper"
 require "mediawiki_selenium/support/modules/sauce_helper"
 require "mediawiki_selenium/support/modules/strict_pending"
 
-World { MediawikiSelenium::Environment.load(ENV["MEDIAWIKI_ENVIRONMENT"], ENV) }
+World { MediawikiSelenium::Environment.load_default }
 
 World(MediawikiSelenium::ApiHelper)
 World(MediawikiSelenium::PageFactory)
