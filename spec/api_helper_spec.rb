@@ -6,7 +6,8 @@ module MediawikiSelenium
 
     let(:config) do
       {
-        mediawiki_url: "http://an.example/wiki/",
+        mediawiki_url: wiki_url,
+        mediawiki_url_b: alternative_wiki_url,
         mediawiki_api_url: api_url,
         mediawiki_api_url_b: alternative_api_url,
         mediawiki_user: "mw user",
@@ -14,11 +15,13 @@ module MediawikiSelenium
       }
     end
 
-    let(:api_url) { "http://an.example/api" }
-    let(:alternative_api_url) { "" }
-
     describe "#api" do
       subject { env.api }
+
+      let(:wiki_url) { "http://an.example/wiki/" }
+      let(:api_url) { "http://an.example/api" }
+      let(:alternative_wiki_url) { "http://another.example/wiki/" }
+      let(:alternative_api_url) { "" }
 
       let(:client) { double(MediawikiApi::Client) }
 
@@ -45,7 +48,7 @@ module MediawikiSelenium
         context "from an altered environment" do
           subject { env2.api }
 
-          let(:env2) { env.with_alternative(:mediawiki_api_url, :b) }
+          let(:env2) { env.on_wiki(:b) }
 
           context "with the same API URL" do
             let(:alternative_api_url) { api_url }
@@ -68,6 +71,38 @@ module MediawikiSelenium
             it "returns a new client" do
               expect(subject).not_to be(client)
             end
+          end
+        end
+      end
+    end
+
+    describe "#on_wiki" do
+      let(:wiki_url) { "http://an.example/wiki/" }
+      let(:api_url) { "http://an.example/api" }
+      let(:alternative_wiki_url) { "http://another.example/wiki/" }
+
+      context "and the given alternative API URL is configured" do
+        let(:alternative_api_url) { "http://another.example/api" }
+
+        it "executes in the new environment using the alternative wiki and API URL" do
+          _ = self
+
+          env.on_wiki(:b) do |wiki_url, api_url|
+            _.expect(wiki_url).to _.eq(_.alternative_wiki_url)
+            _.expect(api_url).to _.eq(_.alternative_api_url)
+          end
+        end
+      end
+
+      context "and no explicit API URL is configured for the wiki" do
+        let(:alternative_api_url) { "" }
+
+        it "constructs one relative to the wiki URL" do
+          _ = self
+
+          env.on_wiki(:b) do |wiki_url, api_url|
+            _.expect(wiki_url).to _.eq(_.alternative_wiki_url)
+            _.expect(api_url).to _.eq("http://another.example/w/api.php")
           end
         end
       end

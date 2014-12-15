@@ -253,17 +253,13 @@ module MediawikiSelenium
     #
     # @param id [Symbol] Alternative wiki ID.
     #
-    # @yield [wiki_url, api_url]
+    # @yield [wiki_url]
     # @yieldparam wiki_url [String] Alternative wiki URL.
-    # @yieldparam api_url [String] Alternative API URL.
     #
     # @return [Environment]
     #
     def on_wiki(id, &blk)
-      url = lookup(:mediawiki_url, id: id)
-      api_url = lookup(:mediawiki_api_url, id: id, default: -> { api_url_from(url) })
-
-      with(mediawiki_url: url, mediawiki_api_url: api_url, &blk)
+      with_alternative(:mediawiki_url, id, &blk)
     end
 
     # Returns the current value for `:mediawiki_password` or the value for the
@@ -417,10 +413,6 @@ module MediawikiSelenium
     end
 
     private
-
-    def api_url_from(wiki_url)
-      URI.parse(wiki_url).merge("/w/api.php").to_s
-    end
 
     def browser_config
       lookup_all(browser_factory.all_binding_keys, default: nil).reject { |k, v| v.nil? }

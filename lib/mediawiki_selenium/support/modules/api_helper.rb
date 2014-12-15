@@ -19,5 +19,27 @@ module MediawikiSelenium
       end
     end
 
+    # Extends parent implementation to also override the API URL. If no API
+    # URL is explicitly defined for the given alternative, one is constructed
+    # relative to the wiki URL.
+    #
+    # @yield [wiki_url, api_url]
+    # @yieldparam wiki_url [String] Alternative wiki URL.
+    # @yieldparam api_url [String] Alternative API URL.
+    #
+    # @see Environment#on_wiki
+    #
+    def on_wiki(id, &blk)
+      super(id) do |wiki_url|
+        api_url = lookup(:mediawiki_api_url, id: id, default: -> { api_url_from(wiki_url) })
+        return with(mediawiki_url: wiki_url, mediawiki_api_url: api_url, &blk)
+      end
+    end
+
+    private
+
+    def api_url_from(wiki_url)
+      URI.parse(wiki_url).merge("/w/api.php").to_s
+    end
   end
 end
