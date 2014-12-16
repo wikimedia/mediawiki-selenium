@@ -19,6 +19,20 @@ module MediawikiSelenium
       end
     end
 
+    # Ensures the given alternative account exists by attempting to create it
+    # via the API.  Any errors related to the account already existing are
+    # swallowed.
+    #
+    # @param id [Symbol] ID of alternative user.
+    #
+    def ensure_account(id)
+      begin
+        api.create_account(user(id), password(id))
+      rescue MediawikiApi::ApiError => e
+        raise e unless e.code == "userexists"
+      end
+    end
+
     # Extends parent implementation to also override the API URL. If no API
     # URL is explicitly defined for the given alternative, one is constructed
     # relative to the wiki URL.
