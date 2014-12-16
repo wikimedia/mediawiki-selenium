@@ -287,14 +287,21 @@ module MediawikiSelenium
     #
     # @example Teardown environment resources after each scenario completes
     #   After do
-    #     teardown(scenario.passed?)
+    #     teardown(scenario.status)
     #   end
     #
     # @param status [Symbol] Status of the executed scenario.
     #
+    # @yield [browser]
+    # @yieldparam browser [Watir::Browser] Browser object, before it's closed.
+    #
     def teardown(status = :passed)
       @factory_cache.each do |_, factory|
-        factory.each { |browser| browser.close } unless keep_browser_open?
+        factory.each do |browser|
+          yield browser if block_given?
+          browser.close unless keep_browser_open?
+        end
+
         factory.teardown(self, status)
       end
     end

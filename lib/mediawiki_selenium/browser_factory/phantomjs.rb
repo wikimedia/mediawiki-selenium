@@ -6,6 +6,8 @@ module MediawikiSelenium
     #  - browser_language
     #  - browser_user_agent
     #
+    # @see Base
+    #
     class Phantomjs < Base
       bind(:browser_language) do |language, options|
         options[:desired_capabilities]["phantomjs.page.customHeaders.Accept-Language"] = language

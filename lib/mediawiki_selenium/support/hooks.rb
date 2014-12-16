@@ -80,18 +80,20 @@ Before do |scenario|
 end
 
 After do |scenario|
-  if @browser && scenario.failed? && lookup(:screenshot_failures) == "true"
-    require "fileutils"
-    screen_dir = lookup(:screenshot_failures_path) || "screenshots"
-    FileUtils.mkdir_p screen_dir
-    name = test_name(scenario).gsub(/ /, '_')
-    path = "#{screen_dir}/#{name}.png"
-    @browser.screenshot.save path
-    embed path, "image/png"
-  end
-
   if scenario.respond_to?(:status)
-    teardown(scenario.status)
+    require "fileutils"
+
+    teardown(scenario.status) do |browser|
+      if scenario.failed? && lookup(:screenshot_failures, default: false) == "true"
+        screen_dir = lookup(:screenshot_failures_path, default: "screenshots")
+        FileUtils.mkdir_p screen_dir
+        name = test_name(scenario).gsub(/ /, '_')
+        path = "#{screen_dir}/#{name}.png"
+        browser.screenshot.save path
+        embed path, "image/png"
+      end
+
+    end
   else
     teardown
   end

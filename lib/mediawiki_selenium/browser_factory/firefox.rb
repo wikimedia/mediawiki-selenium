@@ -7,8 +7,9 @@ module MediawikiSelenium
     #  - browser_timeout
     #  - browser_user_agent
     #
+    # @see Base
+    #
     class Firefox < Base
-
       bind(:browser_timeout) do |timeout, options|
         timeout = timeout.to_i
         options[:profile]["dom.max_script_run_time"] = timeout
