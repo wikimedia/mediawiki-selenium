@@ -1,5 +1,4 @@
 require "spec_helper"
-require 'pry-byebug'
 
 module MediawikiSelenium
   describe Environment do
