@@ -4,7 +4,7 @@ module MediawikiSelenium
   describe Environment do
     subject { env }
 
-    let(:env) { Environment.new(config).extend(ApiHelper) }
+    let(:env) { Environment.new(config) }
     let(:config) { minimum_config }
 
     let(:minimum_config) do
@@ -92,8 +92,6 @@ module MediawikiSelenium
     end
 
     describe "#as_user" do
-      subject { env.as_user(:b) {} }
-
       let(:config) do
         {
           mediawiki_user: "user",
@@ -103,21 +101,13 @@ module MediawikiSelenium
         }
       end
 
-      let(:new_env) { double(Environment) }
-      let(:new_config) { double(Hash) }
-
-      before do
-        expect(env).to receive(:clone).and_return(new_env)
-        expect(new_env).to receive(:config).and_return(new_config)
-      end
-
       it "executes in the new environment for the alternative user and its password" do
-        expect(new_config).to receive(:merge!).with(
-          mediawiki_user: "user b",
-          mediawiki_password: "pass b",
-        )
-        expect(new_env).to receive(:instance_exec).with("user b", "pass b")
-        subject
+        expect { |block| env.as_user(:b, &block) }.to yield_with_args("user b", "pass b")
+
+        env.as_user(:b) do
+          expect(env[:mediawiki_user]).to eq("user b")
+          expect(env[:mediawiki_password]).to eq("pass b")
+        end
       end
     end
 
@@ -220,32 +210,23 @@ module MediawikiSelenium
     end
 
     describe "#in_browser" do
-      subject { env.in_browser(id, overrides) {} }
-
-      let(:id) { :a }
-      let(:overrides) { {} }
-
-      let(:new_env) { double(Environment) }
-      let(:new_config) { double(Hash) }
-
-      before do
-        expect(env).to receive(:clone).and_return(new_env)
-        expect(new_env).to receive(:config).and_return(new_config)
-      end
-
       it "executes in the new environment with a new browser session" do
-        expect(new_config).to receive(:merge!).with(_browser_session: id)
-        expect(new_env).to receive(:instance_exec).with(id)
-        subject
+        expect { |block| env.in_browser(:a, &block) }.to yield_with_args(:a)
+
+        env.in_browser(:a) do
+          expect(env[:_browser_session]).to eq(:a)
+        end
       end
 
       context "given browser configuration overrides" do
-        let(:overrides) { { language: "eo" } }
-
         it "executes in the new environment with the prefixed overrides" do
-          expect(new_config).to receive(:merge!).with(_browser_session: id, browser_language: "eo")
-          expect(new_env).to receive(:instance_exec).with("eo", id)
-          subject
+          expect { |block| env.in_browser(:a, language: "eo", &block) }.
+            to yield_with_args("eo", :a)
+
+          env.in_browser(:a, language: "eo") do
+            expect(env[:browser_language]).to eq("eo")
+            expect(env[:_browser_session]).to eq(:a)
+          end
         end
       end
     end
@@ -313,10 +294,6 @@ module MediawikiSelenium
     end
 
     describe "#on_wiki" do
-      subject { env.on_wiki(id) {} }
-
-      let(:id) { :b }
-
       let(:config) do
         {
           mediawiki_url: "http://an.example/wiki",
@@ -325,18 +302,12 @@ module MediawikiSelenium
         }
       end
 
-      let(:new_env) { double(Environment) }
-      let(:new_config) { double(Hash) }
-
-      before do
-        expect(env).to receive(:clone).and_return(new_env)
-        expect(new_env).to receive(:config).and_return(new_config)
-      end
-
       it "executes in the new environment using the alternative wiki URL" do
-        expect(new_config).to receive(:merge!).with(mediawiki_url: "http://altb.example/wiki")
-        expect(new_env).to receive(:instance_exec).with("http://altb.example/wiki")
-        subject
+        expect { |block| env.on_wiki(:b, &block) }.to yield_with_args("http://altb.example/wiki")
+
+        env.on_wiki(:b) do
+          expect(env[:mediawiki_url]).to eq("http://altb.example/wiki")
+        end
       end
     end
 
@@ -387,7 +358,7 @@ module MediawikiSelenium
     describe "#wiki_url" do
       subject { env.wiki_url(url) }
 
-      let(:env) { Environment.new(mediawiki_url: "http://an.example/wiki/").extend(ApiHelper) }
+      let(:env) { Environment.new(mediawiki_url: "http://an.example/wiki/") }
 
       context "with no given url" do
         let(:url) { nil }
@@ -432,50 +403,49 @@ module MediawikiSelenium
     end
 
     describe "#with_alternative" do
-      subject { env.with_alternative(names, id) {} }
-
       let(:config) do
         {
-          mediawiki_url: "http://an.example/wiki",
-          mediawiki_url_b: "http://alt.example/wiki",
-          mediawiki_api_url: "http://an.example/api",
-          mediawiki_api_url_b: "http://alt.example/api",
+          mediawiki_url: "http://a.example/wiki",
+          mediawiki_url_b: "http://b.example/wiki",
+          mediawiki_api_url: "http://a.example/api",
+          mediawiki_api_url_b: "http://b.example/api",
         }
       end
 
-      let(:new_env) { double(Environment) }
-      let(:new_config) { double(Hash) }
-
-      before do
-        expect(env).to receive(:clone).and_return(new_env)
-        expect(new_env).to receive(:config).and_return(new_config)
-      end
-
       context "given one option name and an ID" do
-        let(:names) { :mediawiki_url }
-        let(:id) { :b }
-
         it "executes in the new environment that substitutes it using the alternative" do
-          expect(new_config).to receive(:merge!).with(mediawiki_url: "http://alt.example/wiki")
-          expect(new_env).to receive(:instance_exec).with("http://alt.example/wiki")
-          subject
+          expect { |block| env.with_alternative(:mediawiki_url, :b, &block) }.
+            to yield_with_args("http://b.example/wiki")
+
+          env.with_alternative(:mediawiki_url, :b) do
+            expect(env[:mediawiki_url]).to eq("http://b.example/wiki")
+          end
         end
       end
 
       context "given multiple option names and an ID" do
-        let(:names) { [:mediawiki_url, :mediawiki_api_url] }
-        let(:id) { :b }
-
         it "executes in the new environment that substitutes both using the alternatives" do
-          expect(new_config).to receive(:merge!).with(
-            mediawiki_url: "http://alt.example/wiki",
-            mediawiki_api_url: "http://alt.example/api"
-          )
-          expect(new_env).to receive(:instance_exec).with(
-            "http://alt.example/wiki",
-            "http://alt.example/api"
-          )
-          subject
+          expect { |block| env.with_alternative([:mediawiki_url, :mediawiki_api_url], :b, &block) }.
+            to yield_with_args("http://b.example/wiki", "http://b.example/api")
+
+          env.with_alternative([:mediawiki_url, :mediawiki_api_url], :b) do
+            expect(env[:mediawiki_url]).to eq("http://b.example/wiki")
+            expect(env[:mediawiki_api_url]).to eq("http://b.example/api")
+          end
+        end
+      end
+
+      context "following block evaluation" do
+        it "restores the original configuration" do
+          env.with_alternative(:mediawiki_url, :b)
+          expect(env[:mediawiki_url]).to eq("http://a.example/wiki")
+        end
+
+        context "when an exception is raised within the block" do
+          it "restores the original configuration and lets the exception be raised" do
+            expect { env.with_alternative(:mediawiki_url, :b) { raise "error" } }.to raise_error
+            expect(env[:mediawiki_url]).to eq("http://a.example/wiki")
+          end
         end
       end
     end

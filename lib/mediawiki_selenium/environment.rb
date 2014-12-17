@@ -9,9 +9,6 @@ module MediawikiSelenium
   class Environment
     include Comparable
 
-    attr_reader :config
-    protected :config
-
     class << self
       attr_accessor :default_configuration
 
@@ -52,12 +49,8 @@ module MediawikiSelenium
     self.default_configuration = "environments.yml"
 
     def initialize(*configs)
-      @config = configs.map { |config| normalize_config(config) }.reduce(:merge)
-      @factory_cache = {}
-    end
-
-    def initialize_clone(other)
-      @config = other.config.clone
+      @_config = configs.map { |config| normalize_config(config) }.reduce(:merge)
+      @_factory_cache = {}
     end
 
     # Whether the given environment is equal to this one. Two environments are
@@ -68,7 +61,7 @@ module MediawikiSelenium
     # @return [Boolean]
     #
     def ==(other)
-      @config == other.config
+      config == other.config
     end
 
     # Returns the configured value for the given env variable name.
@@ -92,7 +85,7 @@ module MediawikiSelenium
     # @yieldparam user [String] Alternative MediaWiki user.
     # @yieldparam password [String] Alternative MediaWiki password.
     #
-    # @return [Environment]
+    # @return self
     #
     def as_user(id, &blk)
       with_alternative([:mediawiki_user, password_variable], id, &blk)
@@ -115,7 +108,7 @@ module MediawikiSelenium
     def browser_factory(browser = browser_name)
       browser = browser.to_s.downcase.to_sym
 
-      @factory_cache[[remote?, browser]] ||= BrowserFactory.new(browser).tap do |factory|
+      @_factory_cache[[remote?, browser]] ||= BrowserFactory.new(browser).tap do |factory|
         factory.bind(:_browser_session)
         factory.extend(RemoteBrowserFactory) if remote?
       end
@@ -174,7 +167,7 @@ module MediawikiSelenium
     #
     # @yield [*args] Overridden browser configuration.
     #
-    # @return [Environment]
+    # @return self
     #
     def in_browser(id, overrides = {}, &blk)
       overrides = overrides.each.with_object({}) do |(name, value), hash|
@@ -212,7 +205,7 @@ module MediawikiSelenium
       key = "#{key}_#{options[:id]}" if options.fetch(:id, nil)
       key = normalize_key(key)
 
-      value = @config[key]
+      value = config[key]
 
       if value.nil? || value.to_s.empty?
         if options.include?(:default)
@@ -256,7 +249,7 @@ module MediawikiSelenium
     # @yield [wiki_url]
     # @yieldparam wiki_url [String] Alternative wiki URL.
     #
-    # @return [Environment]
+    # @return self
     #
     def on_wiki(id, &blk)
       with_alternative(:mediawiki_url, id, &blk)
@@ -296,7 +289,7 @@ module MediawikiSelenium
     # @yieldparam browser [Watir::Browser] Browser object, before it's closed.
     #
     def teardown(status = :passed)
-      @factory_cache.each do |_, factory|
+      @_factory_cache.each do |_, factory|
         factory.each do |browser|
           yield browser if block_given?
           browser.close unless keep_browser_open?
@@ -351,12 +344,12 @@ module MediawikiSelenium
     # @yield [url]
     # @yieldparam url [String] Wiki URL.
     #
-    # @return [Environment]
+    # @return self
     #
-    def visit_wiki(id, &blk)
+    def visit_wiki(id)
       on_wiki(id) do |url|
         browser.goto url
-        instance_exec(url, &blk) unless blk.nil?
+        yield url if block_given?
       end
     end
 
@@ -413,10 +406,16 @@ module MediawikiSelenium
     #
     # @yield [*args] Values of the overridden configuration.
     #
-    # @return [Environment] The modified environment.
+    # @return self
     #
     def with_alternative(names, id, &blk)
       with(lookup_all(Array(names), id: id), &blk)
+    end
+
+    protected
+
+    def config
+      @_config
     end
 
     private
@@ -438,12 +437,15 @@ module MediawikiSelenium
       key.to_s.downcase.to_sym
     end
 
-    def with(overrides = {}, &blk)
+    def with(overrides = {})
       overrides = normalize_config(overrides)
+      original_config = @_config.dup
 
-      clone.tap do |env|
-        env.config.merge!(overrides)
-        env.instance_exec(*overrides.values, &blk) unless blk.nil?
+      begin
+        @_config = @_config.merge(overrides)
+        yield *overrides.values if block_given?
+      ensure
+        @_config = original_config
       end
     end
   end
