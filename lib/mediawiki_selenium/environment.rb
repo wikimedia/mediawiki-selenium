@@ -88,7 +88,10 @@ module MediawikiSelenium
     # @return self
     #
     def as_user(id, &blk)
-      with_alternative([:mediawiki_user, password_variable], id, &blk)
+      user = lookup(:mediawiki_user, id: id)
+      password = lookup(:mediawiki_password, id: id, default: -> { lookup(:mediawiki_password) })
+
+      with(mediawiki_user: user, mediawiki_password: password, &blk)
     end
 
     # Browser with which to drive tests.

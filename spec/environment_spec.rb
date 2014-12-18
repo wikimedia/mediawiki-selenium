@@ -92,21 +92,42 @@ module MediawikiSelenium
     end
 
     describe "#as_user" do
-      let(:config) do
-        {
-          mediawiki_user: "user",
-          mediawiki_password: "pass",
-          mediawiki_user_b: "user b",
-          mediawiki_password_b: "pass b",
-        }
+      context "when both an alternative user and password are defined" do
+        let(:config) do
+          {
+            mediawiki_user: "user",
+            mediawiki_password: "pass",
+            mediawiki_user_b: "user b",
+            mediawiki_password_b: "pass b",
+          }
+        end
+
+        it "yields the alternative user and password in the new environment" do
+          expect { |block| env.as_user(:b, &block) }.to yield_with_args("user b", "pass b")
+
+          env.as_user(:b) do
+            expect(env[:mediawiki_user]).to eq("user b")
+            expect(env[:mediawiki_password]).to eq("pass b")
+          end
+        end
       end
 
-      it "executes in the new environment for the alternative user and its password" do
-        expect { |block| env.as_user(:b, &block) }.to yield_with_args("user b", "pass b")
+      context "when an alternative for the password isn't defined" do
+        let(:config) do
+          {
+            mediawiki_user: "user",
+            mediawiki_password: "pass",
+            mediawiki_user_b: "user b",
+          }
+        end
 
-        env.as_user(:b) do
-          expect(env[:mediawiki_user]).to eq("user b")
-          expect(env[:mediawiki_password]).to eq("pass b")
+        it "falls back to using the base defined password" do
+          expect { |block| env.as_user(:b, &block) }.to yield_with_args("user b", "pass")
+
+          env.as_user(:b) do
+            expect(env[:mediawiki_user]).to eq("user b")
+            expect(env[:mediawiki_password]).to eq("pass")
+          end
         end
       end
     end
