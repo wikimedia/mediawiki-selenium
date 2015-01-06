@@ -14,6 +14,9 @@ makes it easy to update the shared code.}
   spec.homepage      = "https://gerrit.wikimedia.org/r/#/admin/projects/mediawiki/selenium"
   spec.license       = "GPL-2"
 
+  spec.bindir      = "bin"
+  spec.executables << 'mediawiki-selenium-init'
+
   spec.files         = `git ls-files`.split($/)
   spec.require_paths = ["lib"]
 
@@ -25,6 +28,7 @@ makes it easy to update the shared code.}
   spec.add_runtime_dependency "rest-client", "~> 1.6", ">= 1.6.7"
   spec.add_runtime_dependency "rspec-expectations", "~> 2.14", ">= 2.14.4"
   spec.add_runtime_dependency "syntax", "~> 1.2", ">= 1.2.0"
+  spec.add_runtime_dependency "thor", "~> 0.19", ">= 0.19.1"
 
   spec.add_development_dependency "bundler", "~> 1.6", ">= 1.6.3"
   spec.add_development_dependency "yard", "~> 0.8", ">= 0.8.7.4"
