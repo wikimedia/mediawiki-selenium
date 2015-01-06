@@ -6,6 +6,50 @@ module MediawikiSelenium
   # between user/wiki/browser contexts in ways that help to decouple test
   # implementation from the target wikis.
   #
+  # Default configuration for various resources (wiki URLs, users, etc.) is
+  # typically loaded from an `environments.yml` YAML file in the current
+  # working directory. It should contain defaults for each environment in
+  # which the tests are expected to run, indexed by environment name.
+  #
+  #   beta:
+  #     mediawiki_url: http://en.wikipedia.beta.wmflabs.org/wiki/
+  #     mediawiki_user: Selenium_user
+  #   test2:
+  #     mediawiki_url: http://test2.wikipedia.org/wiki/
+  #     mediawiki_user: Selenium_user
+  #
+  # Which default set to use is determined by the value of the
+  # `MEDIAWIKI_ENVIRONMENT` environment variable. (See {load} and
+  # {load_default}.)
+  #
+  # Any additional configuration specified via environment variables overrides
+  # what is specified in the YAML file. For example, the following would use
+  # the default configuration as specified under `beta` in the YAML file but
+  # define `mediawiki_user` as `Other_user` instead of `Selenium_user`.
+  #
+  #   export MEDIAWIKI_ENVIRONMENT=beta MEDIAWIKI_USER=Other_user
+  #   bundle exec cucumber ...
+  #
+  # There are various methods that allow you to perform actions in the context
+  # of some alternative resource, for example as a different user using
+  # {#as_user}, or on different wiki using {#on_wiki}. Instead of referencing
+  # the exact user names or URLs for these resources, you reference them by an
+  # ID which corresponds to configuration made in `environments.yml`.
+  #
+  #   # environments.yml:
+  #   beta:
+  #     # ...
+  #     mediawiki_user_b: Selenium_user2
+  #
+  #   # step definition:
+  #   Given(/^user B has linked to a page I created$/) do
+  #     as_user(:b) { api.create_page(...) }
+  #   end
+  #
+  # This level of abstraction is intended to reduce coupling between tests
+  # and test environments, and should promote step definitions that are more
+  # readable and congruent with the natural-language steps they implement.
+  #
   class Environment
     include Comparable
 
@@ -43,7 +87,6 @@ module MediawikiSelenium
       def load_default
         load(ENV["MEDIAWIKI_ENVIRONMENT"], ENV)
       end
-
     end
 
     self.default_configuration = "environments.yml"
@@ -79,13 +122,16 @@ module MediawikiSelenium
     # Executes the given block within the context of an environment that's
     # using the given alternative user and its password.
     #
+    # @example
+    #   Given(/^user B has linked to a page I created$/) do
+    #     as_user(:b) { api.create_page(...) }
+    #   end
+    #
     # @param id [Symbol] Alternative user ID.
     #
     # @yield [user, password]
     # @yieldparam user [String] Alternative MediaWiki user.
     # @yieldparam password [String] Alternative MediaWiki password.
-    #
-    # @return self
     #
     def as_user(id, &blk)
       user = lookup(:mediawiki_user, id: id)
@@ -122,7 +168,7 @@ module MediawikiSelenium
     # @return [Symbol]
     #
     def browser_name
-      lookup(:browser).downcase.to_sym
+      lookup(:browser, default: "firefox").downcase.to_sym
     end
 
     # A reference to this environment. Can be used in conjunction with {#[]}
@@ -169,8 +215,6 @@ module MediawikiSelenium
     # @param overrides [Hash] Browser configuration overrides.
     #
     # @yield [*args] Overridden browser configuration.
-    #
-    # @return self
     #
     def in_browser(id, overrides = {}, &blk)
       overrides = overrides.each.with_object({}) do |(name, value), hash|
@@ -251,8 +295,6 @@ module MediawikiSelenium
     #
     # @yield [wiki_url]
     # @yieldparam wiki_url [String] Alternative wiki URL.
-    #
-    # @return self
     #
     def on_wiki(id, &blk)
       with_alternative(:mediawiki_url, id, &blk)
@@ -347,8 +389,6 @@ module MediawikiSelenium
     # @yield [url]
     # @yieldparam url [String] Wiki URL.
     #
-    # @return self
-    #
     def visit_wiki(id)
       on_wiki(id) do |url|
         browser.goto url
@@ -362,6 +402,7 @@ module MediawikiSelenium
     # @example
     #   env = Environment.new(mediawiki_url: "http://an.example/wiki/")
     #
+    #   env.wiki_url # => "http://an.example/wiki/"
     #   env.wiki_url("page") # => "http://an.example/wiki/page"
     #   env.wiki_url("/page") # => "http://an.example/page"
     #   env.wiki_url("http://other.example") # => "http://other.example"
@@ -408,8 +449,6 @@ module MediawikiSelenium
     # @param id [Symbol] Alternative user ID.
     #
     # @yield [*args] Values of the overridden configuration.
-    #
-    # @return self
     #
     def with_alternative(names, id, &blk)
       with(lookup_all(Array(names), id: id), &blk)

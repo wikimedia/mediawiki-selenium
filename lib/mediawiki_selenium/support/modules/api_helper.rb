@@ -10,11 +10,11 @@ module MediawikiSelenium
     # @return [MediawikiApi::Client]
     #
     def api
-      @api_cache ||= {}
+      @_api_cache ||= {}
 
       url = lookup(:mediawiki_api_url, default: api_url_from(lookup(:mediawiki_url)))
 
-      @api_cache[[url, user]] ||= MediawikiApi::Client.new(url).tap do |client|
+      @_api_cache[[url, user]] ||= MediawikiApi::Client.new(url).tap do |client|
         client.log_in(user, password)
       end
     end

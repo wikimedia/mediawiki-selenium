@@ -209,17 +209,17 @@ module MediawikiSelenium
     describe "#browser_name" do
       subject { env.browser_name }
 
-      let(:browser) { "Firefox" }
+      let(:browser) { "Chrome" }
 
       it "is always a lowercase symbol" do
-        expect(subject).to be(:firefox)
+        expect(subject).to be(:chrome)
       end
 
       context "missing browser configuration" do
         let(:browser) { nil }
 
-        it "raises a ConfigurationError" do
-          expect { subject }.to raise_error(ConfigurationError)
+        it "defaults to :firefox" do
+          expect(subject).to be(:firefox)
         end
       end
     end

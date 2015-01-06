@@ -1,82 +1,123 @@
-# Mediawiki::Selenium
+# MediaWiki-Selenium
 
-Several MediaWiki extensions share code that makes it easy to run Selenium
-tests. This gem makes it easy to update the shared code.
+MediaWiki-Selenium is a Ruby framework for the implementation and execution of
+acceptance tests against [MediaWiki](https://www.mediawiki.org/wiki/MediaWiki)
+installations. It is comprised of a number of core dependencies and native
+APIs that help you describe the expected behavior of your MediaWiki-related
+features, and drive cross-browser simulations to ensure the correctness of
+your implementation.
+
+## Core Dependencies
+
+* [Cucumber](https://github.com/cucumber/cucumber) provides the natural
+  [Gherkin](https://github.com/cucumber/cucumber/wiki/Gherkin) language used
+  to describe application features, a basic API for binding that natural
+  language to step definitions written in Ruby, and a test runner for
+  executing the suite.
+
+* [PageObject](https://github.com/cheezy/page-object) helps you to implement
+  [PageObject patterns](https://code.google.com/p/selenium/wiki/PageObjects)
+  within your test suite that better encapsulate the expected structure and
+  mechanics of your application's UI.
+
+* [Watir](https://github.com/watir/watir/) and
+  [Selenium](http://docs.seleniumhq.org/) for driving browser sessions.
+
+* [RSpec](https://github.com/rspec/rspec-expectations) for asserting
+  expectations of scenario outcomes.
 
 ## Installation
 
-To run the Selenium tests you will have to install Ruby. Look at the `Gemfile`
-file for the exact required version. You also have to install the latest
-versions of RubyGems and Firefox (the default browser in which the tests run).
-The easiest way to install Ruby on Linux/Unix/Mac is [RVM](https://rvm.io/) and
-on Windows [RubyInstaller](http://rubyinstaller.org/).
+Ruby 1.9 or above is required, 2.1 is recommended. The easiest way to install
+it is with [RVM](https://rvm.io/) or [rbenv](http://rbenv.org/) on
+Linux/Unix/OS X, and with [RubyInstaller](http://rubyinstaller.org/) on
+Windows.
 
-    cd tests/browser
-    gem update --system
-    gem install bundler
-    bundle install
+Create a `Gemfile` in the root of your MediaWiki-related project that
+specifies the version of `mediawiki_selenium` you wish to use (typically the
+latest version).
 
-If you're not using RVM to manage your Ruby versions, you will need to run the
-commands as root (using `sudo`).
+    gem 'mediawiki_selenium', '~> 0.4.1'
 
-Environment variables `MEDIAWIKI_USER` and `MEDIAWIKI_PASSWORD` are required for
-tests tagged `@login`. For local testing, create a test user on your local wiki
-and export the user and password as the values for those variables.
-For example:
+Install the gem and its dependencies by running `bundle install`. (If
+[Bundler](http://bundler.io/) is not yet installed, install it with
+`gem install bundler`, or `sudo gem install bundler` if you're using a
+system wide Ruby.)
 
-    export MEDIAWIKI_USER=<username here> # Linux/Unix/Mac
-    set MEDIAWIKI_USER=<username here> # Windows Command Prompt
-    $env:MEDIAWIKI_USER="<username here>" # Windows PowerShell
+## Getting Started
 
-    export MEDIAWIKI_PASSWORD=<password here> # Linux/Unix/Mac
-    set MEDIAWIKI_PASSWORD=<password here> # Windows Command Prompt
-    $env:MEDIAWIKI_PASSWORD="<password here>" # Windows PowerShell
+Once the gem is installed, run `mediawiki-selenium-init` in your project's
+root directory to create a boilerplate configuration under `tests/browser`.
 
-## Usage
+    $ bundle exec mediawiki-selenium-init
+        create  tests/browser
+        create  tests/browser/environments.yml
+        create  tests/browser/features/support/env.rb
 
-Run the tests with `bundle exec cucumber`, this should start Firefox.
+Default configuration for various resources (wiki URLs, users, etc.) is
+typically loaded from an `environments.yml` YAML file in the current working
+directory. It should contain defaults for each environment in which the tests
+are expected to run, indexed by environment name. Double check that the
+generated file is suitable for how you expect your tests to be run, for
+example against [Mediawiki-Vagrant](http://www.mediawiki.org/wiki/MediaWiki-Vagrant)
+for local development, or against at least the [Beta Cluster](http://www.mediawiki.org/wiki/Beta_cluster)
+for continuous integration.
 
-By default the tests run at en.wikipedia.beta.wmflabs.org. If you want to run
-the tests on another web server, set the `MEDIAWIKI_URL` environment variable. For example:
+For details on how environment configuration is loaded and used by step
+definitions, see the documentation for `MediawikiSelenium::Environment`.
 
-    export MEDIAWIKI_URL=http://commons.wikimedia.beta.wmflabs.org/wiki/ # Linux/Unix/Mac
-    set MEDIAWIKI_URL=http://commons.wikimedia.beta.wmflabs.org/wiki/ # Windows Command Prompt
-    $env:MEDIAWIKI_URL="http://commons.wikimedia.beta.wmflabs.org/wiki/" # Windows PowerShell
+## Writing Tests
 
-Some tests use the [MediaWiki web API](https://www.mediawiki.org/wiki/API:Main_page)
-to interact with the web server in addition to driving a browser.
-If you want these tests to run on another web server,
-you must also set the `MEDIAWIKI_API_URL` environment variable. For example:
+The ability to write effective and cruft-free tests will come with practice
+and greater familiarity with the underlying libraries. On mediawiki.org,
+you'll find some helpful [high-level documentation](http://www.mediawiki.org/wiki/Quality_Assurance/Browser_testing/Writing_tests)
+to get you started.
 
-    export MEDIAWIKI_API_URL=http://commons.wikimedia.beta.wmflabs.org/w/api.php # Linux/Unix/Mac
-    set MEDIAWIKI_API_URL=http://commons.wikimedia.beta.wmflabs.org/w/api.php # Windows Command Prompt
-    $env:MEDIAWIKI_API_URL="http://commons.wikimedia.beta.wmflabs.org/w/api.php" # Windows PowerShell
+To see exactly which methods are available from within step definitions, see
+the documentation for `MediawikiSelenium::Environment`,
+`MediawikiSelenium::ApiHelper`, and `MediawikiSelenium::PageFactory`.
 
-To run a single test file:
+## Running Tests
 
-    bundle exec cucumber features/FEATURE_NAME.feature
+Execute your tests by running `bundle exec cucumber` from within the
+`tests/browser` directory.
 
-To run a single test scenario, put a colon and the line number (NN) on which
-the scenario begins after the file name:
+By default, the entire suite is run which may take some time. If you wish to
+execute scenarios for just a single feature, you can given the feature file as
+an argument.
 
-    bundle exec cucumber features/FEATURE_NAME.feature:NN
+    bundle exec cucumber feature/some.feature
 
-You can use a different browser with the `BROWSER` env variable, the fastest is
-probably PhantomJS, a headless browser:
+To run a single scenario, give the line number as well.
+
+    bundle exec cucumber feature/some.feature:11
+
+The set of default configuration to use (see "Getting started") is specified
+by the `MEDIAWIKI_ENVIRONMENT` environment variable, which should be defined
+somewhere in your shell profile. For example, if you're using
+[Mediawiki-Vagrant](http://www.mediawiki.org/wiki/MediaWiki-Vagrant) for your
+development and executing tests on the host OS, the environment name would be
+`mw-vagrant-host`.
+
+    export MEDIAWIKI_ENVIRONMENT=mw-vagrant-host # Linux/Unix/Mac
+    set MEDIAWIKI_URL=mw-vagrant-host # Windows Command Prompt
+    $env:MEDIAWIKI_URL="mw-vagrant-host" # Windows PowerShell
+
+Firefox is the default browser, but you can specify a different one by setting
+`BROWSER`.
 
     export BROWSER=phantomjs # Linux/Unix/Mac
     set BROWSER=phantomjs # Windows Command Prompt
     $env:BROWSER="internet_explorer" # Windows PowerShell
 
 By default, the browser will close itself at the end of every scenario. If you
-want the browser to stay open, set the environment variable `KEEP_BROWSER_OPEN`
-to `true`:
+want the browser to stay open, set `KEEP_BROWSER_OPEN` to `true`.
 
     export KEEP_BROWSER_OPEN=true # Linux/Unix/Mac
     set KEEP_BROWSER_OPEN=true # Windows Command Prompt
     $env:KEEP_BROWSER_OPEN="true" # Windows PowerShell
 
-## Headless Mode
+### Headless Mode
 
 Headless operation can be useful when running tests in an environment where
 there's no GUI available, environments such as a continuous integration
@@ -109,7 +150,7 @@ behavior.
     # Keep xvfb running after execution (the default is to kill it)
     HEADLESS_DESTROY_AT_EXIT=false bundle exec cucumber ...
 
-## Screenshots
+### Screenshots
 
 You can get screenshots on failures by setting the environment
 variable `SCREENSHOT_FAILURES` to `true`. Screenshots will be written under the
@@ -138,7 +179,7 @@ commit back both files.
 
 ### Repositories
 
-If not stated differently, Selenium tests are in `/tests/browser` folder and Jenkins jobs are at [integration.wikimedia.org/ci/view/BrowserTests](https://integration.wikimedia.org/ci/view/BrowserTests/).
+If not stated differently, Selenium tests are in `tests/browser` folder and Jenkins jobs are at [integration.wikimedia.org/ci/view/BrowserTests](https://integration.wikimedia.org/ci/view/BrowserTests/).
 
 Repositories that use the gem:
 
