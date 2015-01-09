@@ -13,12 +13,6 @@ Before("@custom-browser") do |scenario|
   @scenario = scenario
 end
 
-Before("@login") do
-  ENV["MEDIAWIKI_PASSWORD"] = ENV[ENV["MEDIAWIKI_PASSWORD_VARIABLE"]] if ENV["MEDIAWIKI_PASSWORD_VARIABLE"]
-  puts "MEDIAWIKI_USER environment variable is not defined! Please export a value for that variable before proceeding." unless ENV["MEDIAWIKI_USER"]
-  puts "MEDIAWIKI_PASSWORD environment variable is not defined! Please export a value for that variable before proceeding." unless ENV["MEDIAWIKI_PASSWORD"]
-end
-
 AfterConfiguration do |config|
   # Install a formatter that can be used to show feature-related warnings
   pretty_format, io = config.formats.find { |(format, io)| format == "pretty" }
@@ -68,41 +62,39 @@ Before do |scenario|
 end
 
 Before do |scenario|
+  # Create a unique random string for this scenario
   @random_string = Random.new.rand.to_s
 
-  # CirrusSearch and VisualEditor need this
-  if ENV["REUSE_BROWSER"] == "true" && $browser
-    @browser = $browser
-  elsif scenario.source_tag_names.include? "@custom-browser"
-    # browser will be started in Cucumber step
-  else
-    @browser = browser(test_name(scenario))
-    $browser = @browser # CirrusSearch and VisualEditor need this
+  # Annotate sessions with the scenario name and Jenkins build info
+  browser_factory.bind do |options|
+    options[:desired_capabilities][:name] = test_name(scenario)
   end
 
-  $session_id = sauce_session_id
+  browser_factory.bind(:job_name) do |job, options|
+    options[:desired_capabilities][:name] += " #{job}"
+  end
+
+  browser_factory.bind(:build_number) do |build, options|
+    options[:desired_capabilities][:name] += "##{build}"
+  end
 end
 
 After do |scenario|
-  if @browser && scenario.failed? && (ENV["SCREENSHOT_FAILURES"] == "true")
+  if scenario.respond_to?(:status)
     require "fileutils"
-    screen_dir = ENV["SCREENSHOT_FAILURES_PATH"] || "screenshots"
-    FileUtils.mkdir_p screen_dir
-    name = test_name(scenario).gsub(/ /, '_')
-    path = "#{screen_dir}/#{name}.png"
-    @browser.screenshot.save path
-    embed path, "image/png"
-  end
 
-  if environment == :saucelabs
-    sid = $session_id || sauce_session_id
-    sauce_api(%Q{{"passed": #{scenario.passed?}}}, sid)
-    sauce_api(%Q{{"public": true}}, sid)
-    sauce_api(%Q{{"build": #{ENV["BUILD_NUMBER"]}}}, sid) if ENV["BUILD_NUMBER"]
-  end
+    teardown(scenario.status) do |browser|
+      if scenario.failed? && lookup(:screenshot_failures, default: false) == "true"
+        screen_dir = lookup(:screenshot_failures_path, default: "screenshots")
+        FileUtils.mkdir_p screen_dir
+        name = test_name(scenario).gsub(/ /, '_')
+        path = "#{screen_dir}/#{name}.png"
+        browser.screenshot.save path
+        embed path, "image/png"
+      end
 
-  if @browser
-    # CirrusSearch and VisualEditor need this
-    @browser.close unless ENV["KEEP_BROWSER_OPEN"] == "true" || ENV["REUSE_BROWSER"] == "true"
+    end
+  else
+    teardown
   end
 end
