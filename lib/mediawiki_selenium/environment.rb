@@ -11,12 +11,12 @@ module MediawikiSelenium
   # working directory. It should contain defaults for each environment in
   # which the tests are expected to run, indexed by environment name.
   #
-  #   beta:
-  #     mediawiki_url: http://en.wikipedia.beta.wmflabs.org/wiki/
-  #     mediawiki_user: Selenium_user
-  #   test2:
-  #     mediawiki_url: http://test2.wikipedia.org/wiki/
-  #     mediawiki_user: Selenium_user
+  #     beta:
+  #       mediawiki_url: http://en.wikipedia.beta.wmflabs.org/wiki/
+  #       mediawiki_user: Selenium_user
+  #     test2:
+  #       mediawiki_url: http://test2.wikipedia.org/wiki/
+  #       mediawiki_user: Selenium_user
   #
   # Which default set to use is determined by the value of the
   # `MEDIAWIKI_ENVIRONMENT` environment variable. (See {load} and
@@ -27,8 +27,8 @@ module MediawikiSelenium
   # the default configuration as specified under `beta` in the YAML file but
   # define `mediawiki_user` as `Other_user` instead of `Selenium_user`.
   #
-  #   export MEDIAWIKI_ENVIRONMENT=beta MEDIAWIKI_USER=Other_user
-  #   bundle exec cucumber ...
+  #     export MEDIAWIKI_ENVIRONMENT=beta MEDIAWIKI_USER=Other_user
+  #     bundle exec cucumber ...
   #
   # There are various methods that allow you to perform actions in the context
   # of some alternative resource, for example as a different user using
@@ -36,15 +36,15 @@ module MediawikiSelenium
   # the exact user names or URLs for these resources, you reference them by an
   # ID which corresponds to configuration made in `environments.yml`.
   #
-  #   # environments.yml:
-  #   beta:
-  #     # ...
-  #     mediawiki_user_b: Selenium_user2
+  #     # environments.yml:
+  #     beta:
+  #       # ...
+  #       mediawiki_user_b: Selenium_user2
   #
-  #   # step definition:
-  #   Given(/^user B has linked to a page I created$/) do
-  #     as_user(:b) { api.create_page(...) }
-  #   end
+  #     # step definition:
+  #     Given(/^user B has linked to a page I created$/) do
+  #       as_user(:b) { api.create_page(...) }
+  #     end
   #
   # This level of abstraction is intended to reduce coupling between tests
   # and test environments, and should promote step definitions that are more

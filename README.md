@@ -83,8 +83,8 @@ Execute your tests by running `bundle exec cucumber` from within the
 `tests/browser` directory.
 
 By default, the entire suite is run which may take some time. If you wish to
-execute scenarios for just a single feature, you can given the feature file as
-an argument.
+execute scenarios for just a single feature, you can provide the feature file
+as an argument.
 
     bundle exec cucumber feature/some.feature
 
