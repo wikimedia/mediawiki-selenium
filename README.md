@@ -37,7 +37,7 @@ Create a `Gemfile` in the root of your MediaWiki-related project that
 specifies the version of `mediawiki_selenium` you wish to use (typically the
 latest version).
 
-    gem 'mediawiki_selenium', '~> 0.4.1'
+    gem 'mediawiki_selenium', '~> 1.0.0'
 
 Install the gem and its dependencies by running `bundle install`. (If
 [Bundler](http://bundler.io/) is not yet installed, install it with
@@ -217,6 +217,24 @@ Repositories that use the gem:
 See https://www.mediawiki.org/wiki/Gerrit
 
 ## Release notes
+
+### 1.0.0 2015-01-16
+* Substantial refactoring and backwards incompatible changes
+* Implemented an "environment abstraction layer" with the aim to:
+  * Improve test determinism by sourcing environment-specific default
+    configurations and enforcing an immutable runtime configuration
+  * Simplify test patterns by providing DSL constructs around commonly tested
+    MediaWiki resources
+  * Manage multiple isolated browser sessions within a single test scenario
+  * Serve more advanced use cases by supporting ad hoc browser customization
+* Cleaned up the global object space by moving methods into the new
+  `Environment` and `BrowserFactory` classes
+* Further decoupled core framework from Cucumber, allowing for the possibility
+  of its use under other Ruby test frameworks like RSpec
+* Established test suite with coverage for all newly implemented EAL modules
+  and classes
+* Improved high level and inline documentation with examples and links to
+  upstream resources
 
 ### 0.4.1 2014-11-11
 * Additional headless environment variables: HEADLESS_DISPLAY, HEADLESS_REUSE, HEADLESS_DESTROY_AT_EXIT.
