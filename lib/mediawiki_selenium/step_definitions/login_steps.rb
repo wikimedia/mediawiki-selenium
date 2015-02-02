@@ -9,6 +9,8 @@ mediawiki_selenium top-level directory and at
 https://git.wikimedia.org/blob/mediawiki%2Fselenium/HEAD/CREDITS.
 =end
 
-Given(/^I am logged in$/) do
-  visit(LoginPage).login_with(ENV["MEDIAWIKI_USER"], ENV["MEDIAWIKI_PASSWORD"])
+Given(/^I am logged in(?: as (\w+))$/) do |user|
+  as_user(user) do |user, password|
+    visit(LoginPage).login_with(user, password)
+  end
 end

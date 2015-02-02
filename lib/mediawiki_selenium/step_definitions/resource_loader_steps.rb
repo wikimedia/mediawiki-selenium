@@ -10,7 +10,7 @@ https://git.wikimedia.org/blob/mediawiki%2Fselenium/HEAD/CREDITS.
 =end
 
 Then(/^page has no ResourceLoader errors$/) do
-  @browser.execute_script("
+  result = browser.execute_script(<<-end)
 return (function() {
     // Returns a string listing problem modules,
     // or empty string if all OK (or not a MediaWiki page).
@@ -41,5 +41,7 @@ return (function() {
     }
     return ret;
 }) ();
-").should == ""
+  end
+
+  expect(result).to eq('')
 end
