@@ -44,6 +44,11 @@ Install the gem and its dependencies by running `bundle install`. (If
 `gem install bundler`, or `sudo gem install bundler` if you're using a
 system wide Ruby.)
 
+## Upgrading
+
+Please read the included `UPGRADE.md` for documentation on how to upgrade from
+one major release to another.
+
 ## Getting Started
 
 Once the gem is installed, run `mediawiki-selenium-init` in your project's
