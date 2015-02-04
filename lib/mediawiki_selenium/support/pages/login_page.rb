@@ -30,7 +30,6 @@ class LoginPage
   def login_with(username, password, wait_for_logout_element = true)
     self.username_element.when_present.send_keys(username)
     self.password_element.when_present.send_keys(password)
-    login_element.fire_event("onfocus")
     login_element.when_present.click
     logout_element.when_present(10) if wait_for_logout_element
   end
