@@ -177,6 +177,9 @@ See https://www.mediawiki.org/wiki/Gerrit
 
 ## Release notes
 
+### 0.4.2 2015-02-04
+* Removed use of `onfocus` from `LoginPage#login_with`
+
 ### 0.4.1 2014-11-11
 * Additional headless environment variables: HEADLESS_DISPLAY, HEADLESS_REUSE, HEADLESS_DESTROY_AT_EXIT.
 
