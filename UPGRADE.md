@@ -58,3 +58,58 @@ To something like this.
 
       # ...
     end
+
+## Refactor direct use of `ENV`
+
+Change all references to `ENV` to use the appropriate `Environment` method.
+
+For example, change things like:
+
+    Given(/^I am logged in to the primary wiki domain$/) do
+      visit(LoginPage).login_with(ENV["MEDIAWIKI_USER"], ENV["MEDIAWIKI_PASSWORD"])
+    end
+
+To something like:
+
+    Given(/^I am logged in to the primary wiki domain$/) do
+      visit(LoginPage).login_with(user, password)
+    end
+
+More esoteric configuration that isn't accessible via a method of
+`Environment` can still be read via `Environment#lookup` and `Environment#[]`.
+
+Change something like the following:
+
+    Then(/^the default language should reflect my browser language$/) do
+      on(PreferencesPage) do |page|
+        expect(page.language_preference).to eq(ENV['BROWSER_LANGUAGE'])
+      end
+    end
+
+To something like:
+
+    Then(/^the default language should reflect my browser language$/) do
+      on(PreferencesPage) do |page|
+        expect(page.language_preference).to eq(env[:browser_language])
+        # or
+        expect(page.language_preference).to eq(lookup(:browser_language))
+      end
+    end
+
+## Remove direct references to `@browser`
+
+All references to `@browser` should use `Environment#browser` instead, since
+the latter will automatically configure and launch the browser the first time
+it's needed.
+
+For example:
+
+    When(/^I am viewing Topic page$/) do
+      on(FlowPage).wait_until { @browser.url =~ /Topic/ }
+    end
+
+Would be changed to:
+
+    When(/^I am viewing Topic page$/) do
+      on(FlowPage).wait_until { browser.url =~ /Topic/ }
+    end
