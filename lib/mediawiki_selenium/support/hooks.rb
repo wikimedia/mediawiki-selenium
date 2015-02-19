@@ -8,7 +8,7 @@ AfterConfiguration do |config|
   config.formats << ['MediawikiSelenium::WarningsFormatter', io] if pretty_format
 
   # Initiate headless mode
-  if ENV['HEADLESS'] == 'true'
+  if ENV['HEADLESS'] == 'true' && ENV['BROWSER'] != 'phantomjs'
     require 'headless'
 
     headless_options = {}.tap do |options|

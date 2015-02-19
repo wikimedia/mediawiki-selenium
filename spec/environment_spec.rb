@@ -332,6 +332,41 @@ module MediawikiSelenium
       end
     end
 
+    describe '#teardown' do
+      subject { env.teardown(status) }
+
+      let(:status) { :passed }
+      let(:browser_instance) { double(Watir::Browser) }
+
+      before do
+        expect(env.browser_factory).to receive(:each) { |&blk| [browser_instance].each(&blk) }
+        expect(env.browser_factory).to receive(:teardown).with(env, status)
+      end
+
+      it 'yields the given block and closes the browser' do
+        expect(browser_instance).to receive(:close)
+        expect { |blk| env.teardown(status, &blk) }.to yield_with_args(browser_instance)
+      end
+
+      context 'when keep_browser_open is set to "true"' do
+        let(:config) { { keep_browser_open: 'true' } }
+
+        it 'does not close the browser' do
+          expect(browser_instance).not_to receive(:close)
+          subject
+        end
+
+        context 'but browser is "phantomjs"' do
+          let(:config) { { browser: 'phantomjs', keep_browser_open: 'true' } }
+
+          it 'closes the browser anyway' do
+            expect(browser_instance).to receive(:close)
+            subject
+          end
+        end
+      end
+    end
+
     describe '#user' do
       subject { env.user(id) }
 

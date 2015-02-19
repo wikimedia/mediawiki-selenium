@@ -334,10 +334,10 @@ module MediawikiSelenium
     # @yieldparam browser [Watir::Browser] Browser object, before it's closed.
     #
     def teardown(status = :passed)
-      @_factory_cache.each do |_, factory|
+      @_factory_cache.each do |(_, browser_name), factory|
         factory.each do |browser|
           yield browser if block_given?
-          browser.close unless keep_browser_open?
+          browser.close unless keep_browser_open? && browser_name != :phantomjs
         end
 
         factory.teardown(self, status)
