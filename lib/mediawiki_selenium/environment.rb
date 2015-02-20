@@ -463,7 +463,7 @@ module MediawikiSelenium
     private
 
     def browser_config
-      lookup_all(browser_factory.all_binding_keys, default: nil).reject { |k, v| v.nil? }
+      lookup_all(browser_factory.all_binding_keys, default: nil).reject { |_k, v| v.nil? }
     end
 
     def password_variable
@@ -485,7 +485,7 @@ module MediawikiSelenium
 
       begin
         @_config = @_config.merge(overrides)
-        yield *overrides.values if block_given?
+        yield(*overrides.values) if block_given?
       ensure
         @_config = original_config
       end

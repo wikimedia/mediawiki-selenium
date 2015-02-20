@@ -41,7 +41,7 @@ module MediawikiSelenium
         #
         def bindings
           if superclass <= Base
-            default_bindings.merge(superclass.bindings) { |key, old, new| old + new }
+            default_bindings.merge(superclass.bindings) { |_key, old, new| old + new }
           else
             default_bindings
           end
@@ -116,7 +116,7 @@ module MediawikiSelenium
       # @return [Hash]
       #
       def bindings
-        self.class.bindings.merge(@bindings) { |key, old, new| old + new }
+        self.class.bindings.merge(@bindings) { |_key, old, new| old + new }
       end
 
       # Instantiate a browser using the given environmental configuration.
@@ -182,7 +182,7 @@ module MediawikiSelenium
       # @param env [Environment] Environment.
       # @param status [Symbol] Status of the executed scenario.
       #
-      def teardown(env, status)
+      def teardown(_env, _status)
         # abstract
       end
 
@@ -196,7 +196,7 @@ module MediawikiSelenium
         Selenium::WebDriver::Remote::Capabilities.send(browser_name)
       end
 
-      def finalize_options!(options)
+      def finalize_options!(_options)
         # abstract
       end
 

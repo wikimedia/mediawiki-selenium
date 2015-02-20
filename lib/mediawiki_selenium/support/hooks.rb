@@ -15,7 +15,7 @@ end
 
 AfterConfiguration do |config|
   # Install a formatter that can be used to show feature-related warnings
-  pretty_format, io = config.formats.find { |(format, io)| format == "pretty" }
+  pretty_format, io = config.formats.find { |(format, _io)| format == "pretty" }
   config.formats << ["MediawikiSelenium::WarningsFormatter", io] if pretty_format
 
   # Initiate headless mode

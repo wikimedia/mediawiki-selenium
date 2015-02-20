@@ -4,7 +4,7 @@ module MediawikiSelenium
   class WarningsFormatter
     include Cucumber::Formatter::Console
 
-    def initialize(runtime, io, options)
+    def initialize(_runtime, io, _options)
       @io = io
       @warning_counts = Hash.new(0)
     end
@@ -20,7 +20,7 @@ module MediawikiSelenium
       end
     end
 
-    def after_features(features)
+    def after_features(*)
       if @warning_counts.any?
         @warning_counts.each do |type, count|
           message = "#{count} warning#{count > 1 ? "s" : ""}"
