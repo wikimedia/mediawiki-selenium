@@ -3,6 +3,9 @@ inherit_from: .rubocop_todo.yml
 AllCops:
   StyleGuideCopsOnly: true
 
+Metrics/LineLength:
+  Max: 100
+
 Metrics/MethodLength:
   Enabled: false
 

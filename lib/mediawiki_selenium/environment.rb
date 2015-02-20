@@ -354,7 +354,8 @@ module MediawikiSelenium
       if scenario.respond_to? :feature
         "#{scenario.feature.title}: #{scenario.title}"
       elsif scenario.respond_to? :scenario_outline
-        "#{scenario.scenario_outline.feature.title}: #{scenario.scenario_outline.title}: #{scenario.name}"
+        outline = scenario.scenario_outline
+        "#{outline.feature.title}: #{outline.title}: #{scenario.name}"
       else
         scenario.name
       end

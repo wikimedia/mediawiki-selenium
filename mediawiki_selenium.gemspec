@@ -6,10 +6,17 @@ require "mediawiki_selenium/version"
 Gem::Specification.new do |spec|
   spec.name          = "mediawiki_selenium"
   spec.version       = MediawikiSelenium::VERSION
-  spec.authors       = ["Chris McMahon", "Dan Duvall", "Jeff Hall", "Nikolas Everett", "Tobias Gritschacher", "Željko Filipin"]
-  spec.email         = ["cmcmahon@wikimedia.org", "dduvall@wikimedia.org", "jhall@wikimedia.org", "neverett@wikimedia.org", "tobias.gritschacher@wikimedia.de", "zeljko.filipin@gmail.com"]
-  spec.description   = %q{Several MediaWiki extensions share code that makes it easy to run Selenium tests. This gem
-makes it easy to update the shared code.}
+  spec.authors       = ["Chris McMahon", "Dan Duvall", "Jeff Hall", "Nikolas Everett",
+                        "Tobias Gritschacher", "Željko Filipin"]
+  spec.email         = ["cmcmahon@wikimedia.org", "dduvall@wikimedia.org", "jhall@wikimedia.org",
+                        "neverett@wikimedia.org", "tobias.gritschacher@wikimedia.de",
+                        "zeljko.filipin@gmail.com"]
+
+  spec.description = (<<-end).split.join(' ')
+    Several MediaWiki extensions share code that makes it easy to run Selenium tests. This gem
+    makes it easy to update the shared code.
+  end
+
   spec.summary       = %q{An easy way to run MediaWiki Selenium tests.}
   spec.homepage      = "https://gerrit.wikimedia.org/r/#/admin/projects/mediawiki/selenium"
   spec.license       = "GPL-2"

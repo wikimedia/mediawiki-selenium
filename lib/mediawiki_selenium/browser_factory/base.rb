@@ -15,8 +15,8 @@ module MediawikiSelenium
         # @example Always configure Firefox's language according to `:browser_language`
         #   module MediawikiSelenium::BrowserFactory
         #     class Firefox < Base
-        #       bind(:browser_language) do |language, options|
-        #         options[:desired_capabilities][:firefox_profile]["intl.accept_languages"] = language
+        #       bind(:browser_language) do |lang, options|
+        #         options[:desired_capabilities][:firefox_profile]["intl.accept_languages"] = lang
         #       end
         #     end
         #   end
