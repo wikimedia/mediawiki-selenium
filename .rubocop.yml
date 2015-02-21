@@ -12,5 +12,8 @@ Metrics/MethodLength:
 Style/Alias:
   Enabled: false
 
+Style/DotPosition:
+  EnforcedStyle: trailing
+
 Style/SignalException:
   Enabled: false
