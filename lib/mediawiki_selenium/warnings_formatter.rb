@@ -10,23 +10,23 @@ module MediawikiSelenium
     end
 
     def after_feature(feature)
-      if feature.mw_warnings.any?
-        feature.mw_warnings.each do |type, messages|
-          messages.each { |msg| @io.puts format_string(msg, :pending) }
-          @warning_counts[type] += messages.length
-        end
+      return unless feature.mw_warnings.any?
 
-        @io.puts
+      feature.mw_warnings.each do |type, messages|
+        messages.each { |msg| @io.puts format_string(msg, :pending) }
+        @warning_counts[type] += messages.length
       end
+
+      @io.puts
     end
 
     def after_features(*)
-      if @warning_counts.any?
-        @warning_counts.each do |type, count|
-          message = "#{count} warning#{count > 1 ? "s" : ""}"
-          message += " due to #{type}" unless type == :default
-          @io.puts format_string(message, :pending)
-        end
+      return unless @warning_counts.any?
+
+      @warning_counts.each do |type, count|
+        message = "#{count} warning#{count > 1 ? "s" : ""}"
+        message += " due to #{type}" unless type == :default
+        @io.puts format_string(message, :pending)
       end
     end
 
