@@ -17,6 +17,7 @@ class LoginPage
   def logged_in_as_element
     @browser.div(id: "mw-content-text").p.b
   end
+
   def login_with(username, password, wait_for_logout_element = true)
     self.username_element.when_present.send_keys(username)
     self.password_element.when_present.send_keys(password)
