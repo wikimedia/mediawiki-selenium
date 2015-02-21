@@ -15,5 +15,8 @@ Style/Alias:
 Style/DotPosition:
   EnforcedStyle: trailing
 
+Style/FileName:
+  Exclude: ['bin/*']
+
 Style/SignalException:
   Enabled: false
