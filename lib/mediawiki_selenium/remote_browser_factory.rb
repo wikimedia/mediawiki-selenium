@@ -1,3 +1,5 @@
+require "mediawiki_selenium/support/sauce"
+
 require "rest_client"
 require "uri"
 
@@ -58,6 +60,8 @@ module MediawikiSelenium
             build: env.lookup(:build_number, default: nil),
           }.to_json
         )
+
+        Cucumber::Formatter::Sauce.current_session_id = sid
       end
     end
 
