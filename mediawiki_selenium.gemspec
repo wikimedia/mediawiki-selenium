@@ -17,7 +17,7 @@ Gem::Specification.new do |spec|
     makes it easy to update the shared code.
   end
 
-  spec.summary       = %q(An easy way to run MediaWiki Selenium tests.)
+  spec.summary       = "An easy way to run MediaWiki Selenium tests."
   spec.homepage      = "https://gerrit.wikimedia.org/r/#/admin/projects/mediawiki/selenium"
   spec.license       = "GPL-2"
 
