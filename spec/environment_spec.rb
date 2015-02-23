@@ -13,7 +13,7 @@ module MediawikiSelenium
         mediawiki_api_url: mediawiki_api_url,
         mediawiki_url: mediawiki_url,
         mediawiki_user: mediawiki_user,
-        mediawiki_password: mediawiki_password,
+        mediawiki_password: mediawiki_password
       }
     end
 
@@ -98,7 +98,7 @@ module MediawikiSelenium
             mediawiki_user: "user",
             mediawiki_password: "pass",
             mediawiki_user_b: "user b",
-            mediawiki_password_b: "pass b",
+            mediawiki_password_b: "pass b"
           }
         end
 
@@ -117,7 +117,7 @@ module MediawikiSelenium
           {
             mediawiki_user: "user",
             mediawiki_password: "pass",
-            mediawiki_user_b: "user b",
+            mediawiki_user_b: "user b"
           }
         end
 
@@ -319,7 +319,7 @@ module MediawikiSelenium
         {
           mediawiki_url: "http://an.example/wiki",
           mediawiki_url_b: "http://altb.example/wiki",
-          mediawiki_url_c: "http://altc.example/wiki",
+          mediawiki_url_c: "http://altc.example/wiki"
         }
       end
 
@@ -429,7 +429,7 @@ module MediawikiSelenium
           mediawiki_url: "http://a.example/wiki",
           mediawiki_url_b: "http://b.example/wiki",
           mediawiki_api_url: "http://a.example/api",
-          mediawiki_api_url_b: "http://b.example/api",
+          mediawiki_api_url_b: "http://b.example/api"
         }
       end
 
