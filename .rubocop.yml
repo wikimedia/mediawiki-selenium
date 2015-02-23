@@ -20,3 +20,6 @@ Style/FileName:
 
 Style/SignalException:
   Enabled: false
+
+Style/TrivialAccessors:
+  ExactNameMatch: true
