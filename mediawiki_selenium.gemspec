@@ -24,7 +24,7 @@ Gem::Specification.new do |spec|
   spec.bindir      = "bin"
   spec.executables << 'mediawiki-selenium-init'
 
-  spec.files         = `git ls-files`.split($/)
+  spec.files         = `git ls-files`.split($INPUT_RECORD_SEPARATOR)
   spec.require_paths = ["lib"]
 
   spec.add_runtime_dependency "cucumber", "~> 1.3", ">= 1.3.10"
