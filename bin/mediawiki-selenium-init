@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
 
-require "mediawiki_selenium"
+require 'mediawiki_selenium'
 
 MediawikiSelenium::Initializer.new.install

@@ -10,7 +10,7 @@ module MediawikiSelenium
     #
     class Chrome < Base
       bind(:browser_language) do |language, options|
-        options[:prefs]["intl.accept_languages"] = language
+        options[:prefs]['intl.accept_languages'] = language
       end
 
       bind(:browser_user_agent) do |user_agent, options|

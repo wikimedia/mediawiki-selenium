@@ -1,4 +1,4 @@
-require "cucumber/formatter/junit"
+require 'cucumber/formatter/junit'
 
 module Cucumber::Formatter
   class Sauce < Junit
@@ -10,12 +10,12 @@ module Cucumber::Formatter
     private
 
     def format_exception(exception)
-      if ENV["HEADLESS"] == "true"
-        job_url = ""
+      if ENV['HEADLESS'] == 'true'
+        job_url = ''
       elsif self.class.current_session_id
         job_url = "Sauce Labs job URL: http://saucelabs.com/jobs/#{self.class.current_session_id}\n"
       else
-        job_url = "Uh-oh. Could not find link to Sauce Labs job URL."
+        job_url = 'Uh-oh. Could not find link to Sauce Labs job URL.'
       end
 
       msgs = [job_url] + ["#{exception.message} (#{exception.class})"] + exception.backtrace

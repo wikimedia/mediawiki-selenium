@@ -1,6 +1,6 @@
 
 When(/^upload bogus file (.+)$/) do |file_name|
-  require "tempfile"
+  require 'tempfile'
   path = "#{Dir.tmpdir}/#{file_name}"
 
   system("touch #{path}")
@@ -14,10 +14,10 @@ end
 
 
 When(/^upload file (.+)$/) do |file_name|
-  require "tempfile"
+  require 'tempfile'
   path = "#{Dir.tmpdir}/#{file_name}"
 
-  require "chunky_png"
+  require 'chunky_png'
   ChunkyPNG::Image.new(Random.new.rand(255), Random.new.rand(255), Random.new.rand(255)).save path
 
   if browser.driver.browser == :chrome

@@ -1,4 +1,4 @@
-require "watir-webdriver"
+require 'watir-webdriver'
 
 module MediawikiSelenium
   module BrowserFactory
@@ -27,7 +27,7 @@ module MediawikiSelenium
         #                                  the browser options.
         #
         def bind(*names, &blk)
-          raise ArgumentError, "no block given" unless block_given?
+          raise ArgumentError, 'no block given' unless block_given?
 
           key = names.length == 1 ? names.first : names
           default_bindings[key] ||= []

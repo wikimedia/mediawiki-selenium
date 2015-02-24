@@ -1,7 +1,7 @@
-require "mediawiki_selenium/support/sauce"
+require 'mediawiki_selenium/support/sauce'
 
-require "rest_client"
-require "uri"
+require 'rest_client'
+require 'uri'
 
 module MediawikiSelenium
   # Constructs remote browser sessions to be run via Sauce Labs. Adds the
@@ -14,7 +14,7 @@ module MediawikiSelenium
   #
   module RemoteBrowserFactory
     REQUIRED_CONFIG = [:sauce_ondemand_username, :sauce_ondemand_access_key]
-    URL = "http://ondemand.saucelabs.com/wd/hub"
+    URL = 'http://ondemand.saucelabs.com/wd/hub'
 
     class << self
       def extend_object(factory)
@@ -53,7 +53,7 @@ module MediawikiSelenium
           url: "https://saucelabs.com/rest/v1/#{username}/jobs/#{sid}",
           user: username,
           password: key,
-          headers: { content_type: "application/json" },
+          headers: { content_type: 'application/json' },
           payload: {
             public: true,
             passed: status == :passed,
@@ -72,9 +72,9 @@ module MediawikiSelenium
       when :firefox
         options[:desired_capabilities][:firefox_profile] = options.delete(:profile)
       when :chrome
-        options[:desired_capabilities]["chromeOptions"] ||= {}
-        options[:desired_capabilities]["chromeOptions"]["prefs"] = options.delete(:prefs)
-        options[:desired_capabilities]["chromeOptions"]["args"] = options.delete(:args)
+        options[:desired_capabilities]['chromeOptions'] ||= {}
+        options[:desired_capabilities]['chromeOptions']['prefs'] = options.delete(:prefs)
+        options[:desired_capabilities]['chromeOptions']['args'] = options.delete(:args)
       end
     end
 

@@ -1,4 +1,4 @@
-require "mediawiki_api"
+require 'mediawiki_api'
 
 module MediawikiSelenium
   # Provides more direct access to the API client from hooks and step
@@ -28,7 +28,7 @@ module MediawikiSelenium
     def ensure_account(id)
       api.create_account(user(id), password(id))
     rescue MediawikiApi::ApiError => e
-      raise e unless e.code == "userexists"
+      raise e unless e.code == 'userexists'
     end
 
     # Extends parent implementation to also override the API URL. If no API
@@ -51,7 +51,7 @@ module MediawikiSelenium
     private
 
     def api_url_from(wiki_url)
-      URI.parse(wiki_url).merge("/w/api.php").to_s
+      URI.parse(wiki_url).merge('/w/api.php').to_s
     end
   end
 end

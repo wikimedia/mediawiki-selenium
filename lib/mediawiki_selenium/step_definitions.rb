@@ -1,5 +1,5 @@
-require "mediawiki_selenium/step_definitions/login_steps"
-require "mediawiki_selenium/step_definitions/navigation_steps"
-require "mediawiki_selenium/step_definitions/preferences_steps"
-require "mediawiki_selenium/step_definitions/resource_loader_steps"
-require "mediawiki_selenium/step_definitions/upload_file_steps"
+require 'mediawiki_selenium/step_definitions/login_steps'
+require 'mediawiki_selenium/step_definitions/navigation_steps'
+require 'mediawiki_selenium/step_definitions/preferences_steps'
+require 'mediawiki_selenium/step_definitions/resource_loader_steps'
+require 'mediawiki_selenium/step_definitions/upload_file_steps'

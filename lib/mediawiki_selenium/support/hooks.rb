@@ -1,20 +1,20 @@
-Before("@custom-browser") do |scenario|
+Before('@custom-browser') do |scenario|
   @scenario = scenario
 end
 
 AfterConfiguration do |config|
   # Install a formatter that can be used to show feature-related warnings
-  pretty_format, io = config.formats.find { |(format, _io)| format == "pretty" }
-  config.formats << ["MediawikiSelenium::WarningsFormatter", io] if pretty_format
+  pretty_format, io = config.formats.find { |(format, _io)| format == 'pretty' }
+  config.formats << ['MediawikiSelenium::WarningsFormatter', io] if pretty_format
 
   # Initiate headless mode
-  if ENV["HEADLESS"] == "true"
-    require "headless"
+  if ENV['HEADLESS'] == 'true'
+    require 'headless'
 
     headless_options = {}.tap do |options|
-      options[:display] = ENV["HEADLESS_DISPLAY"] if ENV.include?("HEADLESS_DISPLAY")
-      options[:reuse] = false if ENV["HEADLESS_REUSE"] == "false"
-      options[:destroy_at_exit] = false if ENV["HEADLESS_DESTROY_AT_EXIT"] == "false"
+      options[:display] = ENV['HEADLESS_DISPLAY'] if ENV.include?('HEADLESS_DISPLAY')
+      options[:reuse] = false if ENV['HEADLESS_REUSE'] == 'false'
+      options[:destroy_at_exit] = false if ENV['HEADLESS_DESTROY_AT_EXIT'] == 'false'
     end
 
     headless = Headless.new(headless_options)
@@ -35,8 +35,8 @@ Before do |scenario|
   dependencies = tags.map { |tag| tag.match(/^@extension-(.+)$/) { |m| m[1].downcase } }.compact
 
   unless dependencies.empty?
-    extensions = api.meta(:siteinfo, siprop: "extensions").data["extensions"]
-    extensions = extensions.map { |ext| ext["name"] }.compact.map(&:downcase)
+    extensions = api.meta(:siteinfo, siprop: 'extensions').data['extensions']
+    extensions = extensions.map { |ext| ext['name'] }.compact.map(&:downcase)
     missing = dependencies - extensions
 
     if missing.any?
@@ -44,7 +44,7 @@ Before do |scenario|
 
       if scenario.feature.respond_to?(:mw_warn)
         warning = "Skipped feature due to missing wiki extensions: #{missing.join(", ")}"
-        scenario.feature.mw_warn(warning, "missing wiki extensions")
+        scenario.feature.mw_warn(warning, 'missing wiki extensions')
       end
     end
   end
@@ -70,16 +70,16 @@ end
 
 After do |scenario|
   if scenario.respond_to?(:status)
-    require "fileutils"
+    require 'fileutils'
 
     teardown(scenario.status) do |browser|
-      if scenario.failed? && lookup(:screenshot_failures, default: false) == "true"
-        screen_dir = lookup(:screenshot_failures_path, default: "screenshots")
+      if scenario.failed? && lookup(:screenshot_failures, default: false) == 'true'
+        screen_dir = lookup(:screenshot_failures_path, default: 'screenshots')
         FileUtils.mkdir_p screen_dir
         name = test_name(scenario).gsub(/ /, '_')
         path = "#{screen_dir}/#{name}.png"
         browser.screenshot.save path
-        embed path, "image/png"
+        embed path, 'image/png'
       end
 
     end

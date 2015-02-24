@@ -1,4 +1,4 @@
-require "cucumber/formatter/console"
+require 'cucumber/formatter/console'
 
 module MediawikiSelenium
   class WarningsFormatter

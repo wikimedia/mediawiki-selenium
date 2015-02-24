@@ -1,4 +1,4 @@
-require "page-object"
+require 'page-object'
 
 module MediawikiSelenium
   # Handles on-demand browser instantiation and assignment of the `@browser`

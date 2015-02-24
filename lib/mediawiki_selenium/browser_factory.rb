@@ -1,9 +1,9 @@
 module MediawikiSelenium
   module BrowserFactory
-    autoload :Base, "mediawiki_selenium/browser_factory/base"
-    autoload :Firefox, "mediawiki_selenium/browser_factory/firefox"
-    autoload :Chrome, "mediawiki_selenium/browser_factory/chrome"
-    autoload :Phantomjs, "mediawiki_selenium/browser_factory/phantomjs"
+    autoload :Base, 'mediawiki_selenium/browser_factory/base'
+    autoload :Firefox, 'mediawiki_selenium/browser_factory/firefox'
+    autoload :Chrome, 'mediawiki_selenium/browser_factory/chrome'
+    autoload :Phantomjs, 'mediawiki_selenium/browser_factory/phantomjs'
 
     # Resolves and instantiates a new factory for the given browser name.
     #
@@ -17,7 +17,7 @@ module MediawikiSelenium
     # @return [BrowserFactory::Base]
     #
     def self.new(browser_name)
-      factory_class = const_get(browser_name.to_s.split("_").map(&:capitalize).join(""))
+      factory_class = const_get(browser_name.to_s.split('_').map(&:capitalize).join(''))
       factory_class.new(browser_name)
     end
   end

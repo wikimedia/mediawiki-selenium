@@ -12,16 +12,16 @@ module MediawikiSelenium
     class Firefox < Base
       bind(:browser_timeout) do |timeout, options|
         timeout = timeout.to_i
-        options[:profile]["dom.max_script_run_time"] = timeout
-        options[:profile]["dom.max_chrome_script_run_time"] = timeout
+        options[:profile]['dom.max_script_run_time'] = timeout
+        options[:profile]['dom.max_chrome_script_run_time'] = timeout
       end
 
       bind(:browser_language) do |language, options|
-        options[:profile]["intl.accept_languages"] = language
+        options[:profile]['intl.accept_languages'] = language
       end
 
       bind(:browser_user_agent) do |user_agent, options|
-        options[:profile]["general.useragent.override"] = user_agent
+        options[:profile]['general.useragent.override'] = user_agent
       end
 
       protected
