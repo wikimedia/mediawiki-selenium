@@ -177,45 +177,7 @@ commit back both files.
 
 ## Links
 
-### Gems
-
-1. mediawiki_selenium: [Gerrit](https://gerrit.wikimedia.org/r/#/admin/projects/mediawiki/selenium), [GitHub](https://github.com/wikimedia/mediawiki-selenium), [RubyGems](https://rubygems.org/gems/mediawiki_selenium), [Code Climate](https://codeclimate.com/github/wikimedia/mediawiki-selenium)
-1. mediawiki_api: [Gerrit](https://gerrit.wikimedia.org/r/#/admin/projects/mediawiki/ruby/api), [GitHub](https://github.com/wikimedia/mediawiki-ruby-api), [RubyGems](https://rubygems.org/gems/mediawiki_api), [Code Climate](https://codeclimate.com/github/wikimedia/mediawiki-ruby-api)
-
-### Repositories
-
-If not stated differently, Selenium tests are in `tests/browser` folder and Jenkins jobs are at [integration.wikimedia.org/ci/view/BrowserTests](https://integration.wikimedia.org/ci/view/BrowserTests/).
-
-Repositories that use the gem:
-
-1. ArticleFeedbackv5: [Gerrit](https://gerrit.wikimedia.org/r/#/admin/projects/mediawiki/extensions/ArticleFeedbackv5), [GitHub](https://github.com/wikimedia/mediawiki-extensions-ArticleFeedbackv5), [Code Climate](https://codeclimate.com/github/wikimedia/mediawiki-extensions-ArticleFeedbackv5)
-1. CentralAuth: [Gerrit](https://gerrit.wikimedia.org/r/#/admin/projects/mediawiki/extensions/CentralAuth), [GitHub](https://github.com/wikimedia/mediawiki-extensions-CentralAuth), [Code Climate](https://codeclimate.com/github/wikimedia/mediawiki-extensions-CentralAuth)
-1. CirrusSearch: [Gerrit](https://gerrit.wikimedia.org/r/#/admin/projects/mediawiki/extensions/CirrusSearch), [GitHub](https://github.com/wikimedia/mediawiki-extensions-CirrusSearch), [Code Climate](https://codeclimate.com/github/wikimedia/mediawiki-extensions-CirrusSearch)
-1. ContentTranslation: [Gerrit](https://gerrit.wikimedia.org/r/#/admin/projects/mediawiki/extensions/ContentTranslation), [GitHub](https://github.com/wikimedia/mediawiki-extensions-ContentTranslation), [Code Climate](https://codeclimate.com/github/wikimedia/mediawiki-extensions-ContentTranslation)
-1. Echo: [Gerrit](https://gerrit.wikimedia.org/r/#/admin/projects/mediawiki/extensions/Echo), [GitHub](https://github.com/wikimedia/mediawiki-extensions-Echo), [Code Climate](https://codeclimate.com/github/wikimedia/mediawiki-extensions-Echo)
-1. Flow: [Gerrit](https://gerrit.wikimedia.org/r/#/admin/projects/mediawiki/extensions/Flow), [GitHub](https://github.com/wikimedia/mediawiki-extensions-Flow), [Code Climate](https://codeclimate.com/github/wikimedia/mediawiki-extensions-Flow)
-1. GettingStarted: [Gerrit](https://gerrit.wikimedia.org/r/#/admin/projects/mediawiki/extensions/GettingStarted), [GitHub](https://github.com/wikimedia/mediawiki-extensions-GettingStarted), [Code Climate](https://codeclimate.com/github/wikimedia/mediawiki-extensions-GettingStarted)
-1. Math: [Gerrit](https://gerrit.wikimedia.org/r/#/admin/projects/mediawiki/extensions/Math), [GitHub](https://github.com/wikimedia/mediawiki-extensions-Math), [Code Climate](https://codeclimate.com/github/wikimedia/mediawiki-extensions-Math)
-1. mediawiki/core: [Gerrit](https://gerrit.wikimedia.org/r/#/admin/projects/mediawiki/core), [GitHub](https://github.com/wikimedia/mediawiki-core), [Code Climate](https://codeclimate.com/github/wikimedia/mediawiki-core)
-1. MobileFrontend: [Gerrit](https://gerrit.wikimedia.org/r/#/admin/projects/mediawiki/extensions/MobileFrontend), [GitHub](https://github.com/wikimedia/mediawiki-extensions-MobileFrontend), [Code Climate](https://codeclimate.com/github/wikimedia/mediawiki-extensions-MobileFrontend)
-1. MultimediaViewer: [Gerrit](https://gerrit.wikimedia.org/r/#/admin/projects/mediawiki/extensions/MultimediaViewer), [GitHub](https://github.com/wikimedia/mediawiki-extensions-MultimediaViewer), [Code Climate](https://codeclimate.com/github/wikimedia/mediawiki-extensions-MultimediaViewer)
-1. PageTriage: [Gerrit](https://gerrit.wikimedia.org/r/#/admin/projects/mediawiki/extensions/PageTriage), [GitHub](https://github.com/wikimedia/mediawiki-extensions-PageTriage), [Code Climate](https://codeclimate.com/github/wikimedia/mediawiki-extensions-PageTriage)
-1. PdfHandler: [Gerrit](https://gerrit.wikimedia.org/r/#/admin/projects/mediawiki/extensions/PdfHandler), [GitHub](https://github.com/wikimedia/mediawiki-extensions-PdfHandler), [Code Climate](https://codeclimate.com/github/wikimedia/mediawiki-extensions-PdfHandler)
-1. Translate: [Gerrit](https://gerrit.wikimedia.org/r/#/admin/projects/mediawiki/extensions/Translate), [GitHub](https://github.com/wikimedia/mediawiki-extensions-Translate), [Code Climate](https://codeclimate.com/github/wikimedia/mediawiki-extensions-Translate)
-1. TwnMainPage: [Gerrit](https://gerrit.wikimedia.org/r/#/admin/projects/mediawiki/extensions/TwnMainPage), [GitHub](https://github.com/wikimedia/mediawiki-extensions-TwnMainPage), [Code Climate](https://codeclimate.com/github/wikimedia/mediawiki-extensions-TwnMainPage)
-1. UniversalLanguageSelector: [Gerrit](https://gerrit.wikimedia.org/r/#/admin/projects/mediawiki/extensions/UniversalLanguageSelector), [GitHub](https://github.com/wikimedia/mediawiki-extensions-UniversalLanguageSelector), [Code Climate](https://codeclimate.com/github/wikimedia/mediawiki-extensions-UniversalLanguageSelector)
-1. UploadWizard: [Gerrit](https://gerrit.wikimedia.org/r/#/admin/projects/mediawiki/extensions/UploadWizard), [GitHub](https://github.com/wikimedia/mediawiki-extensions-UploadWizard), [Code Climate](https://codeclimate.com/github/wikimedia/mediawiki-extensions-UploadWizard)
-1. VisualEditor: [Gerrit](https://gerrit.wikimedia.org/r/#/admin/projects/mediawiki/extensions/VisualEditor), [GitHub](https://github.com/wikimedia/mediawiki-extensions-VisualEditor), [Code Climate](https://codeclimate.com/github/wikimedia/mediawiki-extensions-VisualEditor), `/modules/ve-mw/tests/browser` folder
-1. WikidataBrowserTests: [GitHub](https://github.com/wmde/WikidataBrowserTests), [Code Climate](https://codeclimate.com/github/wmde/WikidataBrowserTests)
-1. WikiLove: [Gerrit](https://gerrit.wikimedia.org/r/#/admin/projects/mediawiki/extensions/WikiLove), [GitHub](https://github.com/wikimedia/mediawiki-extensions-WikiLove), [Code Climate](https://codeclimate.com/github/wikimedia/mediawiki-extensions-WikiLove)
-1. ZeroBanner: [Gerrit](https://gerrit.wikimedia.org/r/#/admin/projects/mediawiki/extensions/ZeroBanner), [GitHub](https://github.com/wikimedia/mediawiki-extensions-ZeroBanner), [Code Climate](https://codeclimate.com/github/wikimedia/mediawiki-extensions-ZeroBanner)
-1. ZeroPortal: [Gerrit](https://gerrit.wikimedia.org/r/#/admin/projects/mediawiki/extensions/ZeroPortal), [GitHub](https://github.com/wikimedia/mediawiki-extensions-ZeroPortal), [Code Climate](https://codeclimate.com/github/wikimedia/mediawiki-extensions-ZeroPortal)
-
-### Alumni
-
-1. Wikibase: [Gerrit](https://gerrit.wikimedia.org/r/#/admin/projects/mediawiki/extensions/Wikibase), [GitHub](https://github.com/wikimedia/mediawiki-extensions-Wikibase), [Code Climate](https://codeclimate.com/github/wikimedia/mediawiki-extensions-Wikibase)
-1. ZeroRatedMobileAccess: [Gerrit](https://gerrit.wikimedia.org/r/#/admin/projects/mediawiki/extensions/ZeroRatedMobileAccess), [GitHub](https://github.com/wikimedia/mediawiki-extensions-ZeroRatedMobileAccess), [Code Climate](https://codeclimate.com/github/wikimedia/mediawiki-extensions-ZeroRatedMobileAccess)
-1. browsertests: [Gerrit](https://gerrit.wikimedia.org/r/#/admin/projects/qa/browsertests), [GitHub](https://github.com/wikimedia/qa-browsertests), [Code Climate](https://codeclimate.com/github/wikimedia/qa-browsertests)
+For a list of MediaWiki repositories that use this gem, see the [Repositories with Ruby code](https://www.mediawiki.org/wiki/Repositories_with_Ruby_code) page on mediawiki.org.
 
 ## Contributing
 
