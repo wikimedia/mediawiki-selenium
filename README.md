@@ -97,16 +97,30 @@ To run a single scenario, give the line number as well.
 
     bundle exec cucumber feature/some.feature:11
 
-The set of default configuration to use (see "Getting started") is specified
-by the `MEDIAWIKI_ENVIRONMENT` environment variable, which should be defined
-somewhere in your shell profile. For example, if you're using
-[Mediawiki-Vagrant](http://www.mediawiki.org/wiki/MediaWiki-Vagrant) for your
-development and executing tests on the host OS, the environment name would be
-`mw-vagrant-host`.
+The set of default configuration to use (see "Getting started") can be
+specified by the `MEDIAWIKI_ENVIRONMENT` environment variable, defined
+somewhere in your shell profile. If no value is set, an entry called `default`
+is loaded.
 
-    export MEDIAWIKI_ENVIRONMENT=mw-vagrant-host # Linux/Unix/Mac
-    set MEDIAWIKI_URL=mw-vagrant-host # Windows Command Prompt
-    $env:MEDIAWIKI_URL="mw-vagrant-host" # Windows PowerShell
+For example, if your `environments.yml` file looked something like this.
+
+    mw-vagrant-host: &default
+      mediawiki_url: http://127.0.0.1:8080/wiki/
+      # ...
+
+    mw-vagrant-guest:
+      mediawiki_url: http://127.0.0.1/wiki/
+      # ...
+
+    beta:
+      mediawiki_url: http://en.wikipedia.beta.wmflabs.org/wiki/
+      # ...
+
+    default: *default
+
+Defining `MEDIAWIKI_ENVIRONMENT=beta` in your shell would tell MW-Selenium to
+use the configuration for `beta` above. Leaving it unset would use the entry
+called `default` which in this case points to `mw-vagrant-host`.
 
 Firefox is the default browser, but you can specify a different one by setting
 `BROWSER`.
