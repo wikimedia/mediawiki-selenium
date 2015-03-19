@@ -1,2 +1,5 @@
+--readme README.md
+--charset utf-8
 --title "MediaWiki Selenium"
 --markup markdown
+'lib/**/*.rb' - '*.md'

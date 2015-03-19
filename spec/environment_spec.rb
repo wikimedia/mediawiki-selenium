@@ -69,6 +69,14 @@ module MediawikiSelenium
         expect(Environment).to receive(:load).with('foo', ENV)
         subject
       end
+
+      context 'where MEDIAWIKI_ENVIRONMENT is not defined' do
+        it 'looks for a "default" environment' do
+          expect(ENV).to receive(:[]).with('MEDIAWIKI_ENVIRONMENT').and_return(nil)
+          expect(Environment).to receive(:load).with('default', ENV)
+          subject
+        end
+      end
     end
 
     describe '#==' do

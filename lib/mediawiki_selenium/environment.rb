@@ -19,8 +19,17 @@ module MediawikiSelenium
   #       mediawiki_user: Selenium_user
   #
   # Which default set to use is determined by the value of the
-  # `MEDIAWIKI_ENVIRONMENT` environment variable. (See {load} and
-  # {load_default}.)
+  # `MEDIAWIKI_ENVIRONMENT` environment variable, or an entry called "default"
+  # if none is set. (See {load} and {load_default}.) The easiest way to
+  # designate such a default set is to use a YAML anchor like so.
+  #
+  #     beta: &default
+  #       mediawiki_url: http://en.wikipedia.beta.wmflabs.org/wiki/
+  #       mediawiki_user: Selenium_user
+  #     test2:
+  #       mediawiki_url: http://test2.wikipedia.org/wiki/
+  #       mediawiki_user: Selenium_user
+  #     default: *default
   #
   # Any additional configuration specified via environment variables overrides
   # what is specified in the YAML file. For example, the following would use
@@ -85,7 +94,7 @@ module MediawikiSelenium
       # @see load
       #
       def load_default
-        load(ENV['MEDIAWIKI_ENVIRONMENT'], ENV)
+        load(ENV['MEDIAWIKI_ENVIRONMENT'] || 'default', ENV)
       end
     end
 
