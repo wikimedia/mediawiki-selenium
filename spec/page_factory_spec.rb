@@ -12,7 +12,26 @@ module MediawikiSelenium
     describe '#on_page' do
       subject { env.on_page(page_class, { using_params: {} }, visit) }
 
+      let(:page_class) { Class.new { include ::PageObject } }
+      let(:visit) { false }
+
       let(:browser) { double('Watir::Browser') }
+
+      it 'returns a new page object' do
+        page = double('PageObject')
+        expect(page_class).to receive(:new).and_return(page)
+        expect(subject).to be(page)
+      end
+
+      context 'when given a block' do
+        it 'yields it only once with a new page object' do
+          page = double('PageObject')
+          allow(page_class).to receive(:new).and_return(page)
+
+          expect { |block| env.on_page(page_class, &block) }.to yield_control.once
+          expect { |block| env.on_page(page_class, &block) }.to yield_with_args(page)
+        end
+      end
 
       context 'when told to visit a page' do
         let(:visit) { true }

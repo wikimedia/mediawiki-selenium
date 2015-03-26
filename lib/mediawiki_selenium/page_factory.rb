@@ -16,7 +16,7 @@ module MediawikiSelenium
     def on_page(page_class, params = { using_params: {} }, visit = false)
       @browser = browser if visit
 
-      super(page_class, params, false).tap do |page|
+      super(page_class, params, false) do |page|
         if page.respond_to?(:goto)
           wiki_url = method(:wiki_url)
 
@@ -33,6 +33,5 @@ module MediawikiSelenium
 
     # @see #on_page
     alias on on_page
-
   end
 end
