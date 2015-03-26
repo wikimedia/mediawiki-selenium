@@ -37,7 +37,7 @@ Create a `Gemfile` in the root of your MediaWiki-related project that
 specifies the version of `mediawiki_selenium` you wish to use (typically the
 latest version).
 
-    gem 'mediawiki_selenium', '~> 1.0.1'
+    gem 'mediawiki_selenium', '~> 1.0.2'
 
 Install the gem and its dependencies by running `bundle install`. (If
 [Bundler](http://bundler.io/) is not yet installed, install it with
@@ -198,6 +198,11 @@ For a list of MediaWiki repositories that use this gem, see the [Repositories wi
 See https://www.mediawiki.org/wiki/Gerrit
 
 ## Release notes
+
+### 1.0.2 2015-03-26
+* Fixed double yield bug in `PageFactory#on`
+* Implemented loading of a `default` configuration from `environments.yml`
+* Improved readme with configuration examples
 
 ### 1.0.1 2015-03-05
 * Fixed regex pattern in shared "I am logged in" step
