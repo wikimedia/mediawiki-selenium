@@ -6,5 +6,6 @@ module MediawikiSelenium
   autoload :Environment, 'mediawiki_selenium/environment'
   autoload :Initializer, 'mediawiki_selenium/initializer'
   autoload :PageFactory, 'mediawiki_selenium/page_factory'
+  autoload :Raita, 'mediawiki_selenium/raita'
   autoload :RemoteBrowserFactory, 'mediawiki_selenium/remote_browser_factory'
 end

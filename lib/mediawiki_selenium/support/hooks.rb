@@ -7,6 +7,16 @@ AfterConfiguration do |config|
   pretty_format, io = config.formats.find { |(format, _io)| format == 'pretty' }
   config.formats << ['MediawikiSelenium::WarningsFormatter', io] if pretty_format
 
+  # Set up Raita logging if RAITA_DB_URL is set. Include any useful
+  # environment variables that Jenkins would have set.
+  env = MediawikiSelenium::Environment.load_default
+  raita_url = env.lookup(:raita_url, default: nil)
+
+  if raita_url
+    raita_build = MediawikiSelenium::Raita.build_from(env)
+    config.formats << ['MediawikiSelenium::Raita::Logger', { url: raita_url, build: raita_build }]
+  end
+
   # Initiate headless mode
   if ENV['HEADLESS'] == 'true' && ENV['BROWSER'] != 'phantomjs'
     require 'headless'
