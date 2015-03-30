@@ -19,5 +19,8 @@ Style/FileName:
 Style/SignalException:
   Enabled: false
 
+Style/StringLiterals:
+  EnforcedStyle: single_quotes
+
 Style/TrivialAccessors:
   ExactNameMatch: true
