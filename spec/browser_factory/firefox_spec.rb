@@ -22,6 +22,21 @@ module MediawikiSelenium::BrowserFactory
         expect(Selenium::WebDriver::Firefox::Profile).to receive(:new).and_return(profile)
       end
 
+      context 'given a browser proxy' do
+        let(:config) { { browser_http_proxy: 'proxy.example:8080' } }
+
+        it 'sets up the profile to use a proxy for both http and https' do
+          selenium_proxy = double('Selenium::WebDriver::Proxy')
+
+          expect(Selenium::WebDriver::Proxy).to receive(:new).
+            with(http: 'proxy.example:8080', ssl: 'proxy.example:8080').
+            and_return(selenium_proxy)
+          expect(profile).to receive(:proxy=).with(selenium_proxy)
+
+          subject
+        end
+      end
+
       context 'given a custom browser_timeout' do
         let(:config) { { browser_timeout: '30' } }
 

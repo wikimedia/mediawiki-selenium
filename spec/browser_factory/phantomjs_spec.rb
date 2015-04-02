@@ -16,6 +16,15 @@ module MediawikiSelenium::BrowserFactory
     describe '#browser_options' do
       subject { factory.browser_options(config) }
 
+      context 'given a browser proxy' do
+        let(:config) { { browser_http_proxy: 'proxy.example:8080' } }
+
+        it 'includes it as --proxy in the cli arguments' do
+          capabilities = subject[:desired_capabilities]
+          expect(capabilities['phantomjs.cli.args']).to include('--proxy=proxy.example:8080')
+        end
+      end
+
       context 'given a custom browser_language' do
         let(:config) { { browser_language: 'eo' } }
 

@@ -3,6 +3,7 @@ module MediawikiSelenium
     # Constructs new Firefox browser instances. The following configuration is
     # supported.
     #
+    #  - browser_http_proxy
     #  - browser_language
     #  - browser_timeout
     #  - browser_user_agent
@@ -10,6 +11,10 @@ module MediawikiSelenium
     # @see Base
     #
     class Firefox < Base
+      bind(:browser_http_proxy) do |http_proxy, options|
+        options[:profile].proxy = Selenium::WebDriver::Proxy.new(http: http_proxy, ssl: http_proxy)
+      end
+
       bind(:browser_timeout) do |timeout, options|
         timeout = timeout.to_i
         options[:profile]['dom.max_script_run_time'] = timeout
