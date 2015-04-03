@@ -15,7 +15,7 @@ module MediawikiSelenium
         # @example Always configure Firefox's language according to `:browser_language`
         #   module MediawikiSelenium::BrowserFactory
         #     class Firefox < Base
-        #       bind(:browser_language) do |lang, options|
+        #       configure(:browser_language) do |lang, options|
         #         options[:desired_capabilities][:firefox_profile]["intl.accept_languages"] = lang
         #       end
         #     end
@@ -26,13 +26,16 @@ module MediawikiSelenium
         # @yield [values, browser_options] A block that binds the configuration to
         #                                  the browser options.
         #
-        def bind(*names, &blk)
+        def configure(*names, &blk)
           raise ArgumentError, 'no block given' unless block_given?
 
           key = names.length == 1 ? names.first : names
           default_bindings[key] ||= []
           default_bindings[key] << blk
         end
+
+        # @deprecated Use {.configure} instead.
+        alias bind configure
 
         # All bindings for this factory class combined with those of super
         # classes.
@@ -58,7 +61,7 @@ module MediawikiSelenium
 
       attr_reader :browser_name
 
-      bind(:browser_timeout) { |value, options| options[:http_client].timeout = value.to_i }
+      configure(:browser_timeout) { |value, options| options[:http_client].timeout = value.to_i }
 
       # Initializes new factory instances.
       #
@@ -83,17 +86,17 @@ module MediawikiSelenium
       #
       # @example Override the user agent according :browser_user_agent
       #   factory = BrowserFactory.new(:firefox)
-      #   factory.bind(:browser_user_agent) do |agent, options|
+      #   factory.configure(:browser_user_agent) do |agent, options|
       #     options[:desired_capabilities][:firefox_profile]["general.useragent.override"] = agent
       #   end
       #
       # @example Annotate the session with our build information
-      #   factory.bind(:job_name, :build_number) do |job, build, options|
+      #   factory.configure(:job_name, :build_number) do |job, build, options|
       #     options[:desired_capabilities][:name] = "#{job} (#{build})"
       #   end
       #
       # @example Bindings aren't invoked unless all given options are configured
-      #   factory.bind(:foo, :bar) do |foo, bar, options|
+      #   factory.configure(:foo, :bar) do |foo, bar, options|
       #     # this never happens!
       #     options[:desired_capabilities][:name] = "#{foo} #{bar}"
       #   end
@@ -104,11 +107,14 @@ module MediawikiSelenium
       # @yield [values, browser_options] A block that binds the configuration to
       #                                  the browser options.
       #
-      def bind(*names, &blk)
+      def configure(*names, &blk)
         key = names.length == 1 ? names.first : names
         @bindings[key] ||= []
         @bindings[key] << (blk || proc {})
       end
+
+      # @deprecated Use {#configure} instead.
+      alias bind configure
 
       # Effective bindings for this factory, those defined at the class level
       # and those defined for this instance.

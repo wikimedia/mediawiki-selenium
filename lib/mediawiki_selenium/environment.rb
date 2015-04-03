@@ -167,7 +167,7 @@ module MediawikiSelenium
       browser = browser.to_s.downcase.to_sym
 
       @_factory_cache[[remote?, browser]] ||= BrowserFactory.new(browser).tap do |factory|
-        factory.bind(:_browser_session)
+        factory.configure(:_browser_session)
         factory.extend(RemoteBrowserFactory) if remote?
       end
     end

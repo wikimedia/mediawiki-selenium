@@ -10,15 +10,15 @@ module MediawikiSelenium
     # @see Base
     #
     class Chrome < Base
-      bind(:browser_http_proxy) do |http_proxy, options|
+      configure(:browser_http_proxy) do |http_proxy, options|
         options[:args] << "--proxy-server=#{http_proxy}"
       end
 
-      bind(:browser_language) do |language, options|
+      configure(:browser_language) do |language, options|
         options[:prefs]['intl.accept_languages'] = language
       end
 
-      bind(:browser_user_agent) do |user_agent, options|
+      configure(:browser_user_agent) do |user_agent, options|
         options[:args] << "--user-agent=#{user_agent}"
       end
 

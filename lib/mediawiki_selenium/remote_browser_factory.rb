@@ -17,23 +17,23 @@ module MediawikiSelenium
     URL = 'http://ondemand.saucelabs.com/wd/hub'
 
     class << self
-      def extend_object(factory)
-        return if factory.is_a?(self)
+      def extend_object(base)
+        return if base.is_a?(self)
 
         super
 
-        factory.bind(:sauce_ondemand_username, :sauce_ondemand_access_key) do |user, key, options|
+        base.configure(:sauce_ondemand_username, :sauce_ondemand_access_key) do |user, key, options|
           options[:url] = URI.parse(URL)
 
           options[:url].user = user
           options[:url].password = key
         end
 
-        factory.bind(:platform) do |platform, options|
+        base.configure(:platform) do |platform, options|
           options[:desired_capabilities].platform = platform
         end
 
-        factory.bind(:version) do |version, options|
+        base.configure(:version) do |version, options|
           options[:desired_capabilities].version = version
         end
       end

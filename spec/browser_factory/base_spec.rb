@@ -6,8 +6,24 @@ module MediawikiSelenium::BrowserFactory
     let(:factory) { factory_class.new(browser_name) }
     let(:browser_name) { :lynx }
 
-    describe '.bind' do
-      subject { factory_class.bind(option_name, &block) }
+    describe '.bindings' do
+      subject { factory_class.bindings }
+
+      before do
+        factory_class.configure(:foo) {}
+      end
+
+      it "includes the base class's default bindings" do
+        expect(subject).to include(Base.default_bindings)
+      end
+
+      it 'includes its own bindings' do
+        expect(subject).to include(factory_class.default_bindings)
+      end
+    end
+
+    describe '.configure' do
+      subject { factory_class.configure(option_name, &block) }
 
       let(:option_name) { :foo }
       let(:block) { proc { } }
@@ -19,27 +35,11 @@ module MediawikiSelenium::BrowserFactory
       end
 
       context 'given no block' do
-        subject { factory_class.bind(option_name) }
+        subject { factory_class.configure(option_name) }
 
         it 'raises an ArgumentError' do
           expect { subject }.to raise_error(ArgumentError)
         end
-      end
-    end
-
-    describe '.bindings' do
-      subject { factory_class.bindings }
-
-      before do
-        factory_class.bind(:foo) {}
-      end
-
-      it "includes the base class's default bindings" do
-        expect(subject).to include(Base.default_bindings)
-      end
-
-      it 'includes its own bindings' do
-        expect(subject).to include(factory_class.default_bindings)
       end
     end
 
@@ -54,9 +54,9 @@ module MediawikiSelenium::BrowserFactory
 
       context 'when bindings are defined' do
         before do
-          factory_class.bind(:foo) {}
-          factory_class.bind(:bar) {}
-          factory_class.bind(:bar) {}
+          factory_class.configure(:foo) {}
+          factory_class.configure(:bar) {}
+          factory_class.configure(:bar) {}
         end
 
         it 'includes all defined bindings' do
@@ -69,33 +69,12 @@ module MediawikiSelenium::BrowserFactory
       end
     end
 
-    describe '#bind' do
-      subject { factory.bind(option_name, &block) }
-      before { subject }
-
-      let(:option_name) { :foo }
-      let(:block) { proc { } }
-
-      it 'adds a new binding for the given option' do
-        expect(factory.bindings).to include(option_name)
-        expect(factory.bindings[option_name]).to include(block)
-      end
-
-      context 'given no block' do
-        subject { factory.bind(option_name) }
-
-        it 'will default to an empty block' do
-          expect(factory.bindings[option_name]).not_to include(nil)
-        end
-      end
-    end
-
     describe '#bindings' do
       subject { factory.bindings }
 
       before do
-        factory_class.bind(:foo) {}
-        factory.bind(:bar)
+        factory_class.configure(:foo) {}
+        factory.configure(:bar)
       end
 
       it 'includes the class-level bindings' do
@@ -176,7 +155,7 @@ module MediawikiSelenium::BrowserFactory
           let(:config) { { foo: 'x' } }
 
           it 'invokes the binding with the configured value' do
-            expect { |block| factory.bind(:foo, &block) && subject }.
+            expect { |block| factory.configure(:foo, &block) && subject }.
               to yield_with_args('x', options)
           end
         end
@@ -185,7 +164,7 @@ module MediawikiSelenium::BrowserFactory
           let(:config) { {} }
 
           it 'never invokes the binding' do
-            expect { |block| factory.bind(:foo, &block) && subject }.
+            expect { |block| factory.configure(:foo, &block) && subject }.
               to_not yield_control
           end
         end
@@ -196,7 +175,7 @@ module MediawikiSelenium::BrowserFactory
           let(:config) { { foo: 'x', bar: 'y' } }
 
           it 'invokes the binding with the configured values' do
-            expect { |block| factory.bind(:foo, :bar, &block) && subject }.
+            expect { |block| factory.configure(:foo, :bar, &block) && subject }.
               to yield_with_args('x', 'y', options)
           end
         end
@@ -205,9 +184,30 @@ module MediawikiSelenium::BrowserFactory
           let(:config) { { foo: 'x' } }
 
           it 'never invokes the binding' do
-            expect { |block| factory.bind(:foo, :bar, &block) && subject }.
+            expect { |block| factory.configure(:foo, :bar, &block) && subject }.
               to_not yield_control
           end
+        end
+      end
+    end
+
+    describe '#configure' do
+      subject { factory.configure(option_name, &block) }
+      before { subject }
+
+      let(:option_name) { :foo }
+      let(:block) { proc { } }
+
+      it 'adds a new binding for the given option' do
+        expect(factory.bindings).to include(option_name)
+        expect(factory.bindings[option_name]).to include(block)
+      end
+
+      context 'given no block' do
+        subject { factory.configure(option_name) }
+
+        it 'will default to an empty block' do
+          expect(factory.bindings[option_name]).not_to include(nil)
         end
       end
     end

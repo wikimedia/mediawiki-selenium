@@ -11,21 +11,21 @@ module MediawikiSelenium
     # @see Base
     #
     class Firefox < Base
-      bind(:browser_http_proxy) do |http_proxy, options|
+      configure(:browser_http_proxy) do |http_proxy, options|
         options[:profile].proxy = Selenium::WebDriver::Proxy.new(http: http_proxy, ssl: http_proxy)
       end
 
-      bind(:browser_timeout) do |timeout, options|
+      configure(:browser_timeout) do |timeout, options|
         timeout = timeout.to_i
         options[:profile]['dom.max_script_run_time'] = timeout
         options[:profile]['dom.max_chrome_script_run_time'] = timeout
       end
 
-      bind(:browser_language) do |language, options|
+      configure(:browser_language) do |language, options|
         options[:profile]['intl.accept_languages'] = language
       end
 
-      bind(:browser_user_agent) do |user_agent, options|
+      configure(:browser_user_agent) do |user_agent, options|
         options[:profile]['general.useragent.override'] = user_agent
       end
 
