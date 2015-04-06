@@ -199,6 +199,10 @@ See https://www.mediawiki.org/wiki/Gerrit
 
 ## Release notes
 
+### 1.1.0 2015-04-06
+* Support for `browser_http_proxy` in Firefox, Chrome, and Phantomjs
+* Renamed browser factory `bind` method to `configure`
+
 ### 1.0.2 2015-03-26
 * Fixed double yield bug in `PageFactory#on`
 * Implemented loading of a `default` configuration from `environments.yml`
