@@ -317,7 +317,7 @@ module MediawikiSelenium
     # @return [String]
     #
     def password(id = nil)
-      lookup(password_variable, id: id)
+      lookup(:mediawiki_password, id: id)
     end
 
     # Whether this environment has been configured to use remote browser
@@ -474,11 +474,6 @@ module MediawikiSelenium
 
     def browser_config
       lookup_all(browser_factory.all_binding_keys, default: nil).reject { |_k, v| v.nil? }
-    end
-
-    def password_variable
-      name = lookup(:mediawiki_password_variable, default: '')
-      name.empty? ? :mediawiki_password : normalize_key(name)
     end
 
     def normalize_config(hash)
