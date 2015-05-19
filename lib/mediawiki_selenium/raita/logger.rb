@@ -13,13 +13,13 @@ module MediawikiSelenium
       # Log everything at once to Raita's Elasticsearch DB.
       #
       def after_features(*)
-        build_id = create('build', @build)['_id']
+        @build_id = create('build', @build)['_id']
 
         @gf.feature_hashes.each do |feature|
           amend_feature(feature)
           elements = feature.delete('elements')
 
-          feature_id = create('feature', feature, build_id)['_id']
+          feature_id = create('feature', feature, @build_id)['_id']
           bulk('feature-element', elements, feature_id)
 
           @build[:result][:status] = change_status(
@@ -29,12 +29,12 @@ module MediawikiSelenium
           @build[:result][:duration] += feature['result']['duration']
         end
 
-        update('build', build_id, @build)
+        update('build', @build_id, @build)
       end
 
       private
 
-      # Add status and duration at the feature and background/scenario level
+      # Add status and duration at the feature and background/scenario level.
       #
       # @param feature {Hash}
       #
@@ -78,15 +78,15 @@ module MediawikiSelenium
 
       def bulk(type, objects, parent = nil)
         data = objects.reduce('') do |d, obj|
-          d << JSON.dump({ create: { _type: type, _parent: parent } }) + "\n"
+          d << JSON.dump({ create: { _type: type, _parent: parent, _routing: @build_id } }) + "\n"
           d << JSON.dump(obj) + "\n\n"
         end
 
-        request(Net::HTTP::Post, ['_bulk'], data, parent: parent)
+        request(Net::HTTP::Post, ['_bulk'], data)
       end
 
       def create(type, object, parent = nil)
-        request(Net::HTTP::Post, [type], object, parent: parent)
+        request(Net::HTTP::Post, [type], object, parent: parent, routing: @build_id)
       end
 
       def request(klass, paths, data, query = {})
@@ -94,7 +94,7 @@ module MediawikiSelenium
 
         uri = @db_url.clone
         uri.path = Pathname.new(uri.path).join(*paths.map(&:to_s)).to_s
-        uri.query = query.map { |pair| pair.join('=') }.join('&')
+        uri.query = query.map { |pair| pair.join('=') unless pair.last.nil? }.compact.join('&')
 
         data = JSON.dump(data) unless data.is_a?(String)
         response = db.request(klass.new(uri), data)

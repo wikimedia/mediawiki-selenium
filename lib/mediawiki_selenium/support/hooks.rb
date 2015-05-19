@@ -83,6 +83,12 @@ After do |scenario|
     require 'fileutils'
 
     teardown(scenario.status) do |browser|
+      # Embed remote session URLs
+      if remote? && browser.driver.respond_to?(:session_id)
+        embed("http://saucelabs.com/jobs/#{browser.driver.session_id}", 'text/url')
+      end
+
+      # Take screenshots
       if scenario.failed? && lookup(:screenshot_failures, default: false) == 'true'
         screen_dir = lookup(:screenshot_failures_path, default: 'screenshots')
         FileUtils.mkdir_p screen_dir

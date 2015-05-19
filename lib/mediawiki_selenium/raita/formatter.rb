@@ -8,6 +8,14 @@ module MediawikiSelenium
       def initialize
         super(NullIO.new)
       end
+
+      # Allows for simple embeddings without base64 encoding.
+      #
+      def embedding(mime_type, data)
+        return unless mime_type.start_with?('text/')
+
+        embeddings << { 'mime_type' => mime_type, 'data' => data }
+      end
     end
   end
 end
