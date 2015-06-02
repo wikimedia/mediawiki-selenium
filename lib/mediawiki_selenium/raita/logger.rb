@@ -5,7 +5,15 @@ module MediawikiSelenium
   module Raita
     class Logger < Cucumber::Formatter::GherkinFormatterAdapter
       def initialize(_runtime, raita_options, options)
+        # Force expanded output of outlines. Note this will effect other
+        # formatters as well, but it's the only way to get a consistent JSON
+        # representation of feature elements with result status and duration.
+        #
+        # @see https://github.com/cucumber/gherkin/issues/165
+        options[:expand] = true
+
         super(Formatter.new, false, options)
+
         @db_url = URI.parse(raita_options[:url])
         @build = raita_options[:build].merge(result: { status: 'passed', duration: 0 })
       end
