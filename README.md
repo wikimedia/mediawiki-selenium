@@ -199,6 +199,10 @@ See https://www.mediawiki.org/wiki/Gerrit
 
 ## Release notes
 
+### 1.2.1 2015-06-02
+* Fixed issue with inconsistent JSON output in Raita logger when using
+  scenario outlines
+
 ### 1.2.0 2015-05-28
 * Support logging to a [Raita](http://git.wikimedia.org/summary/integration%2Fraita.git)
   Elasticsearch database by setting `RAITA_URL`
