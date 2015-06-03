@@ -177,6 +177,9 @@ See https://www.mediawiki.org/wiki/Gerrit
 
 ## Release notes
 
+### 0.4.3 2015-06-03
+* Fixed bug in SauceLabs reporting for when a scenario is skipped
+
 ### 0.4.2 2015-02-04
 * Removed use of `onfocus` from `LoginPage#login_with`
 
