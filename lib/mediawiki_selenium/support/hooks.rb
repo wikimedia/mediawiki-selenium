@@ -96,9 +96,12 @@ After do |scenario|
 
   if environment == :saucelabs
     sid = $session_id || sauce_session_id
-    sauce_api(%Q{{"passed": #{scenario.passed?}}}, sid)
-    sauce_api(%Q{{"public": true}}, sid)
-    sauce_api(%Q{{"build": #{ENV["BUILD_NUMBER"]}}}, sid) if ENV["BUILD_NUMBER"]
+
+    unless sid.nil?
+      sauce_api(%Q{{"passed": #{scenario.passed?}}}, sid)
+      sauce_api(%Q{{"public": true}}, sid)
+      sauce_api(%Q{{"build": #{ENV["BUILD_NUMBER"]}}}, sid) if ENV["BUILD_NUMBER"]
+    end
   end
 
   if @browser
