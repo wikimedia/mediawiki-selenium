@@ -2,5 +2,5 @@
 host=gerrit.wikimedia.org
 port=29418
 project=mediawiki/selenium.git
-defaultbranch=master
+defaultbranch=0.4
 defaultrebase=0

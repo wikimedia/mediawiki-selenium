@@ -27,6 +27,7 @@ makes it easy to update the shared code.}
   spec.add_runtime_dependency "syntax", "~> 1.2", ">= 1.2.0"
 
   spec.add_development_dependency "redcarpet"
+  spec.add_development_dependency "rspec-core", "~> 2.14", ">= 2.14.4"
   spec.add_development_dependency "rubocop", "~> 0.26.1"
   spec.add_development_dependency "yard"
 end
