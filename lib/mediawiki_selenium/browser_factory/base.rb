@@ -71,6 +71,7 @@ module MediawikiSelenium
         @browser_name = browser_name
         @bindings = {}
         @browser_cache = {}
+        @overrides = {}
       end
 
       # Returns a unique set of all the binding keys.
@@ -146,6 +147,8 @@ module MediawikiSelenium
       # @return [Hash]
       #
       def browser_options(config)
+        config = config.merge(@overrides)
+
         options = default_browser_options.tap do |default_options|
           bindings.each do |(names, bindings_for_option)|
             bindings_for_option.each do |binding|
@@ -181,6 +184,15 @@ module MediawikiSelenium
       #
       def new_browser_for(config)
         new_browser(browser_options(config))
+      end
+
+      # Always use the given configuration when setting up a new browser,
+      # regardless of what has been previously configured.
+      #
+      # @param config [Hash] Configuration overrides.
+      #
+      def override(config)
+        @overrides.merge!(config)
       end
 
       # Executes additional teardown tasks.

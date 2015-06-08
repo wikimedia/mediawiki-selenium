@@ -211,5 +211,29 @@ module MediawikiSelenium::BrowserFactory
         end
       end
     end
+
+    describe '#override' do
+      subject { factory.override(overrides) }
+
+      before do
+        allow(Selenium::WebDriver::Remote::Capabilities).to receive(browser_name)
+      end
+
+      it 'always uses the given configuration when setting up a new browser' do
+        # Set up a binding that will accept :foo configuration
+        @foo = nil
+        factory.configure(:foo) { |foo| @foo = foo }
+
+        # Override with config { foo: 'y' }
+        factory.override(foo: 'y')
+
+        # Invoke the binding with `browser_options` and config { foo: 'x' }
+        factory.browser_options(foo: 'x')
+
+        # The configuration hook should have been invoked with the overriden
+        # value
+        expect(@foo).to eq('y')
+      end
+    end
   end
 end
