@@ -69,7 +69,7 @@ for local development, or against at least the [Beta Cluster](http://www.mediawi
 for continuous integration.
 
 For details on how environment configuration is loaded and used by step
-definitions, see the documentation for `MediawikiSelenium::Environment`.
+definitions, see the documentation for {MediawikiSelenium::Environment}.
 
 ## Writing Tests
 
@@ -79,8 +79,8 @@ you'll find some helpful [high-level documentation](http://www.mediawiki.org/wik
 to get you started.
 
 To see exactly which methods are available from within step definitions, see
-the documentation for `MediawikiSelenium::Environment`,
-`MediawikiSelenium::ApiHelper`, and `MediawikiSelenium::PageFactory`.
+the documentation for {MediawikiSelenium::Environment},
+{MediawikiSelenium::ApiHelper}, and {MediawikiSelenium::PageFactory}.
 
 ## Running Tests
 

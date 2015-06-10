@@ -113,3 +113,20 @@ Would be changed to:
     When(/^I am viewing Topic page$/) do
       on(FlowPage).wait_until { browser.url =~ /Topic/ }
     end
+
+## Refactor use of deprecated `APIPage`
+
+API requests should be made directly using {MediawikiSelenium::ApiHelper#api}
+which returns an instance of [MediawikiApi::Client](https://doc.wikimedia.org/rubygems/mediawiki-ruby-api/).
+
+For example:
+
+    Given(/^the "(.*)" article contains "(.*)"$/) do |title, text|
+      on(APIPage).create(title, text)
+    end
+
+Would be changed to:
+
+    Given(/^the "(.*)" article contains "(.*)"$/) do |title, text|
+      api.create_page(title, text)
+    end
