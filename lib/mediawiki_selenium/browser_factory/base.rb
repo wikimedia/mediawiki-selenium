@@ -197,8 +197,8 @@ module MediawikiSelenium
 
       # Executes additional teardown tasks.
       #
-      # @param env [Environment] Environment.
-      # @param status [Symbol] Status of the executed scenario.
+      # @param _env [Environment] Environment.
+      # @param _status [Symbol] Status of the executed scenario.
       #
       def teardown(_env, _status)
         # abstract
