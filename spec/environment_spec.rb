@@ -23,6 +23,10 @@ module MediawikiSelenium
     let(:mediawiki_user) { 'mw user' }
     let(:mediawiki_password) { 'mw password' }
 
+    def mock_environment_name(name)
+      expect(ENV).to receive(:[]).with('MEDIAWIKI_ENVIRONMENT').and_return(name)
+    end
+
     describe '.load' do
       subject { Environment.load(name, extra) }
 
@@ -65,14 +69,14 @@ module MediawikiSelenium
       subject { Environment.load_default }
 
       it 'loads the environment configuration specified by MEDIAWIKI_ENVIRONMENT' do
-        expect(ENV).to receive(:[]).with('MEDIAWIKI_ENVIRONMENT').and_return('foo')
+        mock_environment_name('foo')
         expect(Environment).to receive(:load).with('foo', ENV)
         subject
       end
 
       context 'where MEDIAWIKI_ENVIRONMENT is not defined' do
         it 'looks for a "default" environment' do
-          expect(ENV).to receive(:[]).with('MEDIAWIKI_ENVIRONMENT').and_return(nil)
+          mock_environment_name(nil)
           expect(Environment).to receive(:load).with('default', ENV)
           subject
         end
@@ -228,6 +232,42 @@ module MediawikiSelenium
 
         it 'defaults to :firefox' do
           expect(subject).to be(:firefox)
+        end
+      end
+    end
+
+    describe '#current_alternative' do
+      subject { env.current_alternative(key) }
+
+      let(:key) { :foo }
+      let(:config) { { foo: 'a', foo_b: 'b', foo_c: 'c' } }
+
+      context 'when there is no active alternative' do
+        it { is_expected.to be(nil) }
+      end
+
+      context 'when there is an active alternative' do
+        it 'should return the alternative ID' do
+          env.with_alternative([key], :b) do
+            expect(subject).to eq(:b)
+          end
+        end
+      end
+
+      context 'when there are nested active alternatives' do
+        it 'should return the latest alternative ID' do
+          env.with_alternative([key], :b) do
+            env.with_alternative([key], :c) do
+              expect(subject).to eq(:c)
+            end
+          end
+        end
+
+        it 'properly restores the active alternatives for each level of nesting' do
+          env.with_alternative([key], :b) do
+            env.with_alternative([key], :c)
+            expect(subject).to eq(:b)
+          end
         end
       end
     end

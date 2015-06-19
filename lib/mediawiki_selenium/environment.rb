@@ -103,6 +103,7 @@ module MediawikiSelenium
     def initialize(*configs)
       @_config = configs.map { |config| normalize_config(config) }.reduce(:merge)
       @_factory_cache = {}
+      @_current_alternatives = {}
     end
 
     # Whether the given environment is equal to this one. Two environments are
@@ -143,10 +144,7 @@ module MediawikiSelenium
     # @yieldparam password [String] Alternative MediaWiki password.
     #
     def as_user(id, &blk)
-      user = lookup(:mediawiki_user, id: id)
-      password = lookup(:mediawiki_password, id: id, default: -> { lookup(:mediawiki_password) })
-
-      with(mediawiki_user: user, mediawiki_password: password, &blk)
+      with(mediawiki_user: user(id), mediawiki_password: password(id), &blk)
     end
 
     # Browser with which to drive tests.
@@ -178,6 +176,14 @@ module MediawikiSelenium
     #
     def browser_name
       lookup(:browser, default: 'firefox').downcase.to_sym
+    end
+
+    # Returns the current alternate ID for the given configuration key.
+    #
+    # @param key [Symbol] Configuration key.
+    #
+    def current_alternative(key)
+      @_current_alternatives[key]
     end
 
     # A reference to this environment. Can be used in conjunction with {#[]}
@@ -317,7 +323,7 @@ module MediawikiSelenium
     # @return [String]
     #
     def password(id = nil)
-      lookup(:mediawiki_password, id: id)
+      lookup(:mediawiki_password, id: id, default: -> { lookup(:mediawiki_password) })
     end
 
     # Whether this environment has been configured to use remote browser
@@ -461,7 +467,14 @@ module MediawikiSelenium
     # @yield [*args] Values of the overridden configuration.
     #
     def with_alternative(names, id, &blk)
-      with(lookup_all(Array(names), id: id), &blk)
+      names = Array(names)
+
+      original_alts = @_current_alternatives.dup
+      @_current_alternatives.merge!(names.each.with_object({}) { |n, alts| alts[n] = id })
+
+      with(lookup_all(names, id: id), &blk)
+    ensure
+      @_current_alternatives = original_alts
     end
 
     protected

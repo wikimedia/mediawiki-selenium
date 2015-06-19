@@ -12,15 +12,23 @@ module MediawikiSelenium
     def api
       @_api_cache ||= {}
 
-      url = lookup(:mediawiki_api_url, default: api_url_from(lookup(:mediawiki_url)))
+      url = api_url
 
       @_api_cache[[url, user]] ||= MediawikiApi::Client.new(url).tap do |client|
         client.log_in(user, password)
       end
     end
 
+    # URL to the API endpoint for the current wiki.
+    #
+    # @return [String]
+    #
+    def api_url
+      lookup(:mediawiki_api_url, default: -> { api_url_from(lookup(:mediawiki_url)) })
+    end
+
     # Ensures the given alternative account exists by attempting to create it
-    # via the API.  Any errors related to the account already existing are
+    # via the API. Any errors related to the account already existing are
     # swallowed.
     #
     # @param id [Symbol] ID of alternative user.

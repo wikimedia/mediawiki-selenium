@@ -169,6 +169,30 @@ behavior.
     # Keep xvfb running after execution (the default is to kill it)
     HEADLESS_DESTROY_AT_EXIT=false bundle exec cucumber ...
 
+### User Factory
+
+Setting `user_factory` to `true` for an environment in your `environments.yml`
+will enable the {MediawikiSelenium::UserFactoryHelper} module. The module
+automatically creates accounts referenced in tests (calls to the `user`,
+`password`, or `as_user` methods) using the MW API, and randomizes the actual
+user names.
+
+These randomized fixtures can greatly improve the atomicity/isolation of your
+scenarios, ensuring control over the initial user state (e.g. an edit count
+of 0) or allowing scenarios to run in parallel on the same MW installation.
+
+Note that using this feature will result in a large number of accounts being
+created for each run. You'll typically want to enable this feature only for
+environments like CI (`integration`) or perhaps your local MW-Vagrant.
+
+    integration:
+      user_factory: true
+      # ...
+
+    mw-vagrant-host:
+      user_factory: true
+      # ...
+
 ### Screenshots
 
 You can get screenshots on failures by setting the environment
@@ -200,8 +224,8 @@ See https://www.mediawiki.org/wiki/Gerrit
 ## Release notes
 
 ### 1.3.0 2015-06-10
-* Added {Mediawiki::Environment#override} for overriding environment
-  configuration at runtime
+* Added `Environment#override` for overriding environment configuration at
+  runtime
 * Removed deprecated `APIPage` page object and updated upgrade docs
 
 ### 1.2.1 2015-06-02
