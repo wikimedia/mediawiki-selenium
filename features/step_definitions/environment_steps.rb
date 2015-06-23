@@ -1,15 +1,15 @@
-Given(/^I have configured my environment with:$/) do |config|
-  @env = MediawikiSelenium::Environment.new(config.rows_hash)
+Given(/^I have configured my environment with:$/) do |yaml|
+  @env = MediawikiSelenium::Environment.new(YAML.load(yaml))
 end
 
 Given(/^I have configured my environment from `ENV`(?: and with:)?$/) do |*args|
   configs = [ENV]
-  configs << args.first.rows_hash if args.length > 0
+  configs << YAML.load(args.first) if args.length > 0
 
   @env = MediawikiSelenium::Environment.new(*configs)
 end
 
-Given(/^I have set "(.*?)"$/) do |var|
+Given(/^I have set "(.*?)" in my shell$/) do |var|
   begin
     @env.lookup(var)
   rescue MediawikiSelenium::ConfigurationError

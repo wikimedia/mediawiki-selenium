@@ -1,5 +1,11 @@
+require 'uri'
+
 Given(/^I have started a browser$/) do
   @env.browser
+end
+
+Given(/^I am using a local browser$/) do
+  allow(@env).to receive(:remote?).and_return(false)
 end
 
 When(/^I start interacting with the browser$/) do
@@ -18,8 +24,8 @@ Then(/^the browser is open$/) do
   expect(@env.browser).to exist
 end
 
-Then(/^the current URL should be "(.*?)"$/) do |url|
-  expect(@env.browser.url).to eq(url)
+Then(/^the wiki page should have loaded$/) do
+  expect(@env.browser.element(tag_name: 'body', class: 'mediawiki')).to be_present
 end
 
 Then(/^the browser should have closed$/) do

@@ -1,9 +1,13 @@
+@integration
 Feature: Basic usage
 
   Background:
-    Given I have configured my environment with:
-      | browser       | phantomjs                                           |
-      | mediawiki_url | http://en.wikipedia.beta.wmflabs.org/wiki/Main_page |
+    Given I have configured my environment from `ENV` and with:
+      """
+      browser: phantomjs
+      """
+      And I have set "MEDIAWIKI_URL" in my shell
+      And I am using a local browser
 
   Scenario: The configured browser is used
     When I start interacting with the browser
@@ -20,4 +24,4 @@ Feature: Basic usage
 
   Scenario: Navigating to the wiki
     When I navigate to the `wiki_url`
-    Then the current URL should be "http://en.wikipedia.beta.wmflabs.org/wiki/Main_page"
+    Then the wiki page should have loaded
