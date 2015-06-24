@@ -17,6 +17,10 @@ module MediawikiSelenium
 
       let(:browser) { double('Watir::Browser') }
 
+      before do
+        allow(env).to receive(:browser).and_return(browser)
+      end
+
       it 'returns a new page object' do
         page = double('PageObject')
         expect(page_class).to receive(:new).and_return(page)
@@ -30,6 +34,14 @@ module MediawikiSelenium
 
           expect { |block| env.on_page(page_class, &block) }.to yield_control.once
           expect { |block| env.on_page(page_class, &block) }.to yield_with_args(page)
+        end
+      end
+
+      context 'when the browser has not yet been initialized' do
+        it 'initializes a browser' do
+          allow(page_class).to receive(:new)
+          expect(env).to receive(:browser).and_return(browser)
+          subject
         end
       end
 

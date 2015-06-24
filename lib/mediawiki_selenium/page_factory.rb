@@ -14,7 +14,7 @@ module MediawikiSelenium
     # @see http://www.rubydoc.info/github/cheezy/page-object
     #
     def on_page(page_class, params = { using_params: {} }, visit = false)
-      @browser = browser if visit
+      @browser = browser if visit || !defined?(@browser)
 
       super(page_class, params, false) do |page|
         if page.respond_to?(:goto)
