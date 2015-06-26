@@ -37,7 +37,7 @@ Create a `Gemfile` in the root of your MediaWiki-related project that
 specifies the version of `mediawiki_selenium` you wish to use (typically the
 latest version).
 
-    gem 'mediawiki_selenium', '~> 1.3.0'
+    gem 'mediawiki_selenium', '~> 1.4.0'
 
 Install the gem and its dependencies by running `bundle install`. (If
 [Bundler](http://bundler.io/) is not yet installed, install it with
@@ -222,6 +222,14 @@ For a list of MediaWiki repositories that use this gem, see the [Repositories wi
 See https://www.mediawiki.org/wiki/Gerrit
 
 ## Release notes
+
+### 1.4.0 2015-06-26
+* New user factory module provides account fixtures for a greater level of
+  isolation/atomicity between scenarios
+* Updated MediaWiki API client and Cucumber dependencies for various fixes
+* Fixed `PageFactory#on` for cases where it's used before browser
+  initialization
+* Implemented integration tests that run against a MediaWiki instance in CI
 
 ### 1.3.0 2015-06-10
 * Added `Environment#override` for overriding environment configuration at
