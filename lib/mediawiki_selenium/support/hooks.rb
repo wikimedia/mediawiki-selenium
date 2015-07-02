@@ -16,20 +16,6 @@ AfterConfiguration do |config|
     raita_build = MediawikiSelenium::Raita.build_from(env)
     config.formats << ['MediawikiSelenium::Raita::Logger', { url: raita_url, build: raita_build }]
   end
-
-  # Initiate headless mode
-  if ENV['HEADLESS'] == 'true' && ENV['BROWSER'] != 'phantomjs'
-    require 'headless'
-
-    headless_options = {}.tap do |options|
-      options[:display] = ENV['HEADLESS_DISPLAY'] if ENV.include?('HEADLESS_DISPLAY')
-      options[:reuse] = false if ENV['HEADLESS_REUSE'] == 'false'
-      options[:destroy_at_exit] = false if ENV['HEADLESS_DESTROY_AT_EXIT'] == 'false'
-    end
-
-    headless = Headless.new(headless_options)
-    headless.start
-  end
 end
 
 # Enforce a dependency check for all scenarios tagged with @extension- tags
@@ -79,10 +65,12 @@ Before do |scenario|
 end
 
 After do |scenario|
+  scenario_name = test_name(scenario)
+
   if scenario.respond_to?(:status)
     require 'fileutils'
 
-    teardown(scenario.status) do |browser|
+    teardown(name: scenario_name, status: scenario.status) do |browser|
       # Embed remote session URLs
       if remote? && browser.driver.respond_to?(:session_id)
         embed("http://saucelabs.com/jobs/#{browser.driver.session_id}", 'text/url')
@@ -92,14 +80,13 @@ After do |scenario|
       if scenario.failed? && lookup(:screenshot_failures, default: false) == 'true'
         screen_dir = lookup(:screenshot_failures_path, default: 'screenshots')
         FileUtils.mkdir_p screen_dir
-        name = test_name(scenario).gsub(/ /, '_')
+        name = scenario_name.gsub(/ /, '_')
         path = "#{screen_dir}/#{name}.png"
         browser.screenshot.save path
         embed path, 'image/png'
       end
-
     end
   else
-    teardown
+    teardown(name: scenario_name)
   end
 end

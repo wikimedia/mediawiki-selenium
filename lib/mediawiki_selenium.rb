@@ -4,6 +4,7 @@ module MediawikiSelenium
   autoload :BrowserFactory, 'mediawiki_selenium/browser_factory'
   autoload :ConfigurationError, 'mediawiki_selenium/configuration_error'
   autoload :Environment, 'mediawiki_selenium/environment'
+  autoload :HeadlessHelper, 'mediawiki_selenium/support/modules/headless_helper'
   autoload :Initializer, 'mediawiki_selenium/initializer'
   autoload :PageFactory, 'mediawiki_selenium/page_factory'
   autoload :Raita, 'mediawiki_selenium/raita'

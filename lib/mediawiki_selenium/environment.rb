@@ -104,6 +104,8 @@ module MediawikiSelenium
       @_config = configs.map { |config| normalize_config(config) }.reduce(:merge)
       @_factory_cache = {}
       @_current_alternatives = {}
+
+      extend(HeadlessHelper) if headless?
     end
 
     # Whether the given environment is equal to this one. Two environments are
@@ -199,6 +201,15 @@ module MediawikiSelenium
     #
     def env
       self
+    end
+
+    # Whether this environment is configured to run in headless mode (using
+    # Xvfb via the headless gem).
+    #
+    # @return [true, false]
+    #
+    def headless?
+      lookup(:headless, default: 'false').to_s == 'true'
     end
 
     # Executes the given block within the context of an environment that uses
@@ -339,23 +350,23 @@ module MediawikiSelenium
     # close any open browsers and perform their own teardown tasks.
     #
     # @example Teardown environment resources after each scenario completes
-    #   After do
-    #     teardown(scenario.status)
+    #   After do |scenario|
+    #     teardown(name: scenario.name, status: scenario.status)
     #   end
     #
-    # @param status [Symbol] Status of the executed scenario.
+    # @param info [Hash] Hash of test case information.
     #
     # @yield [browser]
     # @yieldparam browser [Watir::Browser] Browser object, before it's closed.
     #
-    def teardown(status = :passed)
+    def teardown(info = {})
       @_factory_cache.each do |(_, browser_name), factory|
         factory.each do |browser|
           yield browser if block_given?
           browser.close unless keep_browser_open? && browser_name != :phantomjs
         end
 
-        factory.teardown(self, status)
+        factory.teardown(self, info[:status] || :passed)
       end
     end
 

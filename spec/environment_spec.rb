@@ -83,6 +83,22 @@ module MediawikiSelenium
       end
     end
 
+    describe '#initialize' do
+      subject { Environment.new(config) }
+
+      context 'when headless mode is enabled' do
+        let(:config) { { headless: 'true' } }
+
+        it { is_expected.to be_a(HeadlessHelper) }
+      end
+
+      context 'when headless mode is disabled' do
+        let(:config) { { headless: nil } }
+
+        it { is_expected.to_not be_a(HeadlessHelper) }
+      end
+    end
+
     describe '#==' do
       subject { env == other }
 
@@ -381,7 +397,7 @@ module MediawikiSelenium
     end
 
     describe '#teardown' do
-      subject { env.teardown(status) }
+      subject { env.teardown(status: status) }
 
       let(:status) { :passed }
       let(:browser_instance) { double(Watir::Browser) }
@@ -393,7 +409,7 @@ module MediawikiSelenium
 
       it 'yields the given block and closes the browser' do
         expect(browser_instance).to receive(:close)
-        expect { |blk| env.teardown(status, &blk) }.to yield_with_args(browser_instance)
+        expect { |blk| env.teardown(status: status, &blk) }.to yield_with_args(browser_instance)
       end
 
       context 'when keep_browser_open is set to "true"' do
