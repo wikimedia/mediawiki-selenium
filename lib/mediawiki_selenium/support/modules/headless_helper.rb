@@ -38,7 +38,8 @@ module MediawikiSelenium
         @_display
       end
 
-      # Destroys the global headless display created by {create_display}.
+      # Destroys the global headless display created by
+      # {create_or_reuse_display}.
       #
       def destroy_display
         @_display.destroy if @_display

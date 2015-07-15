@@ -47,8 +47,6 @@ module MediawikiSelenium
 
       context 'when told to visit a page' do
         let(:visit) { true }
-        let(:config) { { mediawiki_url: 'http://an.example/wiki/' } }
-
         let(:page_object_platform) { double('PageObject::WatirPageObject') }
 
         before do
@@ -57,6 +55,8 @@ module MediawikiSelenium
         end
 
         context 'where the page URL is defined' do
+          let(:config) { { mediawiki_url: 'http://an.example/wiki/' } }
+
           let(:page_class) do
             Class.new do
               include ::PageObject
@@ -64,14 +64,34 @@ module MediawikiSelenium
             end
           end
 
-          it 'qualifies the path with the configured :mediawiki_url' do
+          before do
             expect_any_instance_of(page_class).to receive(:platform).
               and_return(page_object_platform)
+          end
 
+          it 'qualifies the path with the configured :mediawiki_url' do
             expect(page_object_platform).to receive(:navigate_to).
               with('http://an.example/wiki/Special:RandomPage')
 
             subject
+          end
+
+          context 'and it contains ERb that references `env`' do
+            let(:config) { { mediawiki_url: 'http://an.example/wiki/', mediawiki_user: 'user1' } }
+
+            let(:page_class) do
+              Class.new do
+                include ::PageObject
+                page_url 'User:<%= env.user %>'
+              end
+            end
+
+            it 'successfully calls the `env` method that was added to the page object' do
+              expect(page_object_platform).to receive(:navigate_to).
+                with('http://an.example/wiki/User:user1')
+
+              subject
+            end
           end
         end
 

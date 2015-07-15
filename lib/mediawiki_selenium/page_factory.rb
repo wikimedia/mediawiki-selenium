@@ -11,12 +11,25 @@ module MediawikiSelenium
     # `PageObject::PageFactory#on_page`. All page URLs are also qualified
     # using {Environment#wiki_url}.
     #
+    # Additionally, an instance of the current {Environment} is made available
+    # as `env` for interpolation of page URLs.
+    #
+    # @example Referencing the `env` in page URLs
+    #   class ArticlePage
+    #     page_url 'User:<%= env.user %>'
+    #   end
+    #
     # @see http://www.rubydoc.info/github/cheezy/page-object
     #
     def on_page(page_class, params = { using_params: {} }, visit = false)
       @browser = browser if visit || !defined?(@browser)
+      env = self
 
       super(page_class, params, false) do |page|
+        page.define_singleton_method(:env) do
+          env
+        end
+
         if page.respond_to?(:goto)
           wiki_url = method(:wiki_url)
 
