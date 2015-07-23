@@ -37,7 +37,7 @@ Create a `Gemfile` in the root of your MediaWiki-related project that
 specifies the version of `mediawiki_selenium` you wish to use (typically the
 latest version).
 
-    gem 'mediawiki_selenium', '~> 1.4.0'
+    gem 'mediawiki_selenium', '~> 1.5.0'
 
 Install the gem and its dependencies by running `bundle install`. (If
 [Bundler](http://bundler.io/) is not yet installed, install it with
@@ -222,6 +222,12 @@ For a list of MediaWiki repositories that use this gem, see the [Repositories wi
 See https://www.mediawiki.org/wiki/Gerrit
 
 ## Release notes
+
+### 1.5.0 2015-07-23
+* Video recording of headless browser sessions are now saved to
+  `HEADLESS_CAPTURE_PATH` for failed scenarios
+* Page objects can now reference the current `Environment` object as `env` in
+  their page URL ERb
 
 ### 1.4.0 2015-06-26
 * New user factory module provides account fixtures for a greater level of

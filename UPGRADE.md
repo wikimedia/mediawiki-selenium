@@ -5,7 +5,7 @@
 First, update the `Gemfile` in your project's root directory to specify the
 new version.
 
-    gem 'mediawiki_selenium', '~> 1.4.0'
+    gem 'mediawiki_selenium', '~> 1.5.0'
 
 ## Upgrade gems and dependencies
 
