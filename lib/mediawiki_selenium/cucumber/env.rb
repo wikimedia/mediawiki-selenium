@@ -5,6 +5,7 @@ require 'watir-webdriver'
 World { MediawikiSelenium::Environment.load_default }
 
 World(MediawikiSelenium::ApiHelper)
+World(MediawikiSelenium::LoginHelper)
 World(MediawikiSelenium::PageFactory)
 World(MediawikiSelenium::ScreenshotHelper)
 World(MediawikiSelenium::StrictPending)

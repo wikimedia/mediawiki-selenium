@@ -6,6 +6,7 @@ module MediawikiSelenium
   autoload :Environment, 'mediawiki_selenium/environment'
   autoload :HeadlessHelper, 'mediawiki_selenium/helpers/headless_helper'
   autoload :Initializer, 'mediawiki_selenium/initializer'
+  autoload :LoginHelper, 'mediawiki_selenium/helpers/login_helper'
   autoload :PageFactory, 'mediawiki_selenium/page_factory'
   autoload :Raita, 'mediawiki_selenium/raita'
   autoload :RemoteBrowserFactory, 'mediawiki_selenium/remote_browser_factory'

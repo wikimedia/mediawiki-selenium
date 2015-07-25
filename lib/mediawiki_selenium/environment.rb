@@ -437,7 +437,7 @@ module MediawikiSelenium
     # @yield [url]
     # @yieldparam url [String] Wiki URL.
     #
-    def visit_wiki(id)
+    def visit_wiki(id = nil)
       on_wiki(id) do |url|
         browser.goto url
         yield url if block_given?
