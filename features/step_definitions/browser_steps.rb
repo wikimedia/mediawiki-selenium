@@ -8,6 +8,10 @@ Given(/^I am using a local browser$/) do
   allow(@env).to receive(:remote?).and_return(false)
 end
 
+When(/^I have started interacting with the browser$/) do
+  @env.browser
+end
+
 When(/^I start interacting with the browser$/) do
   @env.browser
 end

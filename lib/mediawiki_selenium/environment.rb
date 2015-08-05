@@ -298,7 +298,7 @@ module MediawikiSelenium
     # @option options [Symbol] :id Alternative ID.
     # @option options [Object] :default Default if no configuration is found.
     #
-    # @return [Array<String>]
+    # @return [Hash{Symbol => String}]
     #
     # @see #lookup
     #

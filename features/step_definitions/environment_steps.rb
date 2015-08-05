@@ -3,7 +3,7 @@ Before do
 end
 
 After do
-  @env.teardown unless @env.nil?
+  @env.teardown unless @env.nil? || @env_torndown
   @tmp_files.each { |path| FileUtils.rm_r(path) if File.exist?(path) }
 end
 
@@ -56,7 +56,7 @@ When(/^the scenario ends$/) do
     sleep 0.3
     @env.teardown(name: @scenario_name, status: @scenario_status)
   ensure
-    @env = nil
+    @env_torndown = true
   end
 end
 
