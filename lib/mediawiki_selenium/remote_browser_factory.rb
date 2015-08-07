@@ -42,6 +42,8 @@ module MediawikiSelenium
     # Submits status and Jenkins build info to Sauce Labs.
     #
     def teardown(env, status)
+      artifacts = super
+
       each do |browser|
         sid = browser.driver.session_id
         url = browser.driver.send(:bridge).http.send(:server_url)
@@ -62,7 +64,11 @@ module MediawikiSelenium
         )
 
         Cucumber::Formatter::Sauce.current_session_id = sid
+
+        artifacts["http://saucelabs.com/jobs/#{sid}"] = 'text/url'
       end
+
+      artifacts
     end
 
     protected

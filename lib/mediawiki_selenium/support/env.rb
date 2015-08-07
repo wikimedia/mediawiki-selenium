@@ -6,5 +6,6 @@ World { MediawikiSelenium::Environment.load_default }
 
 World(MediawikiSelenium::ApiHelper)
 World(MediawikiSelenium::PageFactory)
+World(MediawikiSelenium::ScreenshotHelper)
 World(MediawikiSelenium::StrictPending)
 World(MediawikiSelenium::UserFactoryHelper)

@@ -75,26 +75,12 @@ Before do
 end
 
 After do |scenario|
-  if scenario.respond_to?(:status)
-    require 'fileutils'
-
-    teardown(name: @scenario_name, status: scenario.status) do |browser|
-      # Embed remote session URLs
-      if remote? && browser.driver.respond_to?(:session_id)
-        embed("http://saucelabs.com/jobs/#{browser.driver.session_id}", 'text/url')
-      end
-
-      # Take screenshots
-      if scenario.failed? && lookup(:screenshot_failures, default: false) == 'true'
-        screen_dir = lookup(:screenshot_failures_path, default: 'screenshots')
-        FileUtils.mkdir_p screen_dir
-        name = @scenario_name.gsub(/ /, '_')
-        path = "#{screen_dir}/#{name}.png"
-        browser.screenshot.save path
-        embed path, 'image/png'
-      end
+  artifacts =
+    if scenario.respond_to?(:status)
+      teardown(name: @scenario_name, status: scenario.status)
+    else
+      teardown(name: @scenario_name)
     end
-  else
-    teardown(name: @scenario_name)
-  end
+
+  artifacts.each { |path, mime_type| embed(path, mime_type) }
 end

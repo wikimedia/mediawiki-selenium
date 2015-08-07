@@ -200,8 +200,12 @@ module MediawikiSelenium
       # @param _env [Environment] Environment.
       # @param _status [Symbol] Status of the executed scenario.
       #
+      # @return [Hash{String => String}] Artifacts.
+      #
+      # @see Environment#teardown
+      #
       def teardown(_env, _status)
-        # abstract
+        {}
       end
 
       protected

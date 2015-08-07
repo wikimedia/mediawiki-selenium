@@ -96,21 +96,29 @@ module MediawikiSelenium
     # @see Environment#teardown
     #
     def teardown(info = {})
-      super
-    ensure
-      if @_headless_capture
-        if info[:status] == :failed
-          dir = File.absolute_path(headless_capture_path)
-          FileUtils.mkdir_p(dir)
+      artifacts = {}
 
-          filename = "#{(info[:name] || 'scenario').tr("#{File::SEPARATOR}\000", '-')}.mp4"
-          filename = File.join(dir, filename)
+      begin
+        artifacts = super
+      ensure
+        if @_headless_capture
+          if info[:status] == :failed
+            dir = File.absolute_path(headless_capture_path)
+            FileUtils.mkdir_p(dir)
 
-          @_headless_display.video.stop_and_save(filename)
-        else
-          @_headless_display.video.stop_and_discard
+            filename = "#{(info[:name] || 'scenario').tr("#{File::SEPARATOR}\000", '-')}.mp4"
+            filename = File.join(dir, filename)
+
+            @_headless_display.video.stop_and_save(filename)
+
+            artifacts[filename] = 'video/mp4'
+          else
+            @_headless_display.video.stop_and_discard
+          end
         end
       end
+
+      artifacts
     end
   end
 end

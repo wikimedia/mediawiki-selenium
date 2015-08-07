@@ -359,9 +359,13 @@ module MediawikiSelenium
     # Executes teardown tasks including instructing all browser factories to
     # close any open browsers and perform their own teardown tasks.
     #
+    # Teardown tasks may produce artifacts, which will be returned in the form
+    # `{ path => mime_type }`.
+    #
     # @example Teardown environment resources after each scenario completes
     #   After do |scenario|
-    #     teardown(name: scenario.name, status: scenario.status)
+    #     artifacts = teardown(name: scenario.name, status: scenario.status)
+    #     artifacts.each { |path, mime_type| embed(path, mime_type) }
     #   end
     #
     # @param info [Hash] Hash of test case information.
@@ -369,15 +373,22 @@ module MediawikiSelenium
     # @yield [browser]
     # @yieldparam browser [Watir::Browser] Browser object, before it's closed.
     #
+    # @return [Hash{String => String}] Hash of path/mime-type artifacts.
+    #
     def teardown(info = {})
+      artifacts = {}
+
       @_factory_cache.each do |(_, browser_name), factory|
         factory.each do |browser|
           yield browser if block_given?
           browser.close unless keep_browser_open? && browser_name != :phantomjs
         end
 
-        factory.teardown(self, info[:status] || :passed)
+        factory_artifacts = factory.teardown(self, info[:status] || :passed)
+        artifacts.merge!(factory_artifacts) if factory_artifacts.is_a?(Hash)
       end
+
+      artifacts
     end
 
     # Returns the current value for `:mediawiki_user` or the value for the

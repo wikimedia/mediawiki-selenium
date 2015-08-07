@@ -9,6 +9,7 @@ module MediawikiSelenium
   autoload :PageFactory, 'mediawiki_selenium/page_factory'
   autoload :Raita, 'mediawiki_selenium/raita'
   autoload :RemoteBrowserFactory, 'mediawiki_selenium/remote_browser_factory'
+  autoload :ScreenshotHelper, 'mediawiki_selenium/support/modules/screenshot_helper'
   autoload :StrictPending, 'mediawiki_selenium/support/modules/strict_pending'
   autoload :UserFactory, 'mediawiki_selenium/user_factory'
   autoload :UserFactoryHelper, 'mediawiki_selenium/support/modules/user_factory_helper'
