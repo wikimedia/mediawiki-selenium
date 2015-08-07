@@ -346,14 +346,31 @@ module MediawikiSelenium
       RemoteBrowserFactory::REQUIRED_CONFIG.all? { |name| lookup(name, default: false) }
     end
 
-    # Executes setup tasks. Currently no tasks are performed by default but
-    # additional helpers may perform their own tasks by implementing this
+    # Executes setup tasks, annotating the Selenium session with any
+    # configured `job_name` and `build_number`.
+    #
+    # Additional helpers may perform their own tasks by implementing this
     # method.
     #
-    # @param _info [Hash] Hash of test case information.
+    # @example Setup the environment before each scenario starts
+    #   Before do |scenario|
+    #     setup(name: scenario.name)
+    #   end
     #
-    def setup(_info = {})
-      # no-op
+    # @param info [Hash] Hash of test case information.
+    #
+    def setup(info = {})
+      browser_factory.configure do |options|
+        options[:desired_capabilities][:name] = info[:name] || 'scenario'
+      end
+
+      browser_factory.configure(:job_name) do |job, options|
+        options[:desired_capabilities][:name] += " #{job}"
+      end
+
+      browser_factory.configure(:build_number) do |build, options|
+        options[:desired_capabilities][:name] += "##{build}"
+      end
     end
 
     # Executes teardown tasks including instructing all browser factories to

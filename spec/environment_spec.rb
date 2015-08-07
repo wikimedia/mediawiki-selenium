@@ -396,6 +396,18 @@ module MediawikiSelenium
       end
     end
 
+    describe '#setup' do
+      subject { env.setup(name: 'Some test name') }
+
+      it 'configures the browser factory to accept `:job_name` and `:build_number`' do
+        expect(env.browser_factory).to receive(:configure)
+        expect(env.browser_factory).to receive(:configure).with(:job_name)
+        expect(env.browser_factory).to receive(:configure).with(:build_number)
+
+        subject
+      end
+    end
+
     describe '#teardown' do
       subject { env.teardown(status: status) }
 
