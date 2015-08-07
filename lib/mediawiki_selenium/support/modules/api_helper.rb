@@ -27,6 +27,21 @@ module MediawikiSelenium
       lookup(:mediawiki_api_url, default: -> { api_url_from(lookup(:mediawiki_url)) })
     end
 
+    # Queries MW via the API to check for missing extension dependencies.
+    #
+    # @param dependencies [Array] Extension dependencies.
+    #
+    # @return [Array] Missing extensions.
+    #
+    def missing_extensions(dependencies)
+      return [] if dependencies.empty?
+
+      extensions = api.meta(:siteinfo, siprop: 'extensions').data['extensions']
+      extensions = extensions.map { |ext| ext['name'] }.compact.map(&:downcase)
+
+      dependencies - extensions
+    end
+
     # Ensures the given alternative account exists by attempting to create it
     # via the API. Any errors related to the account already existing are
     # swallowed.

@@ -44,19 +44,14 @@ Before do |scenario|
 
   tags = tag_source.source_tag_names
   dependencies = tags.map { |tag| tag.match(/^@extension-(.+)$/) { |m| m[1].downcase } }.compact
+  missing = missing_extensions(dependencies)
 
-  unless dependencies.empty?
-    extensions = api.meta(:siteinfo, siprop: 'extensions').data['extensions']
-    extensions = extensions.map { |ext| ext['name'] }.compact.map(&:downcase)
-    missing = dependencies - extensions
+  if missing.any?
+    scenario.skip_invoke!
 
-    if missing.any?
-      scenario.skip_invoke!
-
-      if scenario.feature.respond_to?(:mw_warn)
-        warning = "Skipped feature due to missing wiki extensions: #{missing.join(", ")}"
-        scenario.feature.mw_warn(warning, 'missing wiki extensions')
-      end
+    if scenario.feature.respond_to?(:mw_warn)
+      warning = "Skipped feature due to missing MediaWiki extensions: #{missing.join(", ")}"
+      scenario.feature.mw_warn(warning, 'missing MediaWiki extensions')
     end
   end
 end
