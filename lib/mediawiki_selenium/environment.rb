@@ -346,6 +346,16 @@ module MediawikiSelenium
       RemoteBrowserFactory::REQUIRED_CONFIG.all? { |name| lookup(name, default: false) }
     end
 
+    # Executes setup tasks. Currently no tasks are performed by default but
+    # additional helpers may perform their own tasks by implementing this
+    # method.
+    #
+    # @param _info [Hash] Hash of test case information.
+    #
+    def setup(_info = {})
+      # no-op
+    end
+
     # Executes teardown tasks including instructing all browser factories to
     # close any open browsers and perform their own teardown tasks.
     #
@@ -367,23 +377,6 @@ module MediawikiSelenium
         end
 
         factory.teardown(self, info[:status] || :passed)
-      end
-    end
-
-    # Returns a name from the given scenario.
-    #
-    # @param scenario [Cucumber::Ast::Scenario]
-    #
-    # @return [String]
-    #
-    def test_name(scenario)
-      if scenario.respond_to? :feature
-        "#{scenario.feature.title}: #{scenario.title}"
-      elsif scenario.respond_to? :scenario_outline
-        outline = scenario.scenario_outline
-        "#{outline.feature.title}: #{outline.title}: #{scenario.name}"
-      else
-        scenario.name
       end
     end
 
