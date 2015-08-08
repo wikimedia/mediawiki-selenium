@@ -1,5 +1,11 @@
 AllCops:
   StyleGuideCopsOnly: true
+  Exclude:
+    - 'vendor/**/*'
+    # Features syntax is a vendor file imported from Capybara. Ignore it.
+    - 'lib/mediawiki_selenium/rspec/features.rb'
+    # Ignore anything left around in `tmp`
+    - 'tmp/**/*'
 
 Metrics/LineLength:
   Max: 100

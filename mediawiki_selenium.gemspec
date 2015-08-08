@@ -33,6 +33,7 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency 'mediawiki_api', '~> 0.4', '>= 0.4.1'
   spec.add_runtime_dependency 'page-object', '~> 1.0'
   spec.add_runtime_dependency 'rest-client', '~> 1.6', '>= 1.6.7'
+  spec.add_runtime_dependency 'rspec-core', '~> 2.14', '>= 2.14.4'
   spec.add_runtime_dependency 'rspec-expectations', '~> 2.14', '>= 2.14.4'
   spec.add_runtime_dependency 'syntax', '~> 1.2', '>= 1.2.0'
   spec.add_runtime_dependency 'thor', '~> 0.19', '>= 0.19.1'
@@ -41,6 +42,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'yard', '~> 0.8', '>= 0.8.7.4'
   spec.add_development_dependency 'redcarpet', '~> 3.2', '>= 3.2.0'
   spec.add_development_dependency 'rubocop', '~> 0.29.1'
-  spec.add_development_dependency 'rspec-core', '~> 2.14', '>= 2.14.4'
   spec.add_development_dependency 'rspec-mocks', '~> 2.14', '>= 2.14.4'
 end

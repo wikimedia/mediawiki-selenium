@@ -2,4 +2,5 @@
 --charset utf-8
 --title "MediaWiki Selenium"
 --markup markdown
+--exclude mediawiki_selenium/rspec/features.rb
 'lib/**/*.rb' - '*.md'
