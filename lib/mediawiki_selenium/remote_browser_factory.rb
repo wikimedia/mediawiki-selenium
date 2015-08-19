@@ -1,5 +1,3 @@
-require 'mediawiki_selenium/support/sauce'
-
 require 'rest_client'
 require 'uri'
 
@@ -17,6 +15,9 @@ module MediawikiSelenium
     URL = 'http://ondemand.saucelabs.com/wd/hub'
 
     class << self
+      # @attr [Array] SauceLabs job IDs from the most recent sessions.
+      attr_accessor :last_session_ids
+
       def extend_object(base)
         return if base.is_a?(self)
 
@@ -44,6 +45,8 @@ module MediawikiSelenium
     def teardown(env, status)
       artifacts = super
 
+      self.class.last_session_ids = []
+
       each do |browser|
         sid = browser.driver.session_id
         url = browser.driver.send(:bridge).http.send(:server_url)
@@ -63,7 +66,7 @@ module MediawikiSelenium
           }.to_json
         )
 
-        Cucumber::Formatter::Sauce.current_session_id = sid
+        self.class.last_session_ids << sid
 
         artifacts["http://saucelabs.com/jobs/#{sid}"] = 'text/url'
       end
