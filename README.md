@@ -221,6 +221,68 @@ For a list of MediaWiki repositories that use this gem, see the [Repositories wi
 
 See https://www.mediawiki.org/wiki/Gerrit
 
+## Releasing the gem
+
+### Step 1
+
+When you're ready to cut a new release, increase the major/minor/patch version (the gem uses [semantic versioning](http://semver.org/)) and add release notes. Release notes should include:
+
+- What has changed
+- New features
+- Bug fixes
+- Possible incompatibilities
+
+Update gem version in `README.md`, `UPGRADE.md` and `lib/mediawiki_selenium/version.rb`. Add release notes to `RELEASES.md`.
+
+### Step 2
+
+Push the commit to Gerrit. Wait for review and merge.
+
+### Step 3
+
+When the commit is merged into master branch, fetch it and verify the commit is HEAD, for example:
+
+    $ git fetch
+    $ git log --oneline --decorate
+    123abcd (HEAD, origin/master, origin/HEAD, master, T108873) Release minor version 1.5.1
+    ...
+
+### Step 4
+
+Tag the commit, for example:
+
+    $ git fetch --tags
+    $ git log --oneline --decorate
+    123abcd (HEAD, origin/master, origin/HEAD, master, T108873) Release minor version 1.5.1
+    ...
+    $ git tag 1.5.1 123abcd
+    $ git push --tags
+
+### Step 5
+
+Build the gem, for example:
+
+    $ gem build mediawiki_selenium.gemspec
+    Successfully built RubyGem
+    Name: mediawiki_selenium
+    Version: 1.5.1
+    File: mediawiki_selenium-1.5.1.gem
+
+The above gem assumes you have working Ruby and RubyGems.
+
+### Step 6
+
+Push the gem to RubyGems.org, for example:
+
+    $ gem push mediawiki_selenium-1.5.1.gem
+    ...
+
+The last step assumes you have RubyGems.org account and are owner of the gem at the site.
+
+### Step 7
+
+Announce the new release at [QA](https://lists.wikimedia.org/mailman/listinfo/qa) mailing list.
+
 ## Release notes
 
 See {file:RELEASES.md}.
