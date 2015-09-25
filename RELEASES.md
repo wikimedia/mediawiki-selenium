@@ -1,5 +1,18 @@
 ## Release notes
 
+### 1.6.0 2015-09-25
+* Factored out all Cucumber specific functionality from the main framework
+  classes to make way for alternative test harnesses
+  * Generalized setup/teardown hooks
+  * Reorganized support files to reflect their Cucumber specificity
+  * Refactored remote test annotation
+  * Moved screenshot-ing to its own helper
+* Experimental support for plain RSpec based tests (see
+  [T108273](https://phabricator.wikimedia.org/T108273#1520544) for example
+  usage)
+* Implemented API based authentication via the `LoginHelper` and ported the
+  Cucumber login step to use it
+
 ### 1.5.0 2015-07-23
 * Video recording of headless browser sessions are now saved to
   `HEADLESS_CAPTURE_PATH` for failed scenarios
