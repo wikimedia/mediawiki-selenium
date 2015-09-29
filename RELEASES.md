@@ -1,5 +1,10 @@
 ## Release notes
 
+### 1.6.1 2015-09-29
+* Fixed bug in `UserFactory#user` and `UserFactory#password` that caused the
+  incorrect resolution of alternative users/passwords when in the context of
+  `Environment#as_user`
+
 ### 1.6.0 2015-09-25
 * Factored out all Cucumber specific functionality from the main framework
   classes to make way for alternative test harnesses
