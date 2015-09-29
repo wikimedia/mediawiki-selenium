@@ -1,18 +1,50 @@
-# Upgrading from pre-1.0 releases to 1.0.0 and above
+# Upgrading to various major and minor releases
 
-## Update your `Gemfile`
+You can check your current version by running `bundle list mediawiki_selenium`
+in the root directory of your project.
+
+## From 1.x releases to 1.6.0
+
+### Update your `Gemfile`
 
 First, update the `Gemfile` in your project's root directory to specify the
 new version.
 
-    gem 'mediawiki_selenium', '~> 1.5.0'
+    gem 'mediawiki_selenium', '~> 1.6.0'
 
-## Upgrade gems and dependencies
+### Update `require` paths in `env.rb`
+
+The 1.6 release of MW-Selenium decoupled much of the Cucumber specific
+implementation to make room for alternative test harnesses such as RSpec. Some
+support files were moved around to make this separation clearer.
+
+Assuming you're using Cucumber, which is still the default harness, update the
+first set of `require` statements in `tests/browser/features/support/env.rb`
+to the following.
+
+    require 'mediawiki_selenium/cucumber'
+    require 'mediawiki_selenium/pages'
+    require 'mediawiki_selenium/step_definitions'
+
+Note that you can always omit the page object and step definition statements
+if they don't apply to your test cases. The only must have is the first
+`require`.
+
+## From pre-1.0 releases to 1.x
+
+### Update your `Gemfile`
+
+First, update the `Gemfile` in your project's root directory to specify the
+new version.
+
+    gem 'mediawiki_selenium', '~> 1.6.0'
+
+### Upgrade gems and dependencies
 
 Now run `bundle install` to update your project's gem dependencies and
 `Gemfile.lock`.
 
-## Run the initialization script
+### Run the initialization script
 
 Version 1.0 now includes an initialization script that can help with the setup
 of new and existing test suites. Run the script in your project's root
@@ -30,11 +62,11 @@ the Cucumber environment. Since you're working with an existing test suite,
 you may run into a conflict here. Just make sure that your `env.rb` contains
 the following before anything else.
 
-    require 'mediawiki_selenium'
-    require 'mediawiki_selenium/support'
+    require 'mediawiki_selenium/cucumber'
+    require 'mediawiki_selenium/pages'
     require 'mediawiki_selenium/step_definitions'
 
-## Convert page object URLs
+### Convert page object URLs
 
 Convert all page object URLs so that they're defined relative to the root of
 any given wiki and no longer rely on the now deprecated `URL` module. In other
@@ -59,7 +91,7 @@ To something like this.
       # ...
     end
 
-## Refactor direct use of `ENV`
+### Refactor direct use of `ENV`
 
 Change all references to `ENV` to use the appropriate `Environment` method.
 
@@ -96,7 +128,7 @@ To something like:
       end
     end
 
-## Remove direct references to `@browser`
+### Remove direct references to `@browser`
 
 All references to `@browser` should use `Environment#browser` instead, since
 the latter will automatically configure and launch the browser the first time
@@ -114,7 +146,7 @@ Would be changed to:
       on(FlowPage).wait_until { browser.url =~ /Topic/ }
     end
 
-## Refactor use of deprecated `APIPage`
+### Refactor use of deprecated `APIPage`
 
 API requests should be made directly using {MediawikiSelenium::ApiHelper#api}
 which returns an instance of [MediawikiApi::Client](https://doc.wikimedia.org/rubygems/mediawiki-ruby-api/).
