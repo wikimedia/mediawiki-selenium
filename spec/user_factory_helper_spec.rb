@@ -40,7 +40,17 @@ module MediawikiSelenium
             it 'should be different from the primary account' do
               expect(api).to receive(:create_account).twice
 
-              expect(subject).not_to eq(env.user)
+              expect(subject).not_to eq(env.send(method))
+            end
+          end
+
+          context 'within the implicit context of an alternative' do
+            subject { env.as_user(:b) { env.send(method) } }
+
+            it 'should use the already created alternative' do
+              expect(api).to receive(:create_account).twice
+
+              expect(subject).not_to eq(env.send(method))
             end
           end
         end

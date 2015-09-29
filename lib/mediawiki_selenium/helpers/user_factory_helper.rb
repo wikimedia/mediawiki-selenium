@@ -20,9 +20,19 @@ module MediawikiSelenium
     # @see Environment#password
     #
     [:user, :password].each do |name|
+      config_key = :"mediawiki_#{name}"
+
       define_method(name) do |id = nil|
         return super(id) unless lookup(:user_factory, default: false)
-        factory.create(id || current_alternative(:"mediawiki_#{name}"))[name]
+
+        alt_id = current_alternative(config_key)
+
+        # When in the context of an alternative, try the explicit value first
+        if !alt_id.nil? && alt_id == id
+          lookup(config_key, default: -> { factory.create(alt_id)[name] })
+        else
+          factory.create(id || alt_id)[name]
+        end
       end
     end
 

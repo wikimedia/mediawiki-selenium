@@ -146,7 +146,9 @@ module MediawikiSelenium
     # @yieldparam password [String] Alternative MediaWiki password.
     #
     def as_user(id, &blk)
-      with(mediawiki_user: user(id), mediawiki_password: password(id), &blk)
+      record_alternatives([:mediawiki_user, :mediawiki_password], id) do
+        with(mediawiki_user: user(id), mediawiki_password: password(id), &blk)
+      end
     end
 
     # Browser with which to drive tests.
@@ -500,13 +502,7 @@ module MediawikiSelenium
     #
     def with_alternative(names, id, &blk)
       names = Array(names)
-
-      original_alts = @_current_alternatives.dup
-      @_current_alternatives.merge!(names.each.with_object({}) { |n, alts| alts[n] = id })
-
-      with(lookup_all(names, id: id), &blk)
-    ensure
-      @_current_alternatives = original_alts
+      record_alternatives(names, id) { with(lookup_all(names, id: id), &blk) }
     end
 
     protected
@@ -527,6 +523,14 @@ module MediawikiSelenium
 
     def normalize_key(key)
       key.to_s.downcase.to_sym
+    end
+
+    def record_alternatives(names, id)
+      original_alts = @_current_alternatives.dup
+      @_current_alternatives.merge!(names.each.with_object({}) { |n, alts| alts[n] = id })
+      yield
+    ensure
+      @_current_alternatives = original_alts
     end
 
     def with(overrides = {})
