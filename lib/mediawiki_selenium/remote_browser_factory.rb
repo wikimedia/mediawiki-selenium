@@ -45,13 +45,12 @@ module MediawikiSelenium
     def teardown(env, status)
       artifacts = super
 
-      self.class.last_session_ids = []
+      RemoteBrowserFactory.last_session_ids = []
 
       each do |browser|
         sid = browser.driver.session_id
-        url = browser.driver.send(:bridge).http.send(:server_url)
-        username = url.user
-        key = url.password
+        username = env.lookup(:sauce_ondemand_username)
+        key = env.lookup(:sauce_ondemand_access_key)
 
         RestClient::Request.execute(
           method: :put,
@@ -66,7 +65,7 @@ module MediawikiSelenium
           }.to_json
         )
 
-        self.class.last_session_ids << sid
+        RemoteBrowserFactory.last_session_ids << sid
 
         artifacts["http://saucelabs.com/jobs/#{sid}"] = 'text/url'
       end

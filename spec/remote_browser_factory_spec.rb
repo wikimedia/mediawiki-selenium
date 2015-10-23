@@ -1,4 +1,6 @@
+require 'rest_client'
 require 'spec_helper'
+
 require 'mediawiki_selenium/browser_factory/base'
 
 module MediawikiSelenium
@@ -44,6 +46,44 @@ module MediawikiSelenium
           expect(capabilities).to receive(:version=).with('123')
           subject
         end
+      end
+    end
+
+    describe '#teardown' do
+      subject { factory.teardown(env, status) }
+
+      let(:config) do
+        {
+          sauce_ondemand_username: 'foo',
+          sauce_ondemand_access_key: 'bar',
+          build_number: 'b123'
+        }
+      end
+
+      let(:env) { Environment.new(config) }
+      let(:status) { :passed }
+
+      before do
+        browser = double('Watir::Browser')
+        driver = double('Selenium::WebDriver::Driver')
+
+        expect(factory).to receive(:each).and_yield(browser)
+        expect(browser).to receive(:driver).and_return(driver)
+        expect(driver).to receive(:session_id).and_return('123')
+      end
+
+      it 'updates the SauceLabs session for each browser and returns the URL as an artifact' do
+        expect(RestClient::Request).to receive(:execute).with(
+          method: :put,
+          url: 'https://saucelabs.com/rest/v1/foo/jobs/123',
+          user: 'foo',
+          password: 'bar',
+          headers: { content_type: 'application/json' },
+          payload: '{"public":true,"passed":true,"build":"b123"}'
+        )
+
+        expect(subject).to include('http://saucelabs.com/jobs/123')
+        expect(subject['http://saucelabs.com/jobs/123']).to eq('text/url')
       end
     end
   end
