@@ -3,14 +3,14 @@
 You can check your current version by running `bundle list mediawiki_selenium`
 in the root directory of your project.
 
-## From 1.x releases to 1.6.0
+## From 1.x releases to 1.6.x
 
 ### Update your `Gemfile`
 
 First, update the `Gemfile` in your project's root directory to specify the
 new version.
 
-    gem 'mediawiki_selenium', '~> 1.6.0'
+    gem 'mediawiki_selenium', '~> 1.6.2'
 
 ### Update `require` paths in `env.rb`
 
@@ -37,7 +37,7 @@ if they don't apply to your test cases. The only must have is the first
 First, update the `Gemfile` in your project's root directory to specify the
 new version.
 
-    gem 'mediawiki_selenium', '~> 1.6.0'
+    gem 'mediawiki_selenium', '~> 1.6.2'
 
 ### Upgrade gems and dependencies
 

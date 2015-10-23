@@ -1,5 +1,9 @@
 ## Release notes
 
+### 1.6.2 2015-10-23
+* Fixed undefined `last_session_ids=` method bug in `RemoteBrowserFactory`
+  which entirely broke SauceLabs use in previous 1.6.x versions
+
 ### 1.6.1 2015-09-29
 * Fixed bug in `UserFactory#user` and `UserFactory#password` that caused the
   incorrect resolution of alternative users/passwords when in the context of
