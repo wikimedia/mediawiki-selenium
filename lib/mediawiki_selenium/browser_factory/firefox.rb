@@ -32,7 +32,11 @@ module MediawikiSelenium
       protected
 
       def default_browser_options
-        super.merge(profile: Selenium::WebDriver::Firefox::Profile.new)
+        profile = Selenium::WebDriver::Firefox::Profile.new
+        # Never show any firstrun pages.
+        # @see http://kb.mozillazine.org/Browser.startup.homepage_override.mstone
+        profile['browser.startup.homepage_override.mstone'] = 'ignore'
+        super.merge(profile: profile)
       end
     end
   end

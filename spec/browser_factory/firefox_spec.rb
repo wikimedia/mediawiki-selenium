@@ -16,10 +16,18 @@ module MediawikiSelenium::BrowserFactory
     describe '#browser_options' do
       subject { factory.browser_options(config) }
 
+      let(:config) { {} }
       let(:profile) { double(Selenium::WebDriver::Firefox::Profile) }
 
       before do
-        expect(Selenium::WebDriver::Firefox::Profile).to receive(:new).and_return(profile)
+        allow(Selenium::WebDriver::Firefox::Profile).to receive(:new).and_return(profile)
+        allow(profile).to receive(:[]=)
+      end
+
+      it 'attempts to disable any firtrun page' do
+        expect(profile).to receive(:[]=).with('browser.startup.homepage_override.mstone', 'ignore')
+
+        subject
       end
 
       context 'given a browser proxy' do
@@ -42,13 +50,11 @@ module MediawikiSelenium::BrowserFactory
 
         it 'sets dom.max_script_run_time to the given number' do
           expect(profile).to receive(:[]=).with('dom.max_script_run_time', 30)
-          allow(profile).to receive(:[]=)
           subject
         end
 
         it 'sets dom.max_chrome_script_run_time to the given number' do
           expect(profile).to receive(:[]=).with('dom.max_chrome_script_run_time', 30)
-          allow(profile).to receive(:[]=)
           subject
         end
       end
