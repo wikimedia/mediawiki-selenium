@@ -47,6 +47,24 @@ module MediawikiSelenium
           subject
         end
       end
+
+      context 'given a device name' do
+        let(:config) { { device_name: 'tabliphone' } }
+
+        it 'configures the deviceName' do
+          expect(capabilities).to receive(:[]=).with('deviceName', 'tabliphone')
+          subject
+        end
+      end
+
+      context 'given a device orientation' do
+        let(:config) { { device_orientation: 'portrait' } }
+
+        it 'configures the deviceOrientation' do
+          expect(capabilities).to receive(:[]=).with('deviceOrientation', 'portrait')
+          subject
+        end
+      end
     end
 
     describe '#teardown' do

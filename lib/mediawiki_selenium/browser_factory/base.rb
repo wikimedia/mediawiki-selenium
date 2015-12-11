@@ -227,7 +227,7 @@ module MediawikiSelenium
       end
 
       def new_browser(options)
-        Watir::Browser.new(options[:desired_capabilities].browser_name, options)
+        Watir::Browser.new(browser_name, options)
       end
     end
   end

@@ -9,6 +9,8 @@ module MediawikiSelenium
   #  - sauce_ondemand_access_key
   #  - platform
   #  - version
+  #  - device_name
+  #  - device_orientation
   #
   module RemoteBrowserFactory
     REQUIRED_CONFIG = [:sauce_ondemand_username, :sauce_ondemand_access_key]
@@ -36,6 +38,14 @@ module MediawikiSelenium
 
         base.configure(:version) do |version, options|
           options[:desired_capabilities].version = version
+        end
+
+        base.configure(:device_name) do |device_name, options|
+          options[:desired_capabilities]['deviceName'] = device_name
+        end
+
+        base.configure(:device_orientation) do |device_orientation, options|
+          options[:desired_capabilities]['deviceOrientation'] = device_orientation
         end
       end
     end

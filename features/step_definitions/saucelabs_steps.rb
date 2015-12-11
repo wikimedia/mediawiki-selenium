@@ -1,5 +1,10 @@
 require 'net/https'
 
+Given(/^I have configured my environment to use (.*?) on (.*?)$/) do |browser, platform|
+  @configs = [ENV, { browser: browser, platform: platform, browser_timeout: 120 }]
+  @env = MediawikiSelenium::Environment.new(*@configs)
+end
+
 Then(/^the SauceLabs job should be marked as failed$/) do
   job_id = @env.browser.driver.session_id
 

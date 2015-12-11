@@ -97,8 +97,6 @@ module MediawikiSelenium::BrowserFactory
       before do
         expect(Selenium::WebDriver::Remote::Capabilities).to receive(browser_name).
           at_least(:once).and_return(capabilities)
-        expect(capabilities).to receive(:browser_name).
-          at_least(:once).and_return(browser_name)
       end
 
       it 'creates a new Watir::Browser' do
