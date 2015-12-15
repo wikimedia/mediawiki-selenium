@@ -1,5 +1,9 @@
 ## Release notes
 
+### 1.6.3 2015-12-15
+
+* Added support for all SauceLabs provided browsers
+
 ### 1.6.2 2015-10-23
 * Fixed undefined `last_session_ids=` method bug in `RemoteBrowserFactory`
   which entirely broke SauceLabs use in previous 1.6.x versions

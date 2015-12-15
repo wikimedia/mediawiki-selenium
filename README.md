@@ -37,7 +37,7 @@ Create a `Gemfile` in the root of your MediaWiki-related project that
 specifies the version of `mediawiki_selenium` you wish to use (typically the
 latest version).
 
-    gem 'mediawiki_selenium', '~> 1.5.0'
+    gem 'mediawiki_selenium', '~> 1.6.3'
 
 Install the gem and its dependencies by running `bundle install`. (If
 [Bundler](http://bundler.io/) is not yet installed, install it with
