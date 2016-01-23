@@ -16,37 +16,32 @@ module MediawikiSelenium
     REQUIRED_CONFIG = [:sauce_ondemand_username, :sauce_ondemand_access_key]
     URL = 'http://ondemand.saucelabs.com/wd/hub'
 
-    class << self
-      # @attr [Array] SauceLabs job IDs from the most recent sessions.
-      attr_accessor :last_session_ids
+    def self.extend_object(base)
+      return if base.is_a?(self)
 
-      def extend_object(base)
-        return if base.is_a?(self)
+      super
 
-        super
+      base.configure(:sauce_ondemand_username, :sauce_ondemand_access_key) do |user, key, options|
+        options[:url] = URI.parse(URL)
 
-        base.configure(:sauce_ondemand_username, :sauce_ondemand_access_key) do |user, key, options|
-          options[:url] = URI.parse(URL)
+        options[:url].user = user
+        options[:url].password = key
+      end
 
-          options[:url].user = user
-          options[:url].password = key
-        end
+      base.configure(:platform) do |platform, options|
+        options[:desired_capabilities].platform = platform
+      end
 
-        base.configure(:platform) do |platform, options|
-          options[:desired_capabilities].platform = platform
-        end
+      base.configure(:version) do |version, options|
+        options[:desired_capabilities].version = version
+      end
 
-        base.configure(:version) do |version, options|
-          options[:desired_capabilities].version = version
-        end
+      base.configure(:device_name) do |device_name, options|
+        options[:desired_capabilities]['deviceName'] = device_name
+      end
 
-        base.configure(:device_name) do |device_name, options|
-          options[:desired_capabilities]['deviceName'] = device_name
-        end
-
-        base.configure(:device_orientation) do |device_orientation, options|
-          options[:desired_capabilities]['deviceOrientation'] = device_orientation
-        end
+      base.configure(:device_orientation) do |device_orientation, options|
+        options[:desired_capabilities]['deviceOrientation'] = device_orientation
       end
     end
 
@@ -54,8 +49,6 @@ module MediawikiSelenium
     #
     def teardown(env, status)
       artifacts = super
-
-      RemoteBrowserFactory.last_session_ids = []
 
       each do |browser|
         sid = browser.driver.session_id
@@ -74,8 +67,6 @@ module MediawikiSelenium
             build: env.lookup(:build_number, default: nil)
           }.to_json
         )
-
-        RemoteBrowserFactory.last_session_ids << sid
 
         artifacts["http://saucelabs.com/jobs/#{sid}"] = 'text/url'
       end

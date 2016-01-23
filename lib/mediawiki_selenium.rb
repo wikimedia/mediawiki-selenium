@@ -4,6 +4,7 @@ module MediawikiSelenium
   autoload :BrowserFactory, 'mediawiki_selenium/browser_factory'
   autoload :ConfigurationError, 'mediawiki_selenium/configuration_error'
   autoload :Environment, 'mediawiki_selenium/environment'
+  autoload :EmbedBrowserSession, 'mediawiki_selenium/cucumber/embed_browser_session'
   autoload :HeadlessHelper, 'mediawiki_selenium/helpers/headless_helper'
   autoload :Initializer, 'mediawiki_selenium/initializer'
   autoload :LoginHelper, 'mediawiki_selenium/helpers/login_helper'
