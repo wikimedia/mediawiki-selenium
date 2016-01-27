@@ -11,7 +11,9 @@ module MediawikiSelenium
     #
     def browser
       super.tap do |b|
-        embed(b.driver.session_id, 'application/vnd.webdriver-session-id')
+        if b.driver.respond_to?(:session_id)
+          embed(b.driver.session_id, 'application/vnd.webdriver-session-id')
+        end
       end
     end
   end
