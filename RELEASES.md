@@ -1,5 +1,9 @@
 ## Release notes
 
+### 1.6.5 2016-01-27
+
+* Fixed `NoMethodError` in `EmbedBrowserSession` helper
+
 ### 1.6.4 2016-01-27
 
 * Log SauceLabs session URLs via Cucumber logger embeds
