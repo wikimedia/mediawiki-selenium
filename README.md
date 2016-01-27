@@ -36,8 +36,9 @@ Windows.
 Create a `Gemfile` in the root of your MediaWiki-related project that
 specifies the version of `mediawiki_selenium` you wish to use (typically the
 latest version).
+Replace `x.x.x` with version number from `lib/mediawiki_selenium/version.rb`.
 
-    gem 'mediawiki_selenium', '~> 1.6.3'
+    gem 'mediawiki_selenium', '~> x.x.x'
 
 Install the gem and its dependencies by running `bundle install`. (If
 [Bundler](http://bundler.io/) is not yet installed, install it with
@@ -232,7 +233,7 @@ When you're ready to cut a new release, increase the major/minor/patch version (
 - Bug fixes
 - Possible incompatibilities
 
-Update gem version in `README.md`, `UPGRADE.md` and `lib/mediawiki_selenium/version.rb`. Add release notes to `RELEASES.md`.
+Update gem version in `lib/mediawiki_selenium/version.rb`. Add release notes to `RELEASES.md`.
 
 ### Step 2
 
@@ -254,10 +255,10 @@ This assumes you have working Ruby, RubyGems, RubyGems.org account and are an ow
 Release the gem:
 
     $ bundle exec rake release
-    mediawiki_selenium 1.6.3 built to pkg/mediawiki_selenium-1.6.3.gem.
-    Tagged v1.6.3.
+    mediawiki_selenium x.x.x built to pkg/mediawiki_selenium-x.x.x.gem.
+    Tagged vx.x.x.
     Pushed git commits and tags.
-    Pushed mediawiki_selenium 1.6.3 to rubygems.org.
+    Pushed mediawiki_selenium x.x.x to rubygems.org.
 
 ### Step 7
 

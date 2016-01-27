@@ -9,8 +9,9 @@ in the root directory of your project.
 
 First, update the `Gemfile` in your project's root directory to specify the
 new version.
+Replace `x.x.x` with version number from `lib/mediawiki_selenium/version.rb`.
 
-    gem 'mediawiki_selenium', '~> 1.6.3'
+    gem 'mediawiki_selenium', '~> x.x.x'
 
 ### Update `require` paths in `env.rb`
 
@@ -36,8 +37,9 @@ if they don't apply to your test cases. The only must have is the first
 
 First, update the `Gemfile` in your project's root directory to specify the
 new version.
+Replace `x.x.x` with version number from `lib/mediawiki_selenium/version.rb`.
 
-    gem 'mediawiki_selenium', '~> 1.6.3'
+    gem 'mediawiki_selenium', '~> x.x.x'
 
 ### Upgrade gems and dependencies
 

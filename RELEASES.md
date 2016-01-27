@@ -1,5 +1,9 @@
 ## Release notes
 
+### 1.6.4 2016-01-27
+
+* Log SauceLabs session URLs via Cucumber logger embeds
+
 ### 1.6.3 2015-12-15
 
 * Added support for all SauceLabs provided browsers
