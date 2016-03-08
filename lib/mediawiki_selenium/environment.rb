@@ -63,7 +63,7 @@ module MediawikiSelenium
     include Comparable
 
     class << self
-      attr_accessor :default_configuration
+      attr_accessor :default_configuration, :default_test_directory
 
       # Instantiates a new environment using the given set of default
       # configuration from `environments.yml` in the current working
@@ -71,20 +71,23 @@ module MediawikiSelenium
       #
       # @param name [String] Name of the environment.
       # @param extra [Hash] Additional configuration to use.
+      # @param test_dir [String] Path from which to search upward for
+      # `environments.yml`
       #
-      def load(name, extra = {})
+      def load(name, extra = {}, test_dir = nil)
         name = name.to_s
         configs = []
 
         unless name.empty?
-          envs = YAML.load_file(default_configuration)
+          envs = YAML.load_file(search_for_configuration(test_dir || default_test_directory))
           raise ConfigurationError, "unknown environment `#{name}`" unless envs.include?(name)
           configs << envs[name]
         end
 
         configs << extra
 
-        new(*configs)
+        env = new(*configs)
+        env
       end
 
       # Instantiates a new environment from the values of `ENV` and the
@@ -93,12 +96,29 @@ module MediawikiSelenium
       #
       # @see load
       #
-      def load_default
-        load(ENV['MEDIAWIKI_ENVIRONMENT'] || 'default', ENV)
+      def load_default(test_dir = nil)
+        load(ENV['MEDIAWIKI_ENVIRONMENT'] || 'default', ENV, test_dir)
+      end
+
+      # Searches for `environments.yml` in the given path. If it isn't found,
+      # the search continues upward in the directory hierarchy.
+      #
+      # @param path [String] Path to search for configuration
+      #
+      # @return [String] Qualified path to the configuration file
+      #
+      def search_for_configuration(path)
+        return default_configuration if path.nil? || path.empty?
+
+        file_path = File.join(path, default_configuration)
+        return file_path if File.exist?(file_path)
+
+        search_for_configuration(File.dirname(path))
       end
     end
 
     self.default_configuration = 'environments.yml'
+    self.default_test_directory = 'tests/browser'
 
     def initialize(*configs)
       @_config = configs.map { |config| normalize_config(config) }.reduce(:merge)

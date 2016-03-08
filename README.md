@@ -204,6 +204,27 @@ the destination path for screenshots. Example:
 
     SCREENSHOT_FAILURES=true SCREENSHOT_FAILURES_PATH="/tmp/screenshots" bundle exec cucumber
 
+### CI Rake task
+
+To utilize the CI rake task, add the following to your `Rakefile`:
+
+    require 'mediawiki_selenium/rake_task'
+    MediawikiSelenium::RakeTask.new
+
+It defaults to look for `environments.yml` and `features` under `tests/browser`.
+You can specify the directory:
+
+    require 'mediawiki_selenium/rake_task'
+    MediawikiSelenium::RakeTask.new(test_dir: modules/ve-mw/tests/browser)
+
+CI specific options are passed to cucumber when the rake task detects the
+environment variable WORKSPACE is set. It will emit JUnit results under
+`$WORKSPACE/log/junit`. To reproduce that behavior one can:
+
+    export WORKSPACE=/tmp/myplace
+    mkdir -p $WORKSPACE/log/junit
+    bundle exec rake spec
+
 ## Updating Your Gemfile
 
 In your repository, the `Gemfile` specifies dependencies and `Gemfile.lock` defines

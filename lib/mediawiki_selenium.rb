@@ -10,6 +10,7 @@ module MediawikiSelenium
   autoload :LoginHelper, 'mediawiki_selenium/helpers/login_helper'
   autoload :PageFactory, 'mediawiki_selenium/page_factory'
   autoload :Raita, 'mediawiki_selenium/raita'
+  autoload :RakeTask, 'mediawiki_selenium/rake_task'
   autoload :RemoteBrowserFactory, 'mediawiki_selenium/remote_browser_factory'
   autoload :ScreenshotHelper, 'mediawiki_selenium/helpers/screenshot_helper'
   autoload :StrictPending, 'mediawiki_selenium/cucumber/strict_pending'

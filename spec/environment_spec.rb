@@ -23,18 +23,16 @@ module MediawikiSelenium
     let(:mediawiki_user) { 'mw user' }
     let(:mediawiki_password) { 'mw password' }
 
-    def mock_environment_name(name)
-      expect(ENV).to receive(:[]).with('MEDIAWIKI_ENVIRONMENT').and_return(name)
-    end
-
     describe '.load' do
       subject { Environment.load(name, extra) }
 
       let(:name) { 'foo' }
       let(:extra) { {} }
+      let(:env_file) { 'environments.yml' }
 
       before do
-        expect(YAML).to receive(:load_file).with('environments.yml').
+        allow(Environment).to receive(:search_for_configuration).and_return(env_file)
+        allow(YAML).to receive(:load_file).with(env_file).
           and_return('foo' => { 'x' => 'a', 'y' => 'b' })
       end
 
@@ -63,21 +61,43 @@ module MediawikiSelenium
           expect(subject[:y]).to eq('b')
         end
       end
+
+      context 'when a test_dir is given' do
+        subject { Environment.load('foo', {}, test_dir) }
+
+        let(:test_dir) { '/srv/workspace/job' }
+        let(:env_file) { File.join(test_dir, 'environments.yml') }
+
+        it 'loads configuration in the given test_dir' do
+          expect(Environment).to receive(:search_for_configuration).with(test_dir).
+            and_return(env_file)
+          expect(YAML).to receive(:load_file).with(env_file).
+            and_return('foo' => { 'x' => 'a', 'y' => 'b' })
+          subject
+        end
+      end
+
     end
 
     describe '.load_default' do
       subject { Environment.load_default }
 
+      let(:mediawiki_environment) { 'foo' }
+
+      before do
+        expect(ENV).to receive(:[]).with('MEDIAWIKI_ENVIRONMENT').and_return(mediawiki_environment)
+      end
+
       it 'loads the environment configuration specified by MEDIAWIKI_ENVIRONMENT' do
-        mock_environment_name('foo')
-        expect(Environment).to receive(:load).with('foo', ENV)
+        expect(Environment).to receive(:load).with(mediawiki_environment, ENV, nil)
         subject
       end
 
       context 'where MEDIAWIKI_ENVIRONMENT is not defined' do
+        let(:mediawiki_environment) { nil }
+
         it 'looks for a "default" environment' do
-          mock_environment_name(nil)
-          expect(Environment).to receive(:load).with('default', ENV)
+          expect(Environment).to receive(:load).with('default', ENV, nil)
           subject
         end
       end

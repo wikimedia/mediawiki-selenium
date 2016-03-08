@@ -3,6 +3,8 @@ Before('@custom-browser') do |scenario|
 end
 
 AfterConfiguration do |config|
+  MediawikiSelenium::Environment.default_test_directory = config.paths.first || '.'
+
   # Install a formatter that can be used to show feature-related warnings
   pretty_format, io = config.formats.find { |(format, _io)| format == 'pretty' }
   config.formats << ['MediawikiSelenium::WarningsFormatter', io] if pretty_format
