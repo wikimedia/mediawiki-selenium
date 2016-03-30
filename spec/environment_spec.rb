@@ -270,6 +270,60 @@ module MediawikiSelenium
           expect(subject).to be(:firefox)
         end
       end
+
+      context 'when browser and version are combined' do
+        let(:browser) { 'internet_explorer 8.0' }
+
+        it 'returns only the name' do
+          expect(subject).to be(:internet_explorer)
+        end
+      end
+    end
+
+    describe '#browser_tags' do
+      subject { env.browser_tags }
+
+      context 'when a version is specified' do
+        let(:browser) { 'internet_explorer 8.0' }
+
+        it 'returns tags for use in filter test scenarios' do
+          expect(subject).to eq(['internet_explorer', 'internet_explorer_8.0'])
+        end
+      end
+
+      context 'when no version is specified' do
+        let(:browser) { 'internet_explorer' }
+
+        it 'includes only a tag for the browser name' do
+          expect(subject).to eq(['internet_explorer'])
+        end
+      end
+    end
+
+    describe '#browser_version' do
+      subject { env.browser_version }
+
+      let(:browser) { 'internet_explorer 8.0' }
+
+      context 'when no explicit version configuration is provided' do
+        it 'is the version specified at the end of browser' do
+          expect(subject).to eq('8.0')
+        end
+      end
+
+      context 'when an explicit version configuration is provided' do
+        let(:config) { minimum_config.merge(version: '9.0') }
+
+        it 'ignores the version given at the end of browser and returns the explicit one' do
+          expect(subject).to eq('9.0')
+        end
+      end
+
+      context 'when no version is specified' do
+        let(:browser) { 'internet_explorer' }
+
+        it { is_expected.to be(nil) }
+      end
     end
 
     describe '#current_alternative' do

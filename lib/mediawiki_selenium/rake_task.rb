@@ -10,7 +10,7 @@ module MediawikiSelenium
 
       workspace = env.lookup(:workspace, default: nil)
       site = URI.parse(env.lookup(:mediawiki_url)).host
-      browser = env.browser_name
+      browser_tags = env.browser_tags.map { |tag| "@#{tag}" }.join(',')
 
       options = Shellwords.escape(test_dir)
 
@@ -22,7 +22,7 @@ module MediawikiSelenium
       end
 
       super(name) do |t|
-        t.cucumber_opts = "#{options} --tags @#{browser}"
+        t.cucumber_opts = "#{options} --tags #{browser_tags}"
       end
     end
   end

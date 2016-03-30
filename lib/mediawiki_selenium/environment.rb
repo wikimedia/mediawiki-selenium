@@ -194,12 +194,41 @@ module MediawikiSelenium
       end
     end
 
-    # Name of the browser we're using.
+    # Name of the browser we're using. If the `:browser` configuration
+    # contains a version at the end, only the name is returned.
+    #
+    # @example
+    #   env = Environment.new(browser: 'internet_explorer 8.0')
+    #   env.browser_name # => :internet_explorer
     #
     # @return [Symbol]
     #
     def browser_name
-      lookup(:browser, default: 'firefox').downcase.to_sym
+      browser_spec[0].to_sym
+    end
+
+    # Tag names that can be used to filter test scenarios for a specific
+    # browser and/or version.
+    #
+    # @return [Array<String>]
+    #
+    def browser_tags
+      tags = [browser_name.to_s]
+
+      version = browser_version
+      tags << "#{browser_name}_#{version}" if version
+
+      tags
+    end
+
+    # Version of the browser we're using. If a `:version` configuration
+    # is provided, that value is returned. Otherwise a version is searched for
+    # in the `:browser` configuration.
+    #
+    # @return [String]
+    #
+    def browser_version
+      lookup(:version, default: browser_spec[1])
     end
 
     # Returns the current alternate ID for the given configuration key.
@@ -534,7 +563,19 @@ module MediawikiSelenium
     private
 
     def browser_config
-      lookup_all(browser_factory.all_binding_keys, default: nil).reject { |_k, v| v.nil? }
+      config = lookup_all(browser_factory.all_binding_keys, default: nil).reject { |_k, v| v.nil? }
+
+      # The browser version may be provided as part of the `:browser`
+      # configuration or separately as `:version`. In either case,
+      # `browser_version` will return the right value.
+      version = browser_version
+      config[:version] = version unless version.nil?
+
+      config
+    end
+
+    def browser_spec
+      lookup(:browser, default: 'firefox').to_s.downcase.split(' ')
     end
 
     def normalize_config(hash)
