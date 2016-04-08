@@ -18,6 +18,7 @@ module MediawikiSelenium
         options +=
           ' --backtrace --verbose --color --format pretty'\
           " --format Cucumber::Formatter::Sauce --out '#{workspace}/log/junit'"\
+          ' --tags ~@skip'\
           " --tags @#{site}"
       end
 
