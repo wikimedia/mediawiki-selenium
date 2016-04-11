@@ -4,7 +4,7 @@ require 'uri'
 
 module MediawikiSelenium
   class RakeTask < Cucumber::Rake::Task
-    def initialize(name = :selenium, test_dir: Environment.default_test_directory)
+    def initialize(name: :selenium, test_dir: Environment.default_test_directory, site_tag: true)
       target = File.expand_path(test_dir, Rake.original_dir)
       env = Environment.load_default(target)
 
@@ -18,8 +18,9 @@ module MediawikiSelenium
         options +=
           ' --backtrace --verbose --color --format pretty'\
           " --format Cucumber::Formatter::Sauce --out '#{workspace}/log/junit'"\
-          ' --tags ~@skip'\
-          " --tags @#{site}"
+          ' --tags ~@skip'
+        options +=
+          " --tags @#{site}" if site_tag
       end
 
       super(name) do |t|

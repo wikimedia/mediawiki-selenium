@@ -217,6 +217,19 @@ You can specify the directory:
     require 'mediawiki_selenium/rake_task'
     MediawikiSelenium::RakeTask.new(test_dir: modules/ve-mw/tests/browser)
 
+By default, it will run something like this:
+
+    bundle exec cucumber (...) --tags ~@skip --tags @en.wikipedia.beta.wmflabs.org --tags @firefox
+
+To exclude Cucumber site tag (example: `--tags @en.wikipedia.beta.wmflabs.org`):
+
+    require 'mediawiki_selenium/rake_task'
+    MediawikiSelenium::RakeTask.new(site_tag: false)
+
+The above will run:
+
+    bundle exec cucumber (...) --tags ~@skip -tags @firefox
+
 CI specific options are passed to cucumber when the rake task detects the
 environment variable WORKSPACE is set. It will emit JUnit results under
 `$WORKSPACE/log/junit`. To reproduce that behavior one can:
