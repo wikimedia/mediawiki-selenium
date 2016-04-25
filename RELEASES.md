@@ -1,5 +1,9 @@
 ## Release notes
 
+### 1.7.0 2016-04-25
+
+* Provide Rake task to serve as a CI entrypoint
+
 ### 1.6.5 2016-01-27
 
 * Fixed `NoMethodError` in `EmbedBrowserSession` helper
