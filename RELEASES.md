@@ -1,5 +1,10 @@
 ## Release notes
 
+### 1.7.1 2016-05-26
+
+* Bump mediawiki_api dependency to 0.6. MediaWiki API changed, the new version is needed going
+  forward.
+
 ### 1.7.0 2016-04-25
 
 * Provide Rake task to serve as a CI entrypoint
