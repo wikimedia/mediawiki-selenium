@@ -1,5 +1,9 @@
 ## Release notes
 
+### 1.7.2 2016-08-03
+
+* Bump mediawiki_api dependency to 0.7 for automatic redirect support.
+
 ### 1.7.1 2016-05-26
 
 * Bump mediawiki_api dependency to 0.6. MediaWiki API changed, the new version is needed going

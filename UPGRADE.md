@@ -3,7 +3,7 @@
 You can check your current version by running `bundle list mediawiki_selenium`
 in the root directory of your project.
 
-## From 1.x releases to 1.6.x
+## From 1.x releases to 1.7.x
 
 ### Update your `Gemfile`
 
