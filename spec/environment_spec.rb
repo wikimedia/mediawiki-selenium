@@ -649,7 +649,8 @@ module MediawikiSelenium
 
         context 'when an exception is raised within the block' do
           it 'restores the original configuration and lets the exception be raised' do
-            expect { env.with_alternative(:mediawiki_url, :b) { raise 'error' } }.to raise_error
+            expect { env.with_alternative(:mediawiki_url, :b) { raise 'test error' } }.
+              to raise_error('test error')
             expect(env[:mediawiki_url]).to eq('http://a.example/wiki')
           end
         end
