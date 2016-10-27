@@ -32,6 +32,11 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency 'json', '~> 1.8', '>= 1.8.1'
   spec.add_runtime_dependency 'mediawiki_api', '~> 0.7', '>= 0.7.0'
   spec.add_runtime_dependency 'page-object', '~> 1.0'
+
+  # selenium-webdriver 3.0.0 always want the 'geckodriver' to be available even
+  # with Firefox 46 can be driven without it. T149319
+  spec.add_runtime_dependency 'selenium-webdriver', '< 3'
+
   spec.add_runtime_dependency 'rest-client', '~> 1.6', '>= 1.6.7'
   spec.add_runtime_dependency 'rspec-core', '~> 2.14', '>= 2.14.4'
   spec.add_runtime_dependency 'rspec-expectations', '~> 2.14', '>= 2.14.4'
