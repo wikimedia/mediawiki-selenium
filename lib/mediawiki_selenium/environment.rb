@@ -108,7 +108,7 @@ module MediawikiSelenium
       # @return [String] Qualified path to the configuration file
       #
       def search_for_configuration(path)
-        return default_configuration if path.nil? || path.empty?
+        return default_configuration if path.nil? || path.empty? || path == '.'
 
         file_path = File.join(path, default_configuration)
         return file_path if File.exist?(file_path)
