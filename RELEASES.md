@@ -1,5 +1,9 @@
 ## Release notes
 
+### 1.7.3 2016-12-06
+
+* Helper that allows you to query whether JavaScript module has loaded
+
 ### 1.7.2 2016-08-03
 
 * Bump mediawiki_api dependency to 0.7 for automatic redirect support.
