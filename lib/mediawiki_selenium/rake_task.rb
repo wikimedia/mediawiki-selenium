@@ -12,6 +12,7 @@ module MediawikiSelenium
       site = URI.parse(env.lookup(:mediawiki_url)).host
       browser_tags = env.browser_tags.map { |tag| "@#{tag}" }.join(',')
 
+      require 'shellwords'
       options = Shellwords.escape(test_dir)
 
       if workspace
