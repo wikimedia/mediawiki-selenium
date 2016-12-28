@@ -1,5 +1,10 @@
 ## Release notes
 
+### 1.7.4 2016-12-28
+
+* Update JSON gem to version 2
+* Fix NameError: uninitialized constant MediawikiSelenium::RakeTask::Shellwords
+
 ### 1.7.3 2016-12-06
 
 * Helper that allows you to query whether JavaScript module has loaded
