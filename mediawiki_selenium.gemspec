@@ -29,7 +29,7 @@ Gem::Specification.new do |spec|
 
   spec.add_runtime_dependency 'cucumber', '~> 1.3', '>= 1.3.20'
   spec.add_runtime_dependency 'headless', '~> 2.0', '>= 2.1.0'
-  spec.add_runtime_dependency 'json', '~> 1.8', '>= 1.8.1'
+  spec.add_runtime_dependency 'json', '~> 2.0', '>= 2.0.2'
   spec.add_runtime_dependency 'mediawiki_api', '~> 0.7', '>= 0.7.0'
   spec.add_runtime_dependency 'page-object', '~> 1.0'
 
