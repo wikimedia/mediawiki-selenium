@@ -23,6 +23,12 @@ Style/DotPosition:
 Style/FileName:
   Exclude: ['bin/*']
 
+Style/GuardClause:
+  Enabled: false
+
+Style/MultilineIfModifier:
+  Enabled: false
+
 Style/SignalException:
   Enabled: false
 

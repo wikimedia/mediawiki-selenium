@@ -21,7 +21,7 @@ Gem::Specification.new do |spec|
   spec.homepage      = 'https://gerrit.wikimedia.org/r/#/admin/projects/mediawiki/selenium'
   spec.license       = 'GPL-2'
 
-  spec.bindir      = 'bin'
+  spec.bindir = 'bin'
   spec.executables << 'mediawiki-selenium-init'
 
   spec.files         = `git ls-files`.split($INPUT_RECORD_SEPARATOR)
@@ -47,6 +47,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'bundler', '~> 1.6', '>= 1.6.3'
   spec.add_development_dependency 'yard', '~> 0.8', '>= 0.8.7.4'
   spec.add_development_dependency 'redcarpet', '~> 3.2', '>= 3.2.0'
-  spec.add_development_dependency 'rubocop', '~> 0.35.0'
+  spec.add_development_dependency 'rubocop', '~> 0.46.0'
   spec.add_development_dependency 'rspec-mocks', '~> 2.14', '>= 2.14.4'
 end
