@@ -21,7 +21,7 @@ end
 
 When(/^I run `rspec` against my examples$/) do
   env = { 'MEDIAWIKI_ENVIRONMENT' => 'default' }
-  cmd = "'#{Gem.bin_path('bundler', 'bundle')}' exec rspec"
+  cmd = 'bundle exec rspec'
 
   @rspec_output, @rspec_status = Open3.capture2e(env, cmd, chdir: 'tmp/rspec')
 end
