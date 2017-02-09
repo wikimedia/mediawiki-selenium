@@ -1,6 +1,6 @@
 require 'bundler/setup'
 require 'page-object/page_factory'
-require 'watir-webdriver'
+require 'watir'
 
 World { MediawikiSelenium::Environment.load_default }
 

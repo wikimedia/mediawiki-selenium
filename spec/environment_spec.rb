@@ -266,8 +266,8 @@ module MediawikiSelenium
       context 'missing browser configuration' do
         let(:browser) { nil }
 
-        it 'defaults to :firefox' do
-          expect(subject).to be(:firefox)
+        it 'defaults to :chrome' do
+          expect(subject).to be(:chrome)
         end
       end
 

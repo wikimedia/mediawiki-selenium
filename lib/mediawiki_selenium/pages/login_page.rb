@@ -19,9 +19,9 @@ class LoginPage
   end
 
   def login_with(username, password, wait_for_logout_element = true)
-    username_element.when_present.send_keys(username)
-    password_element.when_present.send_keys(password)
-    login_element.when_present.click
-    logout_element.when_present(10) if wait_for_logout_element
+    username_element.send_keys(username)
+    password_element.send_keys(password)
+    login_element.click
+    logout_element if wait_for_logout_element
   end
 end

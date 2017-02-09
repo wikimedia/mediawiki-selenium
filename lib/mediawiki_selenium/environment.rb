@@ -575,7 +575,7 @@ module MediawikiSelenium
     end
 
     def browser_spec
-      lookup(:browser, default: 'firefox').to_s.downcase.split(' ')
+      lookup(:browser, default: 'chrome').to_s.downcase.split(' ')
     end
 
     def normalize_config(hash)

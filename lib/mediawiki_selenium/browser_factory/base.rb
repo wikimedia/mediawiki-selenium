@@ -1,4 +1,4 @@
-require 'watir-webdriver'
+require 'watir'
 
 module MediawikiSelenium
   module BrowserFactory
