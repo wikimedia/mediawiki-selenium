@@ -1,5 +1,23 @@
 ## Release notes
 
+### 1.8.0 2017-02-27
+* Remove raita entirely
+* Major updates in dependencies:
+  * page-object updated to version 2
+  * Watir updated to version 6
+  * Selenium updated to version 3
+* Major changes caused by upgrade to Selenium 3:
+  * default browser is Chrome, instead of Firefox
+  * geckodriver needs to be installed when driving Firefox
+* For more information about upstream changes:
+  * Selenium:
+    * Blog: https://seleniumhq.wordpress.com/
+    * Release notes: https://github.com/SeleniumHQ/selenium/blob/master/rb/CHANGES
+  * Watir:
+    * Blog: http://watir.github.io/blog/
+    * Release notes: https://github.com/watir/watir/blob/master/CHANGES.md
+  * page-object release notes: https://github.com/cheezy/page-object/blob/master/ChangeLog
+
 ### 1.7.4 2016-12-28
 
 * Update JSON gem to version 2
