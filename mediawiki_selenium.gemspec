@@ -27,6 +27,8 @@ Gem::Specification.new do |spec|
   spec.files         = `git ls-files`.split($INPUT_RECORD_SEPARATOR)
   spec.require_paths = ['lib']
 
+  spec.required_ruby_version = '~> 2.0'
+
   spec.add_runtime_dependency 'cucumber', '~> 1.3', '>= 1.3.20'
   spec.add_runtime_dependency 'headless', '~> 2.0', '>= 2.1.0'
   spec.add_runtime_dependency 'json', '~> 2.0', '>= 2.0.2'
