@@ -4,14 +4,14 @@ Feature: Basic usage
   Background:
     Given I have configured my environment from `ENV` and with:
       """
-      browser: phantomjs
+      browser: chrome
       """
       And I have set "MEDIAWIKI_URL" in my shell
       And I am using a local browser
 
   Scenario: The configured browser is used
     When I start interacting with the browser
-    Then the browser name is `:phantomjs`
+    Then the browser name is `:chrome`
 
   Scenario: Browsers are started on-demand
     When I start interacting with the browser
