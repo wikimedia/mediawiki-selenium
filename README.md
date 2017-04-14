@@ -301,3 +301,7 @@ Announce the new release at [QA](https://lists.wikimedia.org/mailman/listinfo/qa
 ## Release notes
 
 See {file:RELEASES.md}.
+
+## [License](../LICENSE)
+
+© Copyright 2013-2017, Wikimedia Foundation & Contributors. Released under the terms of the GNU General Public License, version 2 or later.
