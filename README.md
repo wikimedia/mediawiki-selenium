@@ -204,6 +204,10 @@ the destination path for screenshots. Example:
 
     SCREENSHOT_FAILURES=true SCREENSHOT_FAILURES_PATH="/tmp/screenshots" bundle exec cucumber
 
+## [Sauce Labs](https://www.mediawiki.org/wiki/Selenium/Ruby/Target_beta_cluster_using_Sauce_Labs)
+
+Sauce Labs gives you access to a variety of browsers and platforms for testing.
+
 ### CI Rake task
 
 To utilize the CI rake task, add the following to your `Rakefile`:
@@ -305,3 +309,4 @@ See {file:RELEASES.md}.
 ## [License](../LICENSE)
 
 © Copyright 2013-2017, Wikimedia Foundation & Contributors. Released under the terms of the GNU General Public License, version 2 or later.
+
