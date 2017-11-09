@@ -98,7 +98,7 @@
   scenario outlines
 
 ### 1.2.0 2015-05-28
-* Support logging to a [Raita](http://git.wikimedia.org/summary/integration%2Fraita.git)
+* Support logging to a Raita
   Elasticsearch database by setting `RAITA_URL`
 * Removed deprecated support for `MEDIAWIKI_PASSWORD_VARIABLE`
 
