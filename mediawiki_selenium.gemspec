@@ -30,6 +30,9 @@ Gem::Specification.new do |spec|
   spec.required_ruby_version = '~> 2.0'
 
   spec.add_runtime_dependency 'cucumber', '~> 1.3', '>= 1.3.20'
+  # Locking data_magic to version 1.1 because 1.2 requires Ruby version >= 2.2 and
+  # Jenkins is on 2.1.0
+  spec.add_runtime_dependency 'data_magic', '~> 1.1.0'
   spec.add_runtime_dependency 'headless', '~> 2.0', '>= 2.1.0'
   spec.add_runtime_dependency 'json', '~> 2.0', '>= 2.0.2'
   spec.add_runtime_dependency 'mediawiki_api', '~> 0.7', '>= 0.7.0'
@@ -45,6 +48,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'bundler', '~> 1.6', '>= 1.6.3'
   spec.add_development_dependency 'yard', '~> 0.8', '>= 0.8.7.4'
   spec.add_development_dependency 'redcarpet', '~> 3.2', '>= 3.2.0'
-  spec.add_development_dependency 'rubocop', '~> 0.46.0'
+  spec.add_development_dependency 'rubocop', '~> 0.51.0'
   spec.add_development_dependency 'rspec-mocks', '~> 2.14', '>= 2.14.4'
 end
