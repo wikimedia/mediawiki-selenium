@@ -5,5 +5,5 @@ class ResetPreferencesPage
 
   page_url 'Special:Preferences/reset'
 
-  button(:submit, class: 'mw-htmlform-submit')
+  button(:submit, css: 'input.mw-htmlform-submit, .mw-htmlform-submit button')
 end
