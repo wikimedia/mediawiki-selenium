@@ -1,5 +1,13 @@
 ## Release notes
 
+### 1.8.1 2018-06-14
+* Required Ruby version is 2.x
+* Upgrade selenium-webdriver to 3.2
+* Integration tests use Chrome instead of PhantomJS
+* Added license to readme file
+* Documented Sauce Labs usage in readme file
+* Updated Special:Preferences/reset page
+
 ### 1.8.0 2017-02-27
 * Remove raita entirely
 * Major updates in dependencies:
