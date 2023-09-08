@@ -1,7 +1,0 @@
-.bundle
-/.yardoc/
-/doc/
-/tmp/
-.gem
-*.gem
-Gemfile.lock
